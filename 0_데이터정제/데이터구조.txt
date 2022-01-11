@@ -1,0 +1,62 @@
+Training
+  |— Annotations
+  |      |— CRACK
+  |      |      |— Frontback
+  |      |      |— Highway
+  |      |      |— Industrialroads
+  |      |      |— Kidzone
+  |      |      |— Mainroad
+  |      |      
+  |      |— TOA
+  |             |— Frontback
+  |             |— Highway
+  |             |— Industrialroads
+  |             |— Kidzone
+  |             |— Mainroad
+  |             
+  |— Images
+         |— CRACK
+         |      |— Frontback
+         |      |— Highway
+         |      |— Industrialroads
+         |      |— Kidzone
+         |      |— Mainroad
+         |      
+         |— TOA
+                |— Frontback
+                |— Highway
+                |— Industrialroads
+                |— Kidzone
+                |— Mainroad
+
+
+Validation
+  |— Annotations
+  |      |— CRACK
+  |      |      |— Frontback
+  |      |      |— Highway
+  |      |      |— Industrialroads
+  |      |      |— Kidzone
+  |      |      |— Mainroad
+  |      |      
+  |      |— TOA
+  |             |— Frontback
+  |             |— Highway
+  |             |— Industrialroads
+  |             |— Kidzone
+  |             |— Mainroad
+  |             
+  |— Images
+         |— CRACK
+         |      |— Frontback
+         |      |— Highway
+         |      |— Industrialroads
+         |      |— Kidzone
+         |      |— Mainroad
+         |      
+         |— TOA
+                |— Frontback
+                |— Highway
+                |— Industrialroads
+                |— Kidzone
+                |— Mainroad
