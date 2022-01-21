@@ -1,0 +1,24 @@
+{
+    "os": "Windows-10-10.0.22000-SP0",
+    "python": "3.9.7",
+    "heartbeatAt": "2022-01-17T02:55:37.521927",
+    "startedAt": "2022-01-17T02:55:35.763444",
+    "docker": null,
+    "gpu": "NVIDIA GeForce RTX 3060 Laptop GPU",
+    "gpu_count": 1,
+    "cpu_count": 16,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "c:\\Users\\yunjc\\_python_jupyter\\Pytorch-UNet-master\\train_pan.py",
+    "codePath": "Pytorch-UNet-master\\train_pan.py",
+    "git": {
+        "remote": null,
+        "commit": null
+    },
+    "email": "yunjch21@gmail.com",
+    "root": "C:/Users/yunjc/_python_jupyter",
+    "host": "DESKTOP-78UQQA4",
+    "username": "yunjc",
+    "executable": "C:\\Users\\yunjc\\anaconda3\\python.exe"
+}

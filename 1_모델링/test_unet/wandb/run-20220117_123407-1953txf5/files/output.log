@@ -1,0 +1,31 @@
+INFO: Starting training:
+        Epochs:          5
+        Batch size:      1
+        Learning rate:   1e-05
+        Training size:   4580
+        Validation size: 508
+        Checkpoints:     True
+        Device:          cuda
+        Images scaling:  0.5
+        Mixed Precision: False
+Epoch 1/5:   0%|                                                                                                                                           | 0/4580 [00:05<?, ?img/s]
+Traceback (most recent call last):
+  File "c:/Users/yunjc/_python_jupyter/Pytorch-UNet-master/train_pan.py", line 190, in <module>
+    train_net(net=net,
+  File "c:/Users/yunjc/_python_jupyter/Pytorch-UNet-master/train_pan.py", line 92, in train_net
+    masks_pred = net(images)
+  File "C:\Users\yunjc\anaconda3\envs\dl_env\lib\site-packages\torch\nn\modules\module.py", line 1102, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "c:\Users\yunjc\_python_jupyter\Pytorch-UNet-master\pan\networks.py", line 223, in forward
+    fm_high = self.fpa(fm_low)
+  File "C:\Users\yunjc\anaconda3\envs\dl_env\lib\site-packages\torch\nn\modules\module.py", line 1102, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "c:\Users\yunjc\_python_jupyter\Pytorch-UNet-master\pan\networks.py", line 97, in forward
+    x_master = self.conv_master(x)
+  File "C:\Users\yunjc\anaconda3\envs\dl_env\lib\site-packages\torch\nn\modules\module.py", line 1102, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "C:\Users\yunjc\anaconda3\envs\dl_env\lib\site-packages\torch\nn\modules\conv.py", line 446, in forward
+    return self._conv_forward(input, self.weight, self.bias)
+  File "C:\Users\yunjc\anaconda3\envs\dl_env\lib\site-packages\torch\nn\modules\conv.py", line 442, in _conv_forward
+    return F.conv2d(input, weight, bias, self.stride,
+RuntimeError: Expected 4-dimensional input for 4-dimensional weight [2048, 2048, 1, 1], but got 3-dimensional input of size [3, 640, 959] instead

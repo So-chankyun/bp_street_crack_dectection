@@ -1,0 +1,87 @@
+INFO: Starting training:
+        Epochs:          5
+        Batch size:      1
+        Learning rate:   1e-05
+        Training size:   9000
+        Validation size: 1000
+        Checkpoints:     True
+        Device:          cuda
+        Images scaling:  0.4
+        Mixed Precision: True
+Epoch 1/5:   0%|                                                                                                                               | 0/9000 [00:00<?, ?img/s]
+images: tensor([[[[0.2196, 0.1765, 0.2353,  ..., 0.9059, 0.9059, 0.9059],
+          [0.1882, 0.1843, 0.1490,  ..., 0.9059, 0.9059, 0.9059],
+          [0.2039, 0.2549, 0.2314,  ..., 0.9059, 0.9059, 0.9059],
+          ...,
+          [0.0902, 0.0941, 0.0941,  ..., 0.2549, 0.2510, 0.2510],
+          [0.1137, 0.1098, 0.1020,  ..., 0.2627, 0.2510, 0.2471],
+          [0.1059, 0.1059, 0.1020,  ..., 0.2667, 0.2627, 0.2510]],
+         [[0.2235, 0.1882, 0.2510,  ..., 1.0000, 1.0000, 1.0000],
+          [0.1922, 0.1961, 0.1608,  ..., 1.0000, 1.0000, 1.0000],
+          [0.2118, 0.2627, 0.2392,  ..., 1.0000, 1.0000, 1.0000],
+          ...,
+          [0.1059, 0.1098, 0.1098,  ..., 0.3137, 0.3098, 0.3098],
+          [0.1294, 0.1255, 0.1176,  ..., 0.3176, 0.3098, 0.3059],
+          [0.1216, 0.1216, 0.1176,  ..., 0.3216, 0.3176, 0.3098]],
+         [[0.2588, 0.2078, 0.2863,  ..., 1.0000, 1.0000, 1.0000],
+          [0.2078, 0.2039, 0.1725,  ..., 1.0000, 1.0000, 1.0000],
+          [0.2275, 0.2745, 0.2510,  ..., 1.0000, 1.0000, 1.0000],
+          ...,
+          [0.1216, 0.1216, 0.1255,  ..., 0.3765, 0.3686, 0.3686],
+          [0.1451, 0.1373, 0.1294,  ..., 0.3843, 0.3686, 0.3608],
+          [0.1373, 0.1373, 0.1294,  ..., 0.3882, 0.3765, 0.3686]]]],
+       device='cuda:0')	 true_masks: tensor([[[[0, 0, 0],
+          [0, 0, 0],
+          [0, 0, 0],
+          ...,
+          [0, 0, 0],
+          [0, 0, 0],
+          [0, 0, 0]],
+         [[0, 0, 0],
+          [0, 0, 0],
+          [0, 0, 0],
+          ...,
+          [0, 0, 0],
+          [0, 0, 0],
+          [0, 0, 0]],
+         [[0, 0, 0],
+          [0, 0, 0],
+          [0, 0, 0],
+          ...,
+          [0, 0, 0],
+          [0, 0, 0],
+          [0, 0, 0]],
+         ...,
+         [[0, 0, 0],
+          [0, 0, 0],
+          [0, 0, 0],
+          ...,
+          [0, 0, 0],
+          [0, 0, 0],
+          [0, 0, 0]],
+         [[0, 0, 0],
+          [0, 0, 0],
+          [0, 0, 0],
+          ...,
+          [0, 0, 0],
+          [0, 0, 0],
+          [0, 0, 0]],
+         [[0, 0, 0],
+          [0, 0, 0],
+          [0, 0, 0],
+          ...,
+          [0, 0, 0],
+          [0, 0, 0],
+Epoch 1/5:   0%|                                                                                                                               | 0/9000 [00:09<?, ?img/s]
+Traceback (most recent call last):
+  File "train.py", line 188, in <module>
+    train_net(net=net,
+  File "train.py", line 97, in train_net
+    loss = criterion(masks_pred, true_masks) \
+  File "C:\Users\yunjc\anaconda3\envs\dl_env\lib\site-packages\torch\nn\modules\module.py", line 1102, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "C:\Users\yunjc\anaconda3\envs\dl_env\lib\site-packages\torch\nn\modules\loss.py", line 1150, in forward
+    return F.cross_entropy(input, target, weight=self.weight,
+  File "C:\Users\yunjc\anaconda3\envs\dl_env\lib\site-packages\torch\nn\functional.py", line 2846, in cross_entropy
+    return torch._C._nn.cross_entropy_loss(input, target, weight, _Reduction.get_enum(reduction), ignore_index, label_smoothing)
+RuntimeError: only batches of spatial targets supported (3D tensors) but got targets of size: : [1, 288, 512, 3]

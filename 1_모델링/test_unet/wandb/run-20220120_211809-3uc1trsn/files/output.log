@@ -1,0 +1,20 @@
+INFO: Starting training:
+        Epochs:          5
+        Batch size:      1
+        Learning rate:   1e-05
+        Training size:   9000
+        Validation size: 1000
+        Checkpoints:     True
+        Device:          cuda
+        Images scaling:  0.4
+        Mixed Precision: True
+Epoch 1/5:   0%|                                                                                                                                                                                       | 0/9000 [00:00<?, ?img/s]
+ images: torch.Size([1, 3, 288, 512])	 true_masks: torch.Size([1, 288, 512])
+ images: torch.Size([1, 3, 288, 512])	 true_masks: torch.Size([1, 288, 512])
+Epoch 1/5:   0%|                                                                                                                                                                                       | 0/9000 [00:08<?, ?img/s]
+Traceback (most recent call last):
+  File "train.py", line 190, in <module>
+    train_net(net=net,
+  File "train.py", line 98, in train_net
+    assert masks_pred==None, "stop here"
+AssertionError: stop here

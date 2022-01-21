@@ -1,0 +1,54 @@
+INFO: Starting training:
+        Epochs:          5
+        Batch size:      1
+        Learning rate:   1e-05
+        Training size:   9000
+        Validation size: 1000
+        Checkpoints:     True
+        Device:          cuda
+        Images scaling:  0.4
+        Mixed Precision: False
+
+Epoch 1/5:   0%|                                                                                                                               | 0/9000 [00:46<?, ?img/s]
+Traceback (most recent call last):
+  File "C:\Users\yunjc\anaconda3\envs\dl_env\lib\runpy.py", line 194, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "C:\Users\yunjc\anaconda3\envs\dl_env\lib\runpy.py", line 87, in _run_code
+    exec(code, run_globals)
+  File "c:\Users\yunjc\.vscode\extensions\ms-python.python-2021.12.1559732655\pythonFiles\lib\python\debugpy\__main__.py", line 45, in <module>
+    cli.main()
+  File "c:\Users\yunjc\.vscode\extensions\ms-python.python-2021.12.1559732655\pythonFiles\lib\python\debugpy/..\debugpy\server\cli.py", line 444, in main
+    run()
+  File "c:\Users\yunjc\.vscode\extensions\ms-python.python-2021.12.1559732655\pythonFiles\lib\python\debugpy/..\debugpy\server\cli.py", line 285, in run_file
+    runpy.run_path(target_as_str, run_name=compat.force_str("__main__"))
+  File "C:\Users\yunjc\anaconda3\envs\dl_env\lib\runpy.py", line 265, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "C:\Users\yunjc\anaconda3\envs\dl_env\lib\runpy.py", line 97, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "C:\Users\yunjc\anaconda3\envs\dl_env\lib\runpy.py", line 87, in _run_code
+    exec(code, run_globals)
+  File "c:\Users\yunjc\_python_jupyter\Pytorch-UNet-master\train.py", line 185, in <module>
+    train_net(net=net,
+  File "c:\Users\yunjc\_python_jupyter\Pytorch-UNet-master\train.py", line 80, in train_net
+    for batch in train_loader:
+  File "C:\Users\yunjc\anaconda3\envs\dl_env\lib\site-packages\torch\utils\data\dataloader.py", line 521, in __next__
+    data = self._next_data()
+  File "C:\Users\yunjc\anaconda3\envs\dl_env\lib\site-packages\torch\utils\data\dataloader.py", line 1203, in _next_data
+    return self._process_data(data)
+  File "C:\Users\yunjc\anaconda3\envs\dl_env\lib\site-packages\torch\utils\data\dataloader.py", line 1229, in _process_data
+    data.reraise()
+  File "C:\Users\yunjc\anaconda3\envs\dl_env\lib\site-packages\torch\_utils.py", line 434, in reraise
+    raise exception
+AssertionError: Caught AssertionError in DataLoader worker process 0.
+Original Traceback (most recent call last):
+  File "C:\Users\yunjc\anaconda3\envs\dl_env\lib\site-packages\torch\utils\data\_utils\worker.py", line 287, in _worker_loop
+    data = fetcher.fetch(index)
+  File "C:\Users\yunjc\anaconda3\envs\dl_env\lib\site-packages\torch\utils\data\_utils\fetch.py", line 49, in fetch
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+  File "C:\Users\yunjc\anaconda3\envs\dl_env\lib\site-packages\torch\utils\data\_utils\fetch.py", line 49, in <listcomp>
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+  File "C:\Users\yunjc\anaconda3\envs\dl_env\lib\site-packages\torch\utils\data\dataset.py", line 363, in __getitem__
+    return self.dataset[self.indices[idx]]
+  File "c:\Users\yunjc\_python_jupyter\Pytorch-UNet-master\utils\data_loading.py", line 66, in __getitem__
+    assert img.size == mask.size, \
+AssertionError: Image and mask {name} should be the same size, but are {img.size} and {mask.size}

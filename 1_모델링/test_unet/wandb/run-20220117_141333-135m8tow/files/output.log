@@ -1,0 +1,17 @@
+INFO: Starting training:
+        Epochs:          5
+        Batch size:      1
+        Learning rate:   1e-05
+        Training size:   4580
+        Validation size: 508
+        Checkpoints:     True
+        Device:          cuda
+        Images scaling:  0.5
+        Mixed Precision: False
+Epoch 1/5:   0%|                                                                                                                               | 0/4580 [00:08<?, ?img/s]
+Traceback (most recent call last):
+  File "c:/Users/yunjc/_python_jupyter/Pytorch-UNet-master/train_pan.py", line 193, in <module>
+    train_net(net=net,
+  File "c:/Users/yunjc/_python_jupyter/Pytorch-UNet-master/train_pan.py", line 92, in train_net
+    out_ss = pan(fms_blob[::-1])
+NameError: name 'pan' is not defined

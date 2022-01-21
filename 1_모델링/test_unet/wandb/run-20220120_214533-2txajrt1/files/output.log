@@ -1,0 +1,88 @@
+INFO: Starting training:
+        Epochs:          5
+        Batch size:      1
+        Learning rate:   1e-05
+        Training size:   9000
+        Validation size: 1000
+        Checkpoints:     True
+        Device:          cpu
+        Images scaling:  0.4
+        Mixed Precision: False
+Epoch 1/5:   0%|                                                                                                                                                                                       | 0/9000 [00:00<?, ?img/s]
+ masks_pred: torch.Size([1, 2, 288, 512])	 true_masks: torch.Size([1, 288, 512])
+Epoch 1/5:   0%|                                                                                                                                                                                       | 0/9000 [00:00<?, ?img/s]C:\Users\yunjc\anaconda3\lib\site-packages\torch\autocast_mode.py:141: UserWarning: User provided device_type of 'cuda', but CUDA is not available. Disabling
+  warnings.warn('User provided device_type of \'cuda\', but CUDA is not available. Disabling')
+ masks_pred: torch.Size([1, 2, 288, 512])	 true_masks: torch.Size([1, 288, 512])
+True
+Epoch 1/5:   0%|                                                                                                                                                         | 1/9000 [00:08<21:40:05,  8.67s/img, loss (batch)=1.35]
+ masks_pred: torch.Size([1, 2, 288, 512])	 true_masks: torch.Size([1, 288, 512])
+
+Epoch 1/5:   0%|                                                                                                                                                         | 2/9000 [00:10<12:03:20,  4.82s/img, loss (batch)=1.37]
+ masks_pred: torch.Size([1, 2, 288, 512])	 true_masks: torch.Size([1, 288, 512])
+
+
+Epoch 1/5:   0%|                                                                                                                                                          | 4/9000 [00:15<7:33:57,  3.03s/img, loss (batch)=1.35]
+ masks_pred: torch.Size([1, 2, 288, 512])	 true_masks: torch.Size([1, 288, 512])
+
+Epoch 1/5:   0%|                                                                                                                                                          | 5/9000 [00:17<6:47:31,  2.72s/img, loss (batch)=1.32]
+ masks_pred: torch.Size([1, 2, 288, 512])	 true_masks: torch.Size([1, 288, 512])
+
+Epoch 1/5:   0%|                                                                                                                                                          | 6/9000 [00:19<6:18:08,  2.52s/img, loss (batch)=1.28]
+ masks_pred: torch.Size([1, 2, 288, 512])	 true_masks: torch.Size([1, 288, 512])
+
+Epoch 1/5:   0%|                                                                                                                                                          | 7/9000 [00:21<6:00:07,  2.40s/img, loss (batch)=1.24]
+ masks_pred: torch.Size([1, 2, 288, 512])	 true_masks: torch.Size([1, 288, 512])
+
+Epoch 1/5:   0%|▏                                                                                                                                                         | 8/9000 [00:23<5:50:35,  2.34s/img, loss (batch)=1.27]
+ masks_pred: torch.Size([1, 2, 288, 512])	 true_masks: torch.Size([1, 288, 512])
+True
+ masks_pred: torch.Size([1, 2, 288, 512])	 true_masks: torch.Size([1, 288, 512])
+
+Epoch 1/5:   0%|▏                                                                                                                                                         | 9/9000 [00:25<5:44:25,  2.30s/img, loss (batch)=1.18]
+ masks_pred: torch.Size([1, 2, 288, 512])	 true_masks: torch.Size([1, 288, 512])
+
+Epoch 1/5:   0%|▏                                                                                                                                                        | 10/9000 [00:28<5:40:13,  2.27s/img, loss (batch)=1.19]
+ masks_pred: torch.Size([1, 2, 288, 512])	 true_masks: torch.Size([1, 288, 512])
+
+Epoch 1/5:   0%|▏                                                                                                                                                        | 11/9000 [00:30<5:35:09,  2.24s/img, loss (batch)=1.16]
+ masks_pred: torch.Size([1, 2, 288, 512])	 true_masks: torch.Size([1, 288, 512])
+
+Epoch 1/5:   0%|▏                                                                                                                                                        | 12/9000 [00:32<5:30:21,  2.21s/img, loss (batch)=1.16]
+ masks_pred: torch.Size([1, 2, 288, 512])	 true_masks: torch.Size([1, 288, 512])
+
+Epoch 1/5:   0%|▏                                                                                                                                                        | 13/9000 [00:34<5:28:02,  2.19s/img, loss (batch)=1.12]
+ masks_pred: torch.Size([1, 2, 288, 512])	 true_masks: torch.Size([1, 288, 512])
+
+Epoch 1/5:   0%|▏                                                                                                                                                        | 14/9000 [00:36<5:25:32,  2.17s/img, loss (batch)=1.12]
+ masks_pred: torch.Size([1, 2, 288, 512])	 true_masks: torch.Size([1, 288, 512])
+
+
+Epoch 1/5:   0%|▎                                                                                                                                                        | 16/9000 [00:41<5:23:41,  2.16s/img, loss (batch)=1.05]
+ masks_pred: torch.Size([1, 2, 288, 512])	 true_masks: torch.Size([1, 288, 512])
+
+
+Epoch 1/5:   0%|▎                                                                                                                                                        | 18/9000 [00:45<5:25:13,  2.17s/img, loss (batch)=1.03]
+ masks_pred: torch.Size([1, 2, 288, 512])	 true_masks: torch.Size([1, 288, 512])
+True
+ masks_pred: torch.Size([1, 2, 288, 512])	 true_masks: torch.Size([1, 288, 512])
+
+
+Epoch 1/5:   0%|▎                                                                                                                                                         | 20/9000 [00:49<5:23:45,  2.16s/img, loss (batch)=1.1]
+ masks_pred: torch.Size([1, 2, 288, 512])	 true_masks: torch.Size([1, 288, 512])
+True
+ masks_pred: torch.Size([1, 2, 288, 512])	 true_masks: torch.Size([1, 288, 512])
+
+Epoch 1/5:   0%|▎                                                                                                                                                       | 21/9000 [00:51<5:23:49,  2.16s/img, loss (batch)=0.995]
+ masks_pred: torch.Size([1, 2, 288, 512])	 true_masks: torch.Size([1, 288, 512])
+
+Epoch 1/5:   0%|▎                                                                                                                                                       | 22/9000 [00:54<5:21:35,  2.15s/img, loss (batch)=0.972]
+ masks_pred: torch.Size([1, 2, 288, 512])	 true_masks: torch.Size([1, 288, 512])
+
+Epoch 1/5:   0%|▍                                                                                                                                                       | 23/9000 [00:56<5:20:28,  2.14s/img, loss (batch)=0.974]
+ masks_pred: torch.Size([1, 2, 288, 512])	 true_masks: torch.Size([1, 288, 512])
+True
+ masks_pred: torch.Size([1, 2, 288, 512])	 true_masks: torch.Size([1, 288, 512])
+
+Epoch 1/5:   0%|▍                                                                                                                                                       | 24/9000 [00:58<5:21:59,  2.15s/img, loss (batch)=0.958]
+ masks_pred: torch.Size([1, 2, 288, 512])	 true_masks: torch.Size([1, 288, 512])
+

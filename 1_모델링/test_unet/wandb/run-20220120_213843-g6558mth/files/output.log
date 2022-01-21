@@ -1,0 +1,49 @@
+INFO: Starting training:
+        Epochs:          5
+        Batch size:      1
+        Learning rate:   1e-05
+        Training size:   9000
+        Validation size: 1000
+        Checkpoints:     True
+        Device:          cpu
+        Images scaling:  0.4
+        Mixed Precision: True
+C:\Users\yunjc\anaconda3\lib\site-packages\torch\cuda\amp\grad_scaler.py:115: UserWarning: torch.cuda.amp.GradScaler is enabled, but CUDA is not available.  Disabling.
+  warnings.warn("torch.cuda.amp.GradScaler is enabled, but CUDA is not available.  Disabling.")
+Epoch 1/5:   0%|                                                                                                                                                                                       | 0/9000 [00:00<?, ?img/s]C:\Users\yunjc\anaconda3\lib\site-packages\torch\autocast_mode.py:141: UserWarning: User provided device_type of 'cuda', but CUDA is not available. Disabling
+  warnings.warn('User provided device_type of \'cuda\', but CUDA is not available. Disabling')
+ masks_pred: torch.Size([1, 2, 288, 512])	 true_masks: torch.Size([1, 288, 512])
+ masks_pred: tensor([[[[-0.4209,  0.1488, -0.0397,  ..., -0.8801, -0.7050,  0.0579],
+          [-0.4023, -0.1766, -0.2744,  ..., -0.6126, -0.3570, -0.2650],
+          [-0.2548, -0.1017,  0.2100,  ..., -0.7342, -0.9335,  0.1122],
+          ...,
+          [-0.3959, -0.0593, -0.2864,  ..., -0.2066, -0.3268,  0.1572],
+          [-0.4951, -0.2709, -0.1698,  ..., -0.5145, -0.5267, -0.0825],
+          [ 0.0808, -0.2867, -0.1638,  ..., -0.2042, -0.2334, -0.0730]],
+         [[-0.6137, -0.0335, -0.4885,  ..., -0.4191, -0.0361, -0.1251],
+          [-0.4921, -0.2270, -0.4266,  ..., -0.8102, -0.1348, -0.1946],
+          [-0.2770, -0.0188, -0.5112,  ..., -0.5141,  0.2455, -0.2865],
+          ...,
+          [-0.6008,  0.0245, -0.4627,  ..., -0.4972, -0.3524, -0.1758],
+          [-0.7267,  0.1135, -0.1442,  ..., -0.6512, -0.2985, -0.1039],
+          [-0.3733, -0.4783, -0.6131,  ..., -0.5722, -0.3775, -0.4030]]]],
+       grad_fn=<MkldnnConvolutionBackward0>)	 true_masks: tensor([[[0, 0, 0,  ..., 0, 0, 0],
+         [0, 0, 0,  ..., 0, 0, 0],
+         [0, 0, 0,  ..., 0, 0, 0],
+         ...,
+         [0, 0, 0,  ..., 0, 0, 0],
+         [0, 0, 0,  ..., 0, 0, 0],
+         [0, 0, 0,  ..., 0, 0, 0]]])
+Epoch 1/5:   0%|                                                                                                                                                                                       | 0/9000 [00:07<?, ?img/s]
+Traceback (most recent call last):
+  File "C:\Users\yunjc\_python_jupyter\bupyeonggu\bp_road_crack_detection\_model_test\Pytorch-UNet-master\train.py", line 191, in <module>
+    train_net(net=net,
+  File "C:\Users\yunjc\_python_jupyter\bupyeonggu\bp_road_crack_detection\_model_test\Pytorch-UNet-master\train.py", line 100, in train_net
+    loss = criterion(masks_pred, true_masks) \
+  File "C:\Users\yunjc\anaconda3\lib\site-packages\torch\nn\modules\module.py", line 1102, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "C:\Users\yunjc\anaconda3\lib\site-packages\torch\nn\modules\loss.py", line 1150, in forward
+    return F.cross_entropy(input, target, weight=self.weight,
+  File "C:\Users\yunjc\anaconda3\lib\site-packages\torch\nn\functional.py", line 2846, in cross_entropy
+    return torch._C._nn.cross_entropy_loss(input, target, weight, _Reduction.get_enum(reduction), ignore_index, label_smoothing)
+IndexError: Target 255 is out of bounds.
