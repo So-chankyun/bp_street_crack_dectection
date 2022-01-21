@@ -1,0 +1,24 @@
+{
+    "os": "Windows-10-10.0.22000-SP0",
+    "python": "3.8.8",
+    "heartbeatAt": "2022-01-21T06:30:12.305013",
+    "startedAt": "2022-01-21T06:30:09.618214",
+    "docker": null,
+    "gpu": "NVIDIA GeForce RTX 3060 Laptop GPU",
+    "gpu_count": 1,
+    "cpu_count": 16,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "train.py",
+    "codePath": "1_\ubaa8\ub378\ub9c1\\test_unet\\train.py",
+    "git": {
+        "remote": "https://github.com/chaaaning/bp_street_crack_detection.git",
+        "commit": "61a2d6cf2c6c3402ee42a70f3b9457026f430559"
+    },
+    "email": "yunjch21@gmail.com",
+    "root": "C:/Users/yunjc/_python_jupyter/bupyeonggu/bp_road_crack_detection",
+    "host": "DESKTOP-78UQQA4",
+    "username": "yunjc",
+    "executable": "C:\\Users\\yunjc\\anaconda3\\envs\\dl_env\\python.exe"
+}

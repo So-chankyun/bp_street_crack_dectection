@@ -1,0 +1,24 @@
+INFO: Starting training:
+        Epochs:          5
+        Batch size:      1
+        Learning rate:   1e-05
+        Training size:   9000
+        Validation size: 1000
+        Checkpoints:     True
+        Device:          cuda
+        Images scaling:  0.4
+        Mixed Precision: True
+Epoch 1/5:   0%|                                                                                                                                               | 0/9000 [00:00<?, ?img/s]
+Epoch 1/5:   0%|                                                                                                                                               | 0/9000 [00:09<?, ?img/s]
+Traceback (most recent call last):
+  File "train.py", line 186, in <module>
+    train_net(net=net,
+  File "train.py", line 95, in train_net
+    loss = criterion(masks_pred, true_masks) \
+  File "C:\Users\yunjc\anaconda3\envs\dl_env\lib\site-packages\torch\nn\modules\module.py", line 1102, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "C:\Users\yunjc\anaconda3\envs\dl_env\lib\site-packages\torch\nn\modules\loss.py", line 1150, in forward
+    return F.cross_entropy(input, target, weight=self.weight,
+  File "C:\Users\yunjc\anaconda3\envs\dl_env\lib\site-packages\torch\nn\functional.py", line 2846, in cross_entropy
+    return torch._C._nn.cross_entropy_loss(input, target, weight, _Reduction.get_enum(reduction), ignore_index, label_smoothing)
+RuntimeError: Expected floating point type for target with class probabilities, got Long
