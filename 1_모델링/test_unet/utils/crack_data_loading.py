@@ -72,14 +72,21 @@ class BaseDataset(Dataset):
             str_fname = str(filename)
             img_pth = Path(str_fname.replace("Annotations","Images").replace("_PLINE.json",".png"))            
             load_img = np.array(Image.open(img_pth))    
-            lbl = np.zeros((load_img.shape[0], load_img.shape[1]), np.uint8)
+            lbl = np.zeros((load_img.shape[0], load_img.shape[1]), np.int32)
         
             for idx in range(len(json_data["annotations"])):
+                
                 temp = np.array(json_data["annotations"][idx]["polyline"]).reshape(-1)
-                
-                assert type(temp) != None, f"Convert .json Error: {ext}\t {list(temp)}"
-                
-                temp_int = np.apply_along_axis(np.int32, arr=temp, axis=0)
+                try:
+                    temp_round = np.apply_along_axis(np.round, arr=temp, axis=0)
+                    temp_int = np.apply_along_axis(np.int32, arr=temp_round, axis=0)
+                except:
+                    t = json_data["annotations"][idx]["polyline"]
+                    none_json = [[x for x in t[0] if x is not None]]
+                    temp = np.array(none_json).reshape(-1)
+                    temp_round = np.apply_along_axis(np.round , arr=temp, axis=0)
+                    temp_int = np.apply_along_axis(np.int32, arr=temp_round, axis=0)
+                    
                 temp_re = temp_int.reshape(-1, 2)
                 
                 lbl = cv2.polylines(img=lbl,
