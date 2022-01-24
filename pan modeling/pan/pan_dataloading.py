@@ -1,5 +1,7 @@
 import torch
 import torch.utils.data as data
+import cv2
+import json
 from imageio import imread
 from pathlib import Path
 from PIL import Image
@@ -23,19 +25,53 @@ class BasicDataset(data.Dataset):
 
     @classmethod
     def load(cls, filename):
-        ext = splitext(filename)[1]
-        if ext in ['.npz', '.npy']:
+        ext = splitext(filename)[1]         # 확장자를 확인하는 라인
+        if ext in ['.npz', '.npy']:         # .npz, .npy로 끝나면 numpy로 받아옴
             return Image.fromarray(np.load(filename))
-        elif ext in ['.pt', '.pth']:
+        elif ext in ['.pt', '.pth']:        # .pt, .pth로 끝나면 torch로 받아와서 numpy로 변환                         
             return Image.fromarray(torch.load(filename).numpy())
+        
+        # json 데이터를 사전에 처리하지 않고 로딩하면서 처리하기
+        elif ext in ['.json']:
+            with open(filename,"r",encoding='utf8') as f:
+                contents = f.read()
+                json_data = json.loads(contents)
+            
+            str_fname = str(filename)
+            img_pth = Path(str_fname.replace("Annotations","Images").replace("_PLINE.json",".png"))            
+            load_img = np.array(Image.open(img_pth))    
+            lbl = np.zeros((load_img.shape[0], load_img.shape[1]), np.int32)
+        
+            for idx in range(len(json_data["annotations"])):
+                
+                temp = np.array(json_data["annotations"][idx]["polyline"]).reshape(-1)
+                try:
+                    temp_round = np.apply_along_axis(np.round, arr=temp, axis=0)
+                    temp_int = np.apply_along_axis(np.int32, arr=temp_round, axis=0)
+                except:
+                    t = json_data["annotations"][idx]["polyline"]
+                    none_json = [[x for x in t[0] if x is not None]]
+                    temp = np.array(none_json).reshape(-1)
+                    temp_round = np.apply_along_axis(np.round , arr=temp, axis=0)
+                    temp_int = np.apply_along_axis(np.int32, arr=temp_round, axis=0)
+                    
+                temp_re = temp_int.reshape(-1, 2)
+                
+                lbl = cv2.polylines(img=lbl,
+                            pts=[temp_re],
+                            isClosed=False,
+                            color=(1),
+                            thickness=5)
+            return Image.fromarray(lbl)
         else:
-            return Image.open(filename)
+            return Image.open(filename)     # 이외의 확장자는 그냥 가져옴
+
 
     def __getitem__(self, index):
         # 데이터를 불러온 다음 transform 시켜서 반환할 수 있도록 하자.
         name = self.ids[index]
-        mask_file = list(self.masks_dir.glob(name+self.mask_suffix+'.gif'))
-        img_file = list(self.data_path.glob(name + '.jpg'))
+        mask_file = list(self.masks_dir.glob(name+self.mask_suffix+'.*'))
+        img_file = list(self.data_path.glob(name + '.*'))
 
         assert len(mask_file) == 1, f'Either no mask or multiple masks found for the ID {name}: {mask_file}'
         assert len(img_file) == 1, f'Either no image or multiple images found for the ID {name}: {img_file}'
@@ -59,4 +95,4 @@ class BasicDataset(data.Dataset):
 
 class CarvanaDataset(BasicDataset):
     def __init__(self, data_path, masks_dir, scale=1.0, transform=None):
-        super().__init__(data_path, masks_dir, scale=1.0, mask_suffix='_mask', transform=transform)
+        super().__init__(data_path, masks_dir, scale=1.0, mask_suffix='_PLINE', transform=transform)

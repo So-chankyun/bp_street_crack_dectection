@@ -18,8 +18,9 @@ from evaluate import evaluate
 from pan.networks import PAN, ResNet50, Mask_Classifier
 import pan.ss_transforms as tr
 
-dir_img = Path('./data/train/')
-dir_mask = Path('./data/train_masks/')
+DATAPATH = "D:/data/도로장애물·표면 인지 영상(수도권)/Training/!CHANGE/CRACK/C_Mainroad_G04/"
+dir_img = Path(DATAPATH.replace("!CHANGE", "Images"))
+dir_mask = Path(DATAPATH.replace("!CHANGE", "Annotations"))
 dir_checkpoint = Path('./checkpoints/')
 
 def train_net(net,
@@ -36,9 +37,9 @@ def train_net(net,
               amp: bool = False):
     # 1. Create dataset
     try:
-        dataset = CarvanaDataset(dir_img, dir_mask, img_scale,transform=transform)
+        dataset = CarvanaDataset(dir_img, dir_mask, img_scale, transform=transform)
     except (AssertionError, RuntimeError):
-        dataset = BasicDataset(dir_img, dir_mask, img_scale,transform=transform)
+        dataset = BasicDataset(dir_img, dir_mask, img_scale, transform=transform)
 
     # 2. Split into train / validation partitions
     n_val = int(len(dataset) * val_percent)
@@ -51,10 +52,10 @@ def train_net(net,
     val_loader = DataLoader(val_set, shuffle=False, drop_last=True, **loader_args)
 
     # (Initialize logging)
-    # experiment = wandb.init(project='U-Net', resume='allow', anonymous='must')
-    # experiment.config.update(dict(epochs=epochs, batch_size=batch_size, learning_rate=learning_rate,
-    #                               val_percent=val_percent, save_checkpoint=save_checkpoint, img_scale=img_scale,
-    #                               amp=amp))
+    experiment = wandb.init(project='PAN_Crack', resume='allow', anonymous='must')
+    experiment.config.update(dict(epochs=epochs, batch_size=batch_size, learning_rate=learning_rate,
+                                  val_percent=val_percent, save_checkpoint=save_checkpoint, img_scale=img_scale,
+                                  amp=amp))
 
     logging.info(f'''Starting training:
         Epochs:          {epochs}
@@ -112,11 +113,11 @@ def train_net(net,
                 pbar.update(images.shape[0])
                 global_step += 1
                 epoch_loss += loss.item()
-                # experiment.log({
-                #     'train loss': loss.item(),
-                #     'step': global_step,
-                #     'epoch': epoch
-                # })
+                experiment.log({
+                    'train loss': loss.item(),
+                    'step': global_step,
+                    'epoch': epoch
+                })
                 pbar.set_postfix(**{'loss (batch)': loss.item()})
 
                 # Evaluation round
@@ -126,25 +127,25 @@ def train_net(net,
                         histograms = {}
                         for tag, value in net.named_parameters():
                             tag = tag.replace('/', '.')
-                            # histograms['Weights/' + tag] = wandb.Histogram(value.data.cpu())
-                            # histograms['Gradients/' + tag] = wandb.Histogram(value.grad.data.cpu())
+                            histograms['Weights/' + tag] = wandb.Histogram(value.data.cpu())
+                            histograms['Gradients/' + tag] = wandb.Histogram(value.grad.data.cpu())
 
-                        val_score = evaluate(net, val_loader, device)
+                        val_score = evaluate(net, res, mc,val_loader, device)
                         scheduler.step(val_score)
 
                         logging.info('Validation Dice score: {}'.format(val_score))
-                        # experiment.log({
-                        #     'learning rate': optimizer.param_groups[0]['lr'],
-                        #     'validation Dice': val_score,
-                        #     # 'images': wandb.Image(images[0].cpu()),
-                        #     # 'masks': {
-                        #     #     'true': wandb.Image(true_masks[0].float().cpu()),
-                        #     #     'pred': wandb.Image(torch.softmax(masks_pred, dim=1).argmax(dim=1)[0].float().cpu()),
-                        #     # },
-                        #     'step': global_step,
-                        #     'epoch': epoch,
-                        #     **histograms
-                        # })
+                        experiment.log({
+                            'learning rate': optimizer.param_groups[0]['lr'],
+                            'validation Dice': val_score,
+                            'images': wandb.Image(images[0].cpu()),
+                            'masks': {
+                                'true': wandb.Image(true_masks[0].float().cpu()),
+                                'pred': wandb.Image(torch.softmax(mask_pred, dim=1).argmax(dim=1)[0].float().cpu()),
+                            },
+                            'step': global_step,
+                            'epoch': epoch,
+                            **histograms
+                        })
 
         if save_checkpoint:
             Path(dir_checkpoint).mkdir(parents=True, exist_ok=True)
