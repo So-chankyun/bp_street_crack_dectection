@@ -5,7 +5,8 @@ from tqdm import tqdm
 from utils.dice_score import multiclass_dice_coeff, dice_coeff
 
 
-def evaluate(net, dataloader, device):
+def evaluate(net, res, mc, dataloader, device):
+    res.eval()
     net.eval()
     num_val_batches = len(dataloader)
     n_classes = 2
@@ -21,7 +22,9 @@ def evaluate(net, dataloader, device):
 
         with torch.no_grad():
             # predict the mask
-            mask_pred = net(image)
+            fms_blob, z = res(image)
+            out_ss = net(fms_blob[::-1])
+            mask_pred = mc(out_ss)
 
             # convert to one-hot format
             if n_classes == 1:
