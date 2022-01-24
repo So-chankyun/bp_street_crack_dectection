@@ -97,8 +97,6 @@ class FPA(nn.Module):
         :return: out: Feature maps. Shape: [b, 2048, h, w]
         """
         # Master branch
-        print(f'x shape : {x.size()}')
-        print(f'channels : {self.channels_cond}')
         x_master = self.conv_master(x)
         x_master = self.bn_master(x_master)
 
@@ -115,13 +113,11 @@ class FPA(nn.Module):
         x1_2 = self.bn1_2(x1_2)
 
         # Branch 2
-        print(f'x1_1 shape : {x1_1.size()}')
         x2_1 = self.conv5x5_1(x1_1)
         x2_1 = self.bn2_1(x2_1)
         x2_1 = self.relu(x2_1)
         x2_2 = self.conv5x5_2(x2_1)
         x2_2 = self.bn2_2(x2_2)
-        print(f'x2_2 shape : {x2_2.size()}')
 
         # Branch 3
         x3_1 = self.conv3x3_1(x2_1)
@@ -129,7 +125,6 @@ class FPA(nn.Module):
         x3_1 = self.relu(x3_1)
         x3_2 = self.conv3x3_2(x3_1)
         x3_2 = self.bn3_2(x3_2)
-        print(f'x3_2 shape : {x3_2.size()}')
 
         # Merge branch 1 and 2
 
@@ -210,7 +205,6 @@ class PAN(nn.Module):
         # 어떤 작업인지 이해가 안됨.
         for i, block in enumerate(blocks):
             channels_blocks.append(list(list(block.children())[2].children())[4].weight.shape[0])
-        print(list(list(block.children())[2].children())[4])
 
         self.fpa = FPA(channels=channels_blocks[0])
         # channels_high = channels_blocks[0]
