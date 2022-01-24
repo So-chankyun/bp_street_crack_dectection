@@ -16,7 +16,7 @@ from utils.dice_score import dice_loss
 from evaluate import evaluate
 from unet import UNet
 
-DATAPATH = "D:/data/도로장애물·표면 인지 영상(수도권)/Training/!CHANGE/CRACK/C_Mainroad_B01/"
+DATAPATH = "D:/data/도로장애물·표면 인지 영상(수도권)/Training/!CHANGE/CRACK/C_Mainroad_G04/"
 dir_img = Path(DATAPATH.replace("!CHANGE", "Images"))
 dir_mask = Path(DATAPATH.replace("!CHANGE", "Annotations"))
 dir_checkpoint = Path('./checkpoints/')
