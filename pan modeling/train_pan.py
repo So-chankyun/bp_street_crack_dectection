@@ -175,10 +175,10 @@ if __name__ == '__main__':
                                            tr.ToTensor()
                                            ])
 
-    # test_transforms = transforms.Compose([tr.RandomSized((256, 256)),
-    #                                       tr.Normalize(mean=(0.485, 0.456, 0.406), std=(0.229, 0.224, 0.225)),
-    #                                       tr.ToTensor()
-    #                                       ])
+    test_transforms = transforms.Compose([tr.RescaleSized(256),
+                                               tr.MinMax(255.0),
+                                               tr.ToTensor()
+                                               ])
 
     logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
