@@ -10,3 +10,5 @@ venv/
 scripts/
 Dockerfile
 *.png
+wandb/
+view_result.ipynb
