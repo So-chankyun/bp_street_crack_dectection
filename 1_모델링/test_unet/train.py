@@ -16,9 +16,9 @@ from utils.dice_score import dice_loss
 from evaluate import evaluate
 from unet import UNet
 
-DATAPATH = "D:/data/도로장애물·표면 인지 영상(수도권)/Training/!CHANGE/CRACK/C_Mainroad_G04/"
-dir_img = Path(DATAPATH.replace("!CHANGE", "Images"))
-dir_mask = Path(DATAPATH.replace("!CHANGE", "Annotations"))
+DATAPATH = "D:/data/도로장애물·표면 인지 영상(수도권)/Training/!CHANGE/CRACK/!changes/"
+dir_img = Path(DATAPATH.replace("!CHANGE", "Images").replace("!changes","images"))
+dir_mask = Path(DATAPATH.replace("!CHANGE", "Annotations").replace("!changes","annotations"))
 dir_checkpoint = Path('./checkpoints/')
 
 def train_net(net,
@@ -29,12 +29,14 @@ def train_net(net,
               val_percent: float = 0.1,
               save_checkpoint: bool = True,
               img_scale: float = 0.5,
+              thick: float = 5,
+              data_num: int = -1,
               amp: bool = False):
     # 1. Create dataset
     try:
-        dataset = CrackDataset(dir_img, dir_mask, img_scale)
+        dataset = CrackDataset(dir_img, dir_mask, img_scale, thick, data_num)
     except (AssertionError, RuntimeError):
-        dataset = BaseDataset(dir_img, dir_mask, img_scale)
+        dataset = BaseDataset(dir_img, dir_mask, img_scale, thick, data_num)
 
     # 2. Split into train / validation partitions
     n_val = int(len(dataset) * val_percent)
@@ -159,8 +161,9 @@ def get_args():
     parser.add_argument('--scale', '-s', type=float, default=0.5, help='Downscaling factor of the images')
     parser.add_argument('--validation', '-v', dest='val', type=float, default=10.0,
                         help='Percent of the data that is used as validation (0-100)')
-    parser.add_argument('--thickness', '-th', type=float, default=5, help='Enter Annotation Thickness')
+    parser.add_argument('--thickness', '-th', type=int, default=5, help='Enter Annotation Thickness')
     parser.add_argument('--amp', action='store_true', default=False, help='Use mixed precision')
+    parser.add_argument('--data_number','-dn', type=int, default=-1, help='Enter Using Number of Data')
 
     return parser.parse_args()
 
@@ -195,6 +198,8 @@ if __name__ == '__main__':
                   device=device,
                   img_scale=args.scale,
                   val_percent=args.val / 100,
+                  thick=args.thickness,
+                  data_num=args.data_number,
                   amp=args.amp)
     except KeyboardInterrupt:
         torch.save(net.state_dict(), 'INTERRUPTED.pth')
