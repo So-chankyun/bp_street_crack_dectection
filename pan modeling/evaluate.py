@@ -6,6 +6,7 @@ from utils.dice_score import multiclass_dice_coeff, dice_coeff
 
 
 def evaluate(net, res, mc, dataloader, device):
+    res.eval()
     net.eval()
     num_val_batches = len(dataloader)
     n_classes = 2
@@ -24,7 +25,6 @@ def evaluate(net, res, mc, dataloader, device):
             fms_blob, z = res(image)
             out_ss = net(fms_blob[::-1])
             mask_pred = mc(out_ss)
-            # mask_pred = net(image)
 
             # convert to one-hot format
             if n_classes == 1:
