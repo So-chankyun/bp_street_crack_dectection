@@ -3,6 +3,7 @@ import torch
 import numpy as np
 import json
 import cv2
+import random
 
 from PIL import Image
 from pathlib import Path
@@ -12,7 +13,13 @@ from torch.utils.data import Dataset
 
 
 class BaseDataset(Dataset):
-    def __init__(self, img_path: str, ann_path: str, scale: float=1.0, ann_suffix: str= ''):
+    def __init__(self, 
+                 img_path: str, 
+                 ann_path: str, 
+                 scale: float=1.0, 
+                 thick: float=5,
+                 data_num: int=-1,
+                 ann_suffix: str= ''):
         self.img_path = Path(img_path)
         self.ann_path = Path(ann_path)
         
@@ -20,9 +27,17 @@ class BaseDataset(Dataset):
         self.scale = scale
         self.ann_suffix = ann_suffix
         
-        self.ids = [splitext(file)[0] for file in listdir(img_path) if not file.startswith('.')]
+        if data_num > 0:
+            full_ids = [splitext(file)[0] for file in listdir(img_path) if not file.startswith('.')]
+            self.ids = random.sample(full_ids, data_num)
+        else:
+            self.ids = [splitext(file)[0] for file in listdir(img_path) if not file.startswith('.')]
         if not self.ids:
             raise RuntimeError(f"{img_path}\n 위 경로를 찾을 수 없습니다.")
+        
+        
+            
+        self.thick = thick
         logging.info(f"Creating dataset with {len(self.ids)} examples")
         
     def __len__(self):
@@ -56,7 +71,7 @@ class BaseDataset(Dataset):
         return img_ndarray
     
     @classmethod
-    def load(cls, filename):                # 데이터 로드  함수
+    def load(cls, filename, thick=None):                # 데이터 로드  함수
         ext = splitext(filename)[1]         # 확장자를 확인하는 라인
         if ext in ['.npz', '.npy']:         # .npz, .npy로 끝나면 numpy로 받아옴
             return Image.fromarray(np.load(filename))
@@ -70,7 +85,7 @@ class BaseDataset(Dataset):
                 json_data = json.loads(contents)
             
             str_fname = str(filename)
-            img_pth = Path(str_fname.replace("Annotations","Images").replace("_PLINE.json",".png"))            
+            img_pth = Path(str_fname.replace("Annotations","Images").replace("_PLINE.json",".png").replace("annotations","images"))            
             load_img = np.array(Image.open(img_pth))    
             lbl = np.zeros((load_img.shape[0], load_img.shape[1]), np.int32)
         
@@ -88,12 +103,11 @@ class BaseDataset(Dataset):
                     temp_int = np.apply_along_axis(np.int32, arr=temp_round, axis=0)
                     
                 temp_re = temp_int.reshape(-1, 2)
-                
                 lbl = cv2.polylines(img=lbl,
                             pts=[temp_re],
                             isClosed=False,
                             color=(255),
-                            thickness=5)
+                            thickness=thick)
             return Image.fromarray(lbl)
         else:
             return Image.open(filename)     # 이외의 확장자는 그냥 가져옴
@@ -109,7 +123,7 @@ class BaseDataset(Dataset):
         assert len(ann_file)==1, f"어노테이션이 없거나, 여러 개의 ID를 지녔습니다. {name}: {ann_file}"
         assert len(img_file)==1, f"이미지가 없거나, 여러 개의 ID를 지녔습니다. {name}: {img_file}"
         
-        annot = self.load(ann_file[0])
+        annot = self.load(ann_file[0], thick=self.thick)
         img = self.load(img_file[0])
         
         assert img.size == annot.size, \
@@ -124,5 +138,5 @@ class BaseDataset(Dataset):
         }
         
 class CrackDataset(BaseDataset):
-    def __init__(self, img_path, ann_path, scale=1):
-        super().__init__(img_path, ann_path, scale, ann_suffix='_PLINE')
+    def __init__(self, img_path, ann_path, scale=1, thick=5, data_num=-1):
+        super().__init__(img_path, ann_path, scale, thick, data_num, ann_suffix='_PLINE')
