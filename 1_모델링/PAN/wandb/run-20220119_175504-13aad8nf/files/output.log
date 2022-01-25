@@ -1,0 +1,106 @@
+INFO: Starting training:
+        Epochs:          5
+        Batch size:      2
+        Learning rate:   1e-05
+        Training size:   4590
+        Validation size: 509
+        Checkpoints:     True
+        Device:          cuda
+        Images scaling:  0.2
+        Mixed Precision: True
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Epoch 1/5:   7%|███████▉                                                                                                       | 328/4590 [02:38<34:16,  2.07img/s, loss (batch)=0.158]
+Traceback (most recent call last):
+  File "train.py", line 192, in <module>
+    amp=args.amp)
+  File "train.py", line 79, in train_net
+    for batch in train_loader:
+  File "C:\Users\chank\anaconda3\envs\deep_learning\lib\site-packages\torch\utils\data\dataloader.py", line 363, in __next__
+    data = self._next_data()
+  File "C:\Users\chank\anaconda3\envs\deep_learning\lib\site-packages\torch\utils\data\dataloader.py", line 971, in _next_data
+    return self._process_data(data)
+  File "C:\Users\chank\anaconda3\envs\deep_learning\lib\site-packages\torch\utils\data\dataloader.py", line 1014, in _process_data
+    data.reraise()
+  File "C:\Users\chank\anaconda3\envs\deep_learning\lib\site-packages\torch\_utils.py", line 395, in reraise
+    raise self.exc_type(msg)
+AssertionError: Caught AssertionError in DataLoader worker process 0.
+Original Traceback (most recent call last):
+  File "C:\Users\chank\anaconda3\envs\deep_learning\lib\site-packages\torch\utils\data\_utils\worker.py", line 185, in _worker_loop
+    data = fetcher.fetch(index)
+  File "C:\Users\chank\anaconda3\envs\deep_learning\lib\site-packages\torch\utils\data\_utils\fetch.py", line 44, in fetch
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+  File "C:\Users\chank\anaconda3\envs\deep_learning\lib\site-packages\torch\utils\data\_utils\fetch.py", line 44, in <listcomp>
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+  File "C:\Users\chank\anaconda3\envs\deep_learning\lib\site-packages\torch\utils\data\dataset.py", line 257, in __getitem__
+    return self.dataset[self.indices[idx]]
+  File "G:\내 드라이브\인턴\도로 크랙 탐지\Pytorch-UNet\utils\data_loading.py", line 61, in __getitem__
+    assert len(mask_file) == 1, f'Either no mask or multiple masks found for the ID {name}: {mask_file}'
+AssertionError: Either no mask or multiple masks found for the ID 6752de44b721_14 (1): []
