@@ -18,9 +18,8 @@ from evaluate import evaluate
 from pan.networks import PAN, ResNet50, Mask_Classifier
 import pan.ss_transforms as tr
 
-DATAPATH = "D:/data/도로장애물·표면 인지 영상(수도권)/Training/!CHANGE/CRACK/C_Mainroad_G04/"
-dir_img = Path(DATAPATH.replace("!CHANGE", "Images"))
-dir_mask = Path(DATAPATH.replace("!CHANGE", "Annotations"))
+dir_img = Path('./data/train/')
+dir_mask = Path('./data/train_masks/')
 dir_checkpoint = Path('./checkpoints/')
 
 def train_net(net,
@@ -30,19 +29,22 @@ def train_net(net,
               epochs: int = 5,
               batch_size: int = 1,
               learning_rate: float = 0.001,
-              val_percent: float = 0.1,
+              val_percent: float = 0.2,
               save_checkpoint: bool = True,
               img_scale: float = 0.2,
               transform=None,
               amp: bool = False):
     # 1. Create dataset
     try:
-        dataset = CarvanaDataset(dir_img, dir_mask, img_scale, transform=transform)
+        dataset = CarvanaDataset(dir_img, dir_mask, img_scale,transform=transform)
     except (AssertionError, RuntimeError):
-        dataset = BasicDataset(dir_img, dir_mask, img_scale, transform=transform)
+        dataset = BasicDataset(dir_img, dir_mask, img_scale,transform=transform)
 
     # 2. Split into train / validation partitions
     n_val = int(len(dataset) * val_percent)
+    # 짝수일 경우
+    if n_val % 2 == 0:
+        n_val -= 1
     n_train = len(dataset) - n_val
     train_set, val_set = random_split(dataset, [n_train, n_val], generator=torch.Generator().manual_seed(0))
 
@@ -52,10 +54,10 @@ def train_net(net,
     val_loader = DataLoader(val_set, shuffle=False, drop_last=True, **loader_args)
 
     # (Initialize logging)
-    experiment = wandb.init(project='PAN_Crack', resume='allow', anonymous='must')
-    experiment.config.update(dict(epochs=epochs, batch_size=batch_size, learning_rate=learning_rate,
-                                  val_percent=val_percent, save_checkpoint=save_checkpoint, img_scale=img_scale,
-                                  amp=amp))
+    # experiment = wandb.init(project='U-Net', resume='allow', anonymous='must')
+    # experiment.config.update(dict(epochs=epochs, batch_size=batch_size, learning_rate=learning_rate,
+    #                               val_percent=val_percent, save_checkpoint=save_checkpoint, img_scale=img_scale,
+    #                               amp=amp))
 
     logging.info(f'''Starting training:
         Epochs:          {epochs}
@@ -70,8 +72,20 @@ def train_net(net,
     ''')
 
     # 4. Set up the optimizer, the loss, the learning rate scheduler and the loss scaling for AMP
-    optimizer = optim.RMSprop(net.parameters(), lr=learning_rate, weight_decay=1e-8, momentum=0.9)
-    scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, 'max', patience=2)  # goal: maximize Dice score
+    model_name = ['res', 'pan', 'mc']
+    optimizer = {'res': optim.SGD(res.parameters(), lr=args.lr, weight_decay=1e-4),
+                 'net': optim.SGD(net.parameters(), lr=args.lr, weight_decay=1e-4),
+                 'mc': optim.SGD(mc.parameters(), lr=args.lr, weight_decay=1e-4)}
+
+    # goal: maximize Dice score
+    optimizer_lr_scheduler = {'res': optim.lr_scheduler.ReduceLROnPlateau(optimizer['res'], 'max', patience=2),
+                              'net': optim.lr_scheduler.ReduceLROnPlateau(optimizer['net'], 'max', patience=2),
+                              'mc': optim.lr_scheduler.ReduceLROnPlateau(optimizer['mc'], 'max', patience=2)}
+
+    # 기존의 optimizer 및 scheduler
+    # optimizer = optim.RMSprop(net.parameters(), lr=learning_rate, weight_decay=1e-8, momentum=0.9)
+    # scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, 'max', patience=2)
+
     grad_scaler = torch.cuda.amp.GradScaler(enabled=amp)
     criterion = nn.CrossEntropyLoss()
     global_step = 0
@@ -105,19 +119,27 @@ def train_net(net,
                                        F.one_hot(true_masks, 2).permute(0, 3, 1, 2).float())
                                         # 차원을 섞어줌
 
-                optimizer.zero_grad()
+                # Update model
+                model_name = [res, net, mc]
+                for m in model_name:
+                    m.zero_grad()
+
                 grad_scaler.scale(loss).backward()
-                grad_scaler.step(optimizer)
+
+                model_name = ['res', 'pan', 'mc']
+                for m in model_name:
+                    grad_scaler.step(optimizer[m])
+
                 grad_scaler.update()
 
                 pbar.update(images.shape[0])
                 global_step += 1
                 epoch_loss += loss.item()
-                experiment.log({
-                    'train loss': loss.item(),
-                    'step': global_step,
-                    'epoch': epoch
-                })
+                # experiment.log({
+                #     'train loss': loss.item(),
+                #     'step': global_step,
+                #     'epoch': epoch
+                # })
                 pbar.set_postfix(**{'loss (batch)': loss.item()})
 
                 # Evaluation round
@@ -127,25 +149,28 @@ def train_net(net,
                         histograms = {}
                         for tag, value in net.named_parameters():
                             tag = tag.replace('/', '.')
-                            histograms['Weights/' + tag] = wandb.Histogram(value.data.cpu())
-                            histograms['Gradients/' + tag] = wandb.Histogram(value.grad.data.cpu())
+                            # histograms['Weights/' + tag] = wandb.Histogram(value.data.cpu())
+                            # histograms['Gradients/' + tag] = wandb.Histogram(value.grad.data.cpu())
 
-                        val_score = evaluate(net, res, mc,val_loader, device)
-                        scheduler.step(val_score)
+                        val_score = evaluate(net, res, mc, val_loader, device,)
+
+                        # 각 model 들의 learning rate를 val_score를 통해 조절
+                        for m in model_name:
+                            optimizer_lr_scheduler[m].step(val_score)
 
                         logging.info('Validation Dice score: {}'.format(val_score))
-                        experiment.log({
-                            'learning rate': optimizer.param_groups[0]['lr'],
-                            'validation Dice': val_score,
-                            'images': wandb.Image(images[0].cpu()),
-                            'masks': {
-                                'true': wandb.Image(true_masks[0].float().cpu()),
-                                'pred': wandb.Image(torch.softmax(mask_pred, dim=1).argmax(dim=1)[0].float().cpu()),
-                            },
-                            'step': global_step,
-                            'epoch': epoch,
-                            **histograms
-                        })
+                        # experiment.log({
+                        #     'learning rate': optimizer.param_groups[0]['lr'],
+                        #     'validation Dice': val_score,
+                        #     # 'images': wandb.Image(images[0].cpu()),
+                        #     # 'masks': {
+                        #     #     'true': wandb.Image(true_masks[0].float().cpu()),
+                        #     #     'pred': wandb.Image(torch.softmax(masks_pred, dim=1).argmax(dim=1)[0].float().cpu()),
+                        #     # },
+                        #     'step': global_step,
+                        #     'epoch': epoch,
+                        #     **histograms
+                        # })
 
         if save_checkpoint:
             Path(dir_checkpoint).mkdir(parents=True, exist_ok=True)
@@ -171,7 +196,7 @@ def get_args():
 if __name__ == '__main__':
     args = get_args()
 
-    train_transforms = transforms.Compose([tr.RescaleSized(256),
+    train_transforms = transforms.Compose([tr.RescaleSized(512),
                                            tr.MinMax(255.0),
                                            tr.ToTensor()
                                            ])

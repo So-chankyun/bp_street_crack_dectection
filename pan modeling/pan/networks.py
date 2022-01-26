@@ -135,7 +135,6 @@ class FPA(nn.Module):
 
         x_master = x_master * self.relu(self.bn_upsample_1(self.conv_upsample_1(x1_merge)))
 
-
         out = self.relu(x_master + x_gpb)
 
         return out
@@ -232,7 +231,7 @@ class PAN(nn.Module):
         return fm_high
 
 class Mask_Classifier(nn.Module):
-    def __init__(self, in_features=256, num_class=1):
+    def __init__(self, in_features=512, num_class=1):
         super(Mask_Classifier, self).__init__()
         self.mask_conv = nn.ConvTranspose2d(in_features, num_class, kernel_size=6, stride=4, padding=1)
 
