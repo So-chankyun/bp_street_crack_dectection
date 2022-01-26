@@ -18,8 +18,9 @@ from evaluate import evaluate
 from pan.networks import PAN, ResNet50, Mask_Classifier
 import pan.ss_transforms as tr
 
-dir_img = Path('./data/train/')
-dir_mask = Path('./data/train_masks/')
+DATAPATH = "D:/data/도로장애물·표면 인지 영상(수도권)/Training/!CHANGE/CRACK/!changes/"
+dir_img = Path(DATAPATH.replace("!CHANGE", "Images").replace("!changes","images"))
+dir_mask = Path(DATAPATH.replace("!CHANGE", "Annotations").replace("!changes","annotations"))
 dir_checkpoint = Path('./checkpoints/')
 
 def train_net(net,
@@ -33,12 +34,14 @@ def train_net(net,
               save_checkpoint: bool = True,
               img_scale: float = 0.2,
               transform=None,
+              thick: float = 5,
+              data_num: int = -1,
               amp: bool = False):
     # 1. Create dataset
     try:
-        dataset = CarvanaDataset(dir_img, dir_mask, img_scale,transform=transform)
+        dataset = CarvanaDataset(dir_img, dir_mask, img_scale,transform=transform, thick=thick, data_num=data_num)
     except (AssertionError, RuntimeError):
-        dataset = BasicDataset(dir_img, dir_mask, img_scale,transform=transform)
+        dataset = BasicDataset(dir_img, dir_mask, img_scale,transform=transform, thick=thick, data_num=data_num)
 
     # 2. Split into train / validation partitions
     n_val = int(len(dataset) * val_percent)
@@ -54,10 +57,10 @@ def train_net(net,
     val_loader = DataLoader(val_set, shuffle=False, drop_last=True, **loader_args)
 
     # (Initialize logging)
-    # experiment = wandb.init(project='U-Net', resume='allow', anonymous='must')
-    # experiment.config.update(dict(epochs=epochs, batch_size=batch_size, learning_rate=learning_rate,
-    #                               val_percent=val_percent, save_checkpoint=save_checkpoint, img_scale=img_scale,
-    #                               amp=amp))
+    experiment = wandb.init(project='PAN_CRACK_Custom', resume='allow', anonymous='must')
+    experiment.config.update(dict(epochs=epochs, batch_size=batch_size, learning_rate=learning_rate,
+                                  val_percent=val_percent, save_checkpoint=save_checkpoint, img_scale=img_scale,
+                                  amp=amp))
 
     logging.info(f'''Starting training:
         Epochs:          {epochs}
@@ -72,7 +75,7 @@ def train_net(net,
     ''')
 
     # 4. Set up the optimizer, the loss, the learning rate scheduler and the loss scaling for AMP
-    model_name = ['res', 'pan', 'mc']
+    # model_name = ['res', 'pan', 'mc']
     optimizer = {'res': optim.SGD(res.parameters(), lr=args.lr, weight_decay=1e-4),
                  'net': optim.SGD(net.parameters(), lr=args.lr, weight_decay=1e-4),
                  'mc': optim.SGD(mc.parameters(), lr=args.lr, weight_decay=1e-4)}
@@ -126,7 +129,7 @@ def train_net(net,
 
                 grad_scaler.scale(loss).backward()
 
-                model_name = ['res', 'pan', 'mc']
+                model_name = ['res', 'net', 'mc']
                 for m in model_name:
                     grad_scaler.step(optimizer[m])
 
@@ -135,11 +138,11 @@ def train_net(net,
                 pbar.update(images.shape[0])
                 global_step += 1
                 epoch_loss += loss.item()
-                # experiment.log({
-                #     'train loss': loss.item(),
-                #     'step': global_step,
-                #     'epoch': epoch
-                # })
+                experiment.log({
+                    'train loss': loss.item(),
+                    'step': global_step,
+                    'epoch': epoch
+                })
                 pbar.set_postfix(**{'loss (batch)': loss.item()})
 
                 # Evaluation round
@@ -159,18 +162,18 @@ def train_net(net,
                             optimizer_lr_scheduler[m].step(val_score)
 
                         logging.info('Validation Dice score: {}'.format(val_score))
-                        # experiment.log({
-                        #     'learning rate': optimizer.param_groups[0]['lr'],
-                        #     'validation Dice': val_score,
-                        #     # 'images': wandb.Image(images[0].cpu()),
-                        #     # 'masks': {
-                        #     #     'true': wandb.Image(true_masks[0].float().cpu()),
-                        #     #     'pred': wandb.Image(torch.softmax(masks_pred, dim=1).argmax(dim=1)[0].float().cpu()),
-                        #     # },
-                        #     'step': global_step,
-                        #     'epoch': epoch,
-                        #     **histograms
-                        # })
+                        experiment.log({
+                            # 'learning rate': optimizer.param_groups[0]['lr'],
+                            'validation Dice': val_score,
+                            'images': wandb.Image(images[0].cpu()),
+                            'masks': {
+                                'true': wandb.Image(true_masks[0].float().cpu()),
+                                'pred': wandb.Image(torch.softmax(mask_pred, dim=1).argmax(dim=1)[0].float().cpu()),
+                            },
+                            'step': global_step,
+                            'epoch': epoch,
+                            **histograms
+                        })
 
         if save_checkpoint:
             Path(dir_checkpoint).mkdir(parents=True, exist_ok=True)
@@ -188,6 +191,8 @@ def get_args():
     parser.add_argument('--scale', '-s', type=float, default=1.0, help='Downscaling factor of the images')
     parser.add_argument('--validation', '-v', dest='val', type=float, default=10.0,
                         help='Percent of the data that is used as validation (0-100)')
+    parser.add_argument('--thickness', '-th', type=int, default=5, help='Enter Annotation Thickness')
+    parser.add_argument('--data_number','-dn', type=int, default=-1, help='Enter Using Number of Data')
     parser.add_argument('--amp', action='store_true', default=False, help='Use mixed precision')
 
     return parser.parse_args()
@@ -246,6 +251,8 @@ if __name__ == '__main__':
                   img_scale=args.scale,
                   val_percent=args.val / 100,
                   transform=train_transforms,
+                  thick=args.thickness,
+                  data_num=args.data_number,
                   amp=args.amp)
     except KeyboardInterrupt:
         torch.save(net.state_dict(), 'INTERRUPTED.pth')
