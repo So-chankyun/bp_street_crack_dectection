@@ -12,3 +12,7 @@ Dockerfile
 *.png
 wandb/
 test_modeling_any.ipynb
+wandbdb/
+LICENSE
+requirement.txt
+hubconfs.py
