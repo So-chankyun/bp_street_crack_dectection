@@ -1,4 +1,0 @@
-name: dl_env
-channels:
-  - defaults
-prefix: C:\Users\yunjc\anaconda3\envs\dl_env\envs\dl_env

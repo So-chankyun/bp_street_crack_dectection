@@ -11,4 +11,6 @@ scripts/
 Dockerfile
 *.png
 wandb/
-view_result.ipynb
+test_modeling_any.ipynb
+requirements.txt
+hubconf.py
