@@ -181,11 +181,12 @@ class FixedResize(object):
 
 
 class Scale(object):
-    def __init__(self, size):
-        if isinstance(size, numbers.Number):
-            self.size = (int(size), int(size))
-        else:
-            self.size = size
+    def __init__(self, scale):
+        # if isinstance(size, numbers.Number):
+        #     self.size = (int(size), int(size))
+        # else:
+        #     self.size = size
+        self.scale = scale
 
     def __call__(self, sample):
         img = sample['image']
@@ -193,10 +194,18 @@ class Scale(object):
         assert img.size == mask.size
         w, h = img.size
 
-        if (w >= h and w == self.size[1]) or (h >= w and h == self.size[0]):
-            return {'image': img,
-                    'mask': mask}
-        oh, ow = self.size
+        # 너비가 높이와 같거나 크고, 입력받은 사이즈의 높이와 너비가 같다면
+        # 높이가 너비보다 크거나 같고, 높이가 입력받은 사이즈의 너비와 같다면
+        # if (w >= h and w == self.size[1]) or (h >= w and h == self.size[0]):
+        #     return {'image': img,
+        #             'mask': mask}
+
+        # scaling해서 반환
+        oh, ow = int(self.scale*h), int(self.scale*w)
+        oh -= oh % 10 # 1의 자리 숫자 빼줌
+        ow -= ow % 10
+        assert oh > 0 and ow > 0, 'Scale is too small, resized images would have no pixel'
+
         img = img.resize((ow, oh), Image.BILINEAR)
         mask = mask.resize((ow, oh), Image.NEAREST)
 
@@ -289,7 +298,7 @@ class RescaleSized(object):
         mask = sample['mask']
         assert img.size == mask.size
 
-        w, h = self.size, self.size
+        w, h = self.size[0], self.size[1]
 
         img, mask = img.resize((w, h), Image.BILINEAR), mask.resize((w, h), Image.NEAREST)
         sample = {'image': img, 'mask': mask}

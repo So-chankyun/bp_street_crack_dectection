@@ -31,7 +31,7 @@ def train_net(net,
               mc,
               device,
               epochs: int = 5,
-              batch_size: int = 1,
+              batch_size: int = 2,
               learning_rate: float = 0.004,
               val_percent: float = 0.2,
               save_checkpoint: bool = True,
@@ -104,6 +104,7 @@ def train_net(net,
     for epoch in range(epochs):
         res.train()
         net.train()
+        mc.train()
         epoch_loss = 0
 
         with tqdm(total=n_train, desc=f'Epoch {epoch + 1}/{epochs}', unit='img') as pbar:
@@ -123,7 +124,7 @@ def train_net(net,
                     fms_blob, z = res(images)
                     out_ss = net(fms_blob[::-1])
                     mask_pred = mc(out_ss)
-                    true_masks = F.interpolate(true_masks, scale_factor=0.25, mode='nearest')
+                    # true_masks = F.interpolate(true_masks, scale_factor=0.25, mode='nearest')
 
                     loss = criterion(mask_pred, true_masks.long().squeeze(1)) \
                            + dice_loss(F.softmax(mask_pred, dim=1).float(),
@@ -208,7 +209,7 @@ def get_args():
 if __name__ == '__main__':
     args = get_args()
 
-    train_transforms = transforms.Compose([tr.RescaleSized(512),
+    train_transforms = transforms.Compose([tr.RescaleSized((896,512)),
                                            tr.MinMax(255.0),
                                            tr.ToTensor()
                                            ])

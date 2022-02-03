@@ -8,6 +8,7 @@ from utils.dice_score import multiclass_dice_coeff, dice_coeff
 def evaluate(net, res, mc, dataloader, device):
     res.eval()
     net.eval()
+    mc.eval()
     num_val_batches = len(dataloader)
     n_classes = 2
     dice_score = 0
@@ -27,7 +28,7 @@ def evaluate(net, res, mc, dataloader, device):
             mask_pred = mc(out_ss)
 
             # true mask를 먼저 interpolate 시키고, 그 다음 one-hot encoding을 진행.
-            mask_true = F.interpolate(mask_true, scale_factor=0.25, mode='nearest')
+            # mask_true = F.interpolate(mask_true, scale_factor=0.25, mode='nearest')
             mask_true = F.one_hot(mask_true.long().squeeze(1), n_classes).permute(0, 3, 1, 2).float()
 
             # convert to one-hot format
@@ -42,6 +43,7 @@ def evaluate(net, res, mc, dataloader, device):
 
     res.train()
     net.train()
+    mc.train()
 
     # Fixes a potential division by zero error
     if num_val_batches == 0:
