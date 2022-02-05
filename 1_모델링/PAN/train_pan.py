@@ -22,8 +22,9 @@ from pan.networks import PAN, ResNet50, Classifier, Mask_Classifier
 import pan.ss_transforms as tr
 from pan.utils import PolyLR
 
-dir_img = Path('./data/train/')
-dir_mask = Path('./data/train_masks/')
+DATAPATH = "D:/crack data/도로장애물·표면 인지 영상(수도권)/Training/!CHANGE/CRACK/!changes/"
+dir_img = Path(DATAPATH.replace("!CHANGE", "Images").replace("!changes","data"))
+dir_mask = Path(DATAPATH.replace("!CHANGE", "Annotations").replace("!changes","data"))
 dir_checkpoint = Path('./checkpoints/')
 
 def train_net(net,
@@ -36,13 +37,15 @@ def train_net(net,
               val_percent: float = 0.2,
               save_checkpoint: bool = True,
               img_scale: float = 1.0,
+              thick= 5.0,
+              data_num = -1,
               transform=None,
               amp: bool = False):
     # 1. Create dataset
     try:
-        dataset = CarvanaDataset(dir_img, dir_mask, img_scale,transform=transform)
+        dataset = CarvanaDataset(dir_img, dir_mask, img_scale, thick, data_num, transform=transform)
     except (AssertionError, RuntimeError):
-        dataset = BasicDataset(dir_img, dir_mask, img_scale,transform=transform)
+        dataset = BasicDataset(dir_img, dir_mask, img_scale, thick, data_num, transform=transform)
 
     # 2. Split into train / validation partitions
     n_val = int(len(dataset) * val_percent)
@@ -79,9 +82,9 @@ def train_net(net,
 
     # 4. Set up the optimizer, the loss, the learning rate scheduler and the loss scaling for AMP
     model_name = ['res','net', 'mc']
-    optimizer = {'res': optim.SGD(res.parameters(), lr=learning_rate, weight_decay=1e-4),
-                 'net': optim.SGD(net.parameters(), lr=learning_rate, weight_decay=1e-4),
-                 'mc': optim.SGD(mc.parameters(), lr=learning_rate, weight_decay=1e-4)}
+    optimizer = {'res': optim.SGD(res.parameters(), lr=learning_rate, weight_decay=1e-3),
+                 'net': optim.SGD(net.parameters(), lr=learning_rate, weight_decay=1e-3),
+                 'mc': optim.SGD(mc.parameters(), lr=learning_rate, weight_decay=1e-3)}
 
     # goal: maximize Dice score
     optimizer_lr_scheduler = {'res': optim.lr_scheduler.ReduceLROnPlateau(optimizer['res'], 'max', patience=2),
@@ -125,11 +128,13 @@ def train_net(net,
                     out_ss = net(fms_blob[::-1])
                     mask_pred = mc(out_ss)
                     # true_masks = F.interpolate(true_masks, scale_factor=0.25, mode='nearest')
+                    # print("min : {}, max : {}".format(true_masks.min(),true_masks.max()))
+                    # print("min : {}, max : {}".format(mask_pred.min(),mask_pred.max()))
+
 
                     loss = criterion(mask_pred, true_masks.long().squeeze(1)) \
-                           + dice_loss(F.softmax(mask_pred, dim=1).float(),
-                                       F.one_hot(true_masks.long().squeeze(1), 2).permute(0, 3, 1, 2).float())
-                                        # 차원을 섞어줌
+                           + dice_loss(F.softmax(mask_pred, dim=1).float(), F.one_hot(true_masks.long().squeeze(1), 2).permute(0, 3, 1, 2).float())
+                    #                     # 차원을 섞어줌
 
                 # Update model
                 model_name = [res, net, mc]
@@ -201,7 +206,9 @@ def get_args():
     parser.add_argument('--scale', '-s', type=float, default=1.0, help='Downscaling factor of the images')
     parser.add_argument('--validation', '-v', dest='val', type=float, default=10.0,
                         help='Percent of the data that is used as validation (0-100)')
+    parser.add_argument('--thickness', '-th', type=int, default=5, help='Enter Annotation Thickness')
     parser.add_argument('--amp', action='store_true', default=False, help='Use mixed precision')
+    parser.add_argument('--data_number', '-dn', type=int, default=-1, help='Enter Using Number of Data')
 
     return parser.parse_args()
 
@@ -209,7 +216,7 @@ def get_args():
 if __name__ == '__main__':
     args = get_args()
 
-    train_transforms = transforms.Compose([tr.RescaleSized((896,512)),
+    train_transforms = transforms.Compose([tr.RescaleSized((640,384)),
                                            tr.MinMax(255.0),
                                            tr.ToTensor()
                                            ])
@@ -254,6 +261,8 @@ if __name__ == '__main__':
                   device=device,
                   img_scale=args.scale,
                   val_percent=args.val / 100,
+                  thick=args.thickness,
+                  data_num=args.data_number,
                   transform=train_transforms,
                   amp=args.amp)
 

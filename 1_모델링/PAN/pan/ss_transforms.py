@@ -121,6 +121,7 @@ class MinMax(object):
         img = np.array(sample['image']).astype(np.float32)
         mask = np.array(sample['mask']).astype(np.float32)
         img /= self.max
+        mask /= self.max
 
         return {'image': img,
                 'mask': mask}

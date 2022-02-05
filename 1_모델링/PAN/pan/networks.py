@@ -233,15 +233,16 @@ class PAN(nn.Module):
 class Mask_Classifier(nn.Module):
     def __init__(self, in_features=256, num_class=1):
         super(Mask_Classifier, self).__init__()
-        self.mask_conv = nn.ConvTranspose2d(in_features, num_class, kernel_size=6, stride=4, padding=1)
-        self.bn_upsample = nn.BatchNorm2d(num_class)
-        self.relu = nn.ReLU(inplace=True)
+        # self.mask_conv = nn.ConvTranspose2d(in_features, num_class, kernel_size=6, stride=4, padding=1)
+        # self.bn_upsample = nn.BatchNorm2d(num_class)
+        # self.relu = nn.ReLU(inplace=True)
 
-        # self.mask_conv = nn.Conv2d(in_features, num_class, kernel_size=3, stride=1, padding=1)
+        self.mask_conv = nn.Conv2d(in_features, num_class, kernel_size=3, stride=1, padding=1)
 
         # channel만 줄어들고 크기는 그대로이다.
 
     def forward(self, x):
         x = self.mask_conv(x)
-        x = self.relu(self.bn_upsample(x))
+        x = nn.Upsample(scale_factor=4, mode='bilinear', align_corners=True)(x)
+        # x = self.relu(self.bn_upsample(x))
         return x
