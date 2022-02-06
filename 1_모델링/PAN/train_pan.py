@@ -82,9 +82,9 @@ def train_net(net,
 
     # 4. Set up the optimizer, the loss, the learning rate scheduler and the loss scaling for AMP
     model_name = ['res','net', 'mc']
-    optimizer = {'res': optim.SGD(res.parameters(), lr=learning_rate, weight_decay=1e-3),
-                 'net': optim.SGD(net.parameters(), lr=learning_rate, weight_decay=1e-3),
-                 'mc': optim.SGD(mc.parameters(), lr=learning_rate, weight_decay=1e-3)}
+    optimizer = {'res': optim.SGD(res.parameters(), lr=learning_rate, weight_decay=1e-4),
+                 'net': optim.SGD(net.parameters(), lr=learning_rate, weight_decay=1e-4),
+                 'mc': optim.SGD(mc.parameters(), lr=learning_rate, weight_decay=1e-4)}
 
     # goal: maximize Dice score
     optimizer_lr_scheduler = {'res': optim.lr_scheduler.ReduceLROnPlateau(optimizer['res'], 'max', patience=2),

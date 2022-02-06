@@ -10,6 +10,7 @@ from os.path import splitext
 import random
 import json
 import cv2
+import pandas as pd
 
 class BasicDataset(data.Dataset):
     def __init__(self, data_path,masks_dir, scale=1.0, thick=5.0, data_num=-1, mask_suffix='',transform=None):
@@ -22,11 +23,14 @@ class BasicDataset(data.Dataset):
         self.scale = scale
 
         # data_num이 지정되지 않으면, 모든 데이터를 불러들여온다.
-        if data_num > 0:
-            full_ids = [splitext(file)[0] for file in listdir(data_path) if not file.startswith('.')]
-            self.ids = random.sample(full_ids, data_num)
-        else:
-            self.ids = [splitext(file)[0] for file in listdir(data_path) if not file.startswith('.')]
+
+        # if data_num > 0:
+        #     full_ids = [splitext(file)[0] for file in listdir(data_path) if not file.startswith('.')]
+        #     self.ids = random.sample(full_ids, data_num)
+        # else:
+        #     self.ids = [splitext(file)[0] for file in listdir(data_path) if not file.startswith('.')]
+
+        self.ids = pd.read_csv('./mask_ratio_over_five.csv')['file_name']
 
         if not self.ids:
             raise RuntimeError(f'No input file found in {data_path}, make sure you put your images there')

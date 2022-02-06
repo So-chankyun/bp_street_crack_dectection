@@ -78,15 +78,13 @@ class FPA(nn.Module):
         self.bn3_2 = nn.BatchNorm2d(channels_mid)
 
         # Convolution Upsample
-        self.conv_upsample_3 = nn.ConvTranspose2d(channels_mid, channels_mid, kernel_size=4, stride=2, padding=1,
-                                                  bias=False)
+        # self.conv_upsample_3 = nn.ConvTranspose2d(channels_mid, channels_mid, kernel_size=4, stride=2, padding=1,bias=False)
         self.bn_upsample_3 = nn.BatchNorm2d(channels_mid)
 
-        self.conv_upsample_2 = nn.ConvTranspose2d(channels_mid, channels_mid, kernel_size=4, stride=2,padding=1, bias=False)
+        # self.conv_upsample_2 = nn.ConvTranspose2d(channels_mid, channels_mid, kernel_size=4, stride=2,padding=1, bias=False)
         self.bn_upsample_2 = nn.BatchNorm2d(channels_mid)
 
-        self.conv_upsample_1 = nn.ConvTranspose2d(channels_mid, channels, kernel_size=4, stride=2, padding=1,
-                                                  bias=False)
+        self.conv_upsample_1 = nn.Conv2d(channels_mid, channels, kernel_size=3, stride=1, padding=1,bias=False)
         self.bn_upsample_1 = nn.BatchNorm2d(channels)
 
         self.relu = nn.ReLU(inplace=True)
@@ -96,6 +94,9 @@ class FPA(nn.Module):
         :param x: Shape: [b, 2048, h, w]
         :return: out: Feature maps. Shape: [b, 2048, h, w]
         """
+        # store height and width
+        b,c,h,w = x.shape
+
         # Master branch
         x_master = self.conv_master(x)
         x_master = self.bn_master(x_master)
@@ -103,7 +104,7 @@ class FPA(nn.Module):
         # Global pooling branch
         x_gpb = nn.AvgPool2d(x.shape[2:])(x).view(x.shape[0], self.channels_cond, 1, 1)
         x_gpb = self.conv_gpb(x_gpb)
-        x_gpb = self.bn_gpb(x_gpb) # 이 부분이 실행이 안된다.
+        x_gpb = self.bn_gpb(x_gpb)
 
         # Branch 1
         x1_1 = self.conv7x7_1(x)
@@ -128,12 +129,12 @@ class FPA(nn.Module):
 
         # Merge branch 1 and 2
 
-        x3_upsample = self.relu(self.bn_upsample_3(self.conv_upsample_3(x3_2)))
+        x3_upsample = self.relu(self.bn_upsample_3(nn.Upsample(size=(h//4, w//4), mode='bilinear', align_corners=True)(x3_2)))
         x2_merge = self.relu(x2_2 + x3_upsample)
-        x2_upsample = self.relu(self.bn_upsample_2(self.conv_upsample_2(x2_merge)))
+        x2_upsample = self.relu(self.bn_upsample_2(nn.Upsample(size=(h//2, w//2), mode='bilinear',align_corners=True)(x2_merge)))
         x1_merge = self.relu(x1_2 + x2_upsample)
 
-        x_master = x_master * self.relu(self.bn_upsample_1(self.conv_upsample_1(x1_merge)))
+        x_master = x_master * self.relu(self.bn_upsample_1(nn.Upsample(size=(h,w), mode='bilinear',align_corners=True)(self.conv_upsample_1(x1_merge))))
 
         out = self.relu(x_master + x_gpb)
 
@@ -151,7 +152,8 @@ class GAU(nn.Module):
         self.bn_high = nn.BatchNorm2d(channels_low)
 
         if upsample:
-            self.conv_upsample = nn.ConvTranspose2d(channels_high, channels_low, kernel_size=4, stride=2, padding=1, bias=False)
+            # self.conv_upsample = nn.ConvTranspose2d(channels_high, channels_low, kernel_size=4, stride=2, padding=1, bias=False)
+            self.conv_upsample = nn.ConvTranspose2d(channels_high, channels_low, kernel_size=3, stride=1, padding=1, bias=False)
             self.bn_upsample = nn.BatchNorm2d(channels_low)
         else:
             self.conv_reduction = nn.Conv2d(channels_high, channels_low, kernel_size=1, padding=0, bias=False)
@@ -186,7 +188,7 @@ class GAU(nn.Module):
         fms_att = fms_low_mask * fms_high_gp
         if self.upsample:
             out = self.relu(
-                self.bn_upsample(self.conv_upsample(fms_high)) + fms_att)
+                self.bn_upsample(nn.Upsample(scale_factor=2, mode='bilinear', align_corners=True)(self.conv_upsample(fms_high))) + fms_att)
         else:
             out = self.relu(
                 self.bn_reduction(self.conv_reduction(fms_high)) + fms_att)
@@ -201,7 +203,7 @@ class PAN(nn.Module):
         super(PAN, self).__init__()
         channels_blocks = []
 
-        # 어떤 작업인지 이해가 안됨.
+        # resnet 모델 가중치 로딩
         for i, block in enumerate(blocks):
             channels_blocks.append(list(list(block.children())[2].children())[4].weight.shape[0])
 
