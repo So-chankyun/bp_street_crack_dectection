@@ -10,3 +10,7 @@ venv/
 scripts/
 Dockerfile
 *.png
+wandb/
+test_modeling_any.ipynb
+requirements.txt
+hubconf.py

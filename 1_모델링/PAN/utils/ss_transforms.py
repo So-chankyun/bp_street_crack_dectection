@@ -16,7 +16,7 @@ class RandomCrop(object):
             self.size = (int(size), int(size))
         else:
         # 숫자가 아니라면 그냥 저장.
-            self.size = size # h, w
+            self.size = size # w, h
         self.padding = padding
 
     # 객체를 함수처럼 사용할 수 있도록 함. 객체에 x(a, b)와 같은 형태로 값을 넘겨주면 해당 함수가 호출됨
@@ -32,7 +32,7 @@ class RandomCrop(object):
         # 즉, 이미지 사이즈가 서로 다르면 아예 작동하지 않는다.
         assert img.size == mask.size
         w, h = img.size
-        th, tw = self.size # target size
+        tw, th = self.size # target size
 
         # target 이미지와 원본 이미지 사이즈가 같다면 dictionary 형태로 데이터를 반환한다.
         if w == tw and h == th:
@@ -49,6 +49,8 @@ class RandomCrop(object):
 
         # target이 원본에 비해 width나 height가 하나라도 더 크면 위의 조건문에서 마무리된다.
         # 따라서 target이 원본이미지보다 모두 작은 경우이다.
+        random.seed(10)
+
         x1 = random.randint(0, w - tw) # 0과 차이값 사이의 임의의 정수를 생성
         y1 = random.randint(0, h - th) # 0과 차이값 사이의 임의의 정수를 생성
         img = img.crop((x1, y1, x1 + tw, y1 + th)) # (가로 시작점, 세로 시작점, 가로 범위, 세로 범위)

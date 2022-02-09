@@ -13,24 +13,27 @@ import cv2
 import pandas as pd
 
 class BasicDataset(data.Dataset):
-    def __init__(self, data_path,masks_dir, scale=1.0, thick=5.0, data_num=-1, mask_suffix='',transform=None):
+    def __init__(self, data_path,masks_dir, thick=5.0, mask_suffix='',data_type='train', transform=None):
         self.data_path = Path(data_path) # image
         self.masks_dir = Path(masks_dir) # annotation
         self.mask_suffix = mask_suffix # anno_suffix
         self.thick = thick
-        self.data_num = data_num
         self.transform = transform
-        self.scale = scale
+        self.data_type = data_type
 
-        # data_num이 지정되지 않으면, 모든 데이터를 불러들여온다.
+        assert data_type == 'train' or data_type == 'test', f"You have to input data type \'train\' or \'test\'"
 
-        # if data_num > 0:
-        #     full_ids = [splitext(file)[0] for file in listdir(data_path) if not file.startswith('.')]
-        #     self.ids = random.sample(full_ids, data_num)
-        # else:
-        #     self.ids = [splitext(file)[0] for file in listdir(data_path) if not file.startswith('.')]
+        if data_type == 'train':
+            data_list = pd.read_csv('./data list/extract_50k.csv').loc[:,'file_name'].tolist()
+        elif data_type == 'test':
+            random.seed(10)
+            data_list = pd.read_csv('./data list/test_data.csv').loc[:,'file_name'].tolist()
+            random.shuffle(data_list)
 
-        self.ids = pd.read_csv('./mask_ratio_over_five.csv')['file_name']
+        self.ids = [splitext(file)[0] for file in data_list if file.endswith('.png')]
+        if not self.ids:
+            raise RuntimeError(f'No input file found in {data_path}, make sure you put your images there')
+        logging.info(f'Creating dataset with {len(self.ids)} examples')
 
         if not self.ids:
             raise RuntimeError(f'No input file found in {data_path}, make sure you put your images there')
@@ -109,5 +112,5 @@ class BasicDataset(data.Dataset):
         return len(self.ids)
 
 class CarvanaDataset(BasicDataset):
-    def __init__(self, data_path, masks_dir, scale=1.0, thick=5, data_num=-1,transform=None):
-        super().__init__(data_path, masks_dir, scale=1.0, mask_suffix='_PLINE', thick=thick, data_num=data_num,transform=transform)
+    def __init__(self, data_path, masks_dir, data_type='train', transform=None):
+        super().__init__(data_path, masks_dir, mask_suffix='_PLINE', thick=5, data_type=data_type, transform=transform)
