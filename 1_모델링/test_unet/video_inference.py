@@ -6,6 +6,9 @@ import numpy as np
 from PIL import Image
 from unet import UNet
 
+"""
+전처리 로직이 다르다면, preprocess 메서드 수정 필요
+"""
 def preprocess(img, scale):
     pil_img = Image.fromarray(img)
     trs_w, trs_h = int(1280*scale), int(720*scale)
@@ -32,19 +35,21 @@ def merge_img(frame, pred):
 
 def get_args():
     parser = argparse.ArgumentParser(description='Video Inference Learning Parameters')
-    parser.add_argument('--width', '-w', metavar='W', type=int, default=640, help='Model Input Width')
-    parser.add_argument('--height', '-h', metavar='H', type=int, default=360, help='Model Input Height')
+    parser.add_argument('--width', '-W', type=int, default=640, help='Model Input Width')
+    parser.add_argument('--height', '-H', type=int, default=360, help='Model Input Height')
     parser.add_argument('--v_number', '-vn', type=int, default=9, help='The Number of Road Video')
+    parser.add_argument('--frame', '-fps', type=float, default=30.0, help='Output video Frame')
+    parser.add_argument('--model_dir', '-md', type=str, default='UNet_b2th5dn200k', help='Input checkpoint Directory')
     parser.add_argument('--m_cam', action='store_true', default=False, help='Use Device Camera')
-    parser.add_argument('--model_dir', '-md', type=str, default='UNet_b2th10dn50000', help='Input checkpoint Directory')
+    parser.add_argument('--save', action='save_option', default=False, help='Save Video option')
     return parser.parse_args()
 
 if __name__ == '__main__':
     args = get_args()
     PATH = r"C:\Users\yunjc\_python_jupyter\bupyeonggu\bp_road_crack_detection\1_모델링\unet_result_pth\!dir\checkpoint_epoch5.pth"
     MODEL_PATH = PATH.replace("!dir", args.model_dir)
-    INPUT_PATH = f"D:/data/sample_video{args.v_num}.mp4"
-    SAVE_PATH = f'D:/data/UNet_b2th10dn50000/output{args.v_num}.avi'
+    INPUT_PATH = f"D:/data/sample_video{args.v_number}.mp4"
+    SAVE_PATH = f'D:/data/{args.model_dir}/output{args.v_number}.avi'
     DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
     
     model = UNet(n_channels=3, n_classes=2, bilinear=False)
@@ -52,17 +57,17 @@ if __name__ == '__main__':
     model.to(device=DEVICE)
     model.eval()
     
-    if args.m_cam == False:
-        capture = cv2.VideoCapture(INPUT_PATH)
-    else:
+    if args.m_cam:
         capture = cv2.VideoCapture(0)
+    else:
+        capture = cv2.VideoCapture(INPUT_PATH)
     capture.set(cv2.CAP_PROP_FRAME_WIDTH, args.width)
     capture.set(cv2.CAP_PROP_FRAME_HEIGHT, args.height)
 
-    print("재생할 파일 넓이, 높이 : %d, %d"%(args.width, args.height))
+    print("재생할 파일 너비, 높이 : %d, %d"%(args.width, args.height))
 
     fourcc = cv2.VideoWriter_fourcc(*'DIVX')
-    out = cv2.VideoWriter(SAVE_PATH, fourcc, 30.0, (int(args.width), int(args.height)))
+    out = cv2.VideoWriter(SAVE_PATH, fourcc, args.frame, (int(args.width), int(args.height)))
 
     while cv2.waitKey(33) < 0:
         ret, frame = capture.read()
@@ -72,9 +77,12 @@ if __name__ == '__main__':
 
         convert_img = merge_img(frame, pred_frame(frame, model, DEVICE))
         cv2.imshow("Test Vidoe Crack Detect", convert_img)
-        out.write(convert_img)
+        
+        if args.save:
+            out.write(convert_img)
 
 
     capture.release()
-    out.release()
+    if args.save:
+        out.release()
     cv2.destroyAllWindows()
