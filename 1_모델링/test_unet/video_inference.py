@@ -7,7 +7,7 @@ from PIL import Image
 from unet import UNet
 
 """
---- 모델 아이디어 및 테스트는 test_unet/mak_video_detect.ipynb 에서 확인할 수 있음 ---
+########### 모델 아이디어 및 테스트는 test_unet/mak_video_detect.ipynb 에서 확인할 수 있음 ###########
 
 전처리 로직이 다르다면, preprocess 메서드 수정 필요
 """
@@ -40,13 +40,13 @@ def get_args():
     """
     parser의 argument 정의
     
-        --width : 이미지 너비
-        --height : 이미지 높이
-        --v_number : 비디오 번호 - input video 파일 명 예) sample_video9.mp4
-        --frame : output video 저장 시 프레임 수
-        --model_dir : 모델이 있는 directory 이름 (main code 참조)
-        --m_cam : 내장 카메라 사용 여부 (활성화 시 input video 대신 내장 카메라 작동)
-        --save : 저장 여부 (활성화 시 save 경로로 저장 - save 경로는 main에서 정의)
+        --width :       이미지 너비
+        --height :      이미지 높이
+        --v_number :    비디오 번호 - input video 파일 명 예) sample_video9.mp4
+        --frame :       output video 저장 시 프레임 수
+        --model_dir :   모델이 있는 directory 이름 (main code 참조)
+        --m_cam :       내장 카메라 사용 여부 (활성화 시 input video 대신 내장 카메라 작동)
+        --save :        저장 여부 (활성화 시 save 경로로 저장 - save 경로는 main에서 정의)
         --frame_thred : Crack 비율의 경계 값 (예 : 1.0이면 1.0을 초과하는 frame의 ratio를 red로 표시)
         
     """
@@ -87,7 +87,12 @@ if __name__ == '__main__':
     fourcc = cv2.VideoWriter_fourcc(*'DIVX')
     out = cv2.VideoWriter(SAVE_PATH, fourcc, args.frame, (int(args.width), int(args.height)))
 
+    count = 0
+    max_ratio, avg_ratio = 0.0, 0.0
+    
+    
     while cv2.waitKey(33) < 0:
+        count+=1
         ret, frame = capture.read()
         if not ret:
             print("프레임을 수신할 수 없습니다. 종료 중 ...")
@@ -95,15 +100,25 @@ if __name__ == '__main__':
 
         pred_img = pred_frame(frame, model, DEVICE)
         convert_img = merge_img(frame, pred_img)
+        
         CRPF = np.round((pred_img.reshape(-1).sum()/(args.width*args.height))*100, 2)
+        max_ratio = CRPF if CRPF > max_ratio else max_ratio
+        avg_ratio = (avg_ratio*(count-1)+CRPF)/count
+        
+        """
+        ########### args.frame_thred 이상이 됐을 때 캡처 (추가 예정) ###########
+        """
         
         font=cv2.FONT_HERSHEY_SIMPLEX
         color = (50,50,165) if CRPF > args.frame_thred else (50,165,50)
-        CRPF_img = cv2.putText(convert_img, 'Crack Ratio : {:.2f} {}'.format(CRPF, "%"), (5, 20), font, .6, color, 2)
+        
+        CRPF_img = cv2.putText(convert_img, 'Crt Ratio : {:.2f} {}'.format(CRPF, "%"), (5, 20), font, .6, color, 2)
+        MAX_img = cv2.putText(CRPF_img, 'Max Ratio : {:.2f} {}'.format(max_ratio, "%"), (5, 40), font, .6, (60,180,255), 2)
+        AVG_img = cv2.putText(MAX_img, 'Avg Ratio : {:.2f} {}'.format(avg_ratio, "%"), (5, 60), font, .6, (60,180,255), 2)
 
-        cv2.imshow("Test Vidoe Crack Detect", CRPF_img)
+        cv2.imshow("Test Vidoe Crack Detect", AVG_img)
         if args.save:
-            out.write(CRPF_img)
+            out.write(AVG_img)
 
     capture.release()
     if args.save:
