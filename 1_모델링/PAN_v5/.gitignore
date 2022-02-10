@@ -1,0 +1,15 @@
+*.pyc
+data/
+__pycache__/
+checkpoints/
+*.jpg
+venv/
+.idea/
+.github/
+scripts/
+Dockerfile
+*.png
+wandb/
+test_modeling_any.ipynb
+requirements.txt
+hubconf.py
