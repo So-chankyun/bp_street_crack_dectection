@@ -55,8 +55,8 @@ def get_args():
     parser.add_argument('--width', '-W', type=int, default=640, help='Model Input Width')
     parser.add_argument('--height', '-H', type=int, default=360, help='Model Input Height')
     parser.add_argument('--v_number', '-vn', type=int, default=9, help='The Number of Road Video')
-    parser.add_argument('--frame', '-fps', type=float, default=30.0, help='Output video Frame')
-    parser.add_argument('--model_dir', '-md', type=str, default='UNet_b2th5dn200k', help='Input checkpoint Directory')
+    parser.add_argument('--frame', '-fps', type=float, default=15.0, help='Output video Frame')
+    parser.add_argument('--model_name', '-mn', type=str, default='UNet_b2th5dn200k', help='Input Model Name')
     parser.add_argument('--m_cam', action='store_true', default=False, help='Use Device Camera')
     parser.add_argument('--save', action='store_true', default=False, help='Save Video option')
     parser.add_argument('--frame_thred', '-fth', type=float, default=100, help='Frame Threshold Ratio')
@@ -64,10 +64,10 @@ def get_args():
 
 if __name__ == '__main__':
     args = get_args()
-    PATH = r"C:\Users\yunjc\_python_jupyter\bupyeonggu\bp_road_crack_detection\1_모델링\unet_result_pth\!dir\checkpoint_epoch5.pth"
-    MODEL_PATH = PATH.replace("!dir", args.model_dir)
+    PATH = r"C:\Users\yunjc\_python_jupyter\bupyeonggu\bp_road_crack_detection\1_모델링\unet_result_pth\!model.pth"
+    MODEL_PATH = PATH.replace("!model", args.model_name)
     INPUT_PATH = f"D:/data/sample_video{args.v_number}.mp4"
-    SAVE_PATH = f'D:/data/{args.model_dir}/output{args.v_number}.avi'
+    SAVE_PATH = f'D:/data/{args.model_name}_vn{args.v_number}.avi'
     DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
     
     model = UNet(n_channels=3, n_classes=2, bilinear=False)
