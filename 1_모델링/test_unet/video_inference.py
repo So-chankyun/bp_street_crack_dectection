@@ -67,7 +67,7 @@ if __name__ == '__main__':
     PATH = r"C:\Users\yunjc\_python_jupyter\bupyeonggu\bp_road_crack_detection\1_모델링\unet_result_pth\!model.pth"
     MODEL_PATH = PATH.replace("!model", args.model_name)
     INPUT_PATH = f"D:/data/sample_video{args.v_number}.mp4"
-    SAVE_PATH = f'D:/data/{args.model_name}_vn{args.v_number}.avi'
+    SAVE_PATH = f'D:/data/output/{args.model_name}_vn{args.v_number}.avi'
     DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
     
     model = UNet(n_channels=3, n_classes=2, bilinear=False)
@@ -85,7 +85,8 @@ if __name__ == '__main__':
     print("재생할 파일 너비, 높이 : %d, %d"%(args.width, args.height))
 
     fourcc = cv2.VideoWriter_fourcc(*'DIVX')
-    out = cv2.VideoWriter(SAVE_PATH, fourcc, args.frame, (int(args.width), int(args.height)))
+    if args.save:
+        out = cv2.VideoWriter(SAVE_PATH, fourcc, args.frame, (int(args.width), int(args.height)))
 
     count = 0
     max_ratio, avg_ratio = 0.0, 0.0
