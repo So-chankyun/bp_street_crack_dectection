@@ -159,6 +159,8 @@ def get_args():
                         help='Learning rate', dest='lr')
     parser.add_argument('--load', '-f', type=str, default=False, help='Load model from a .pth file')
     parser.add_argument('--scale', '-s', type=float, default=0.5, help='Downscaling factor of the images')
+    ## validation 비율 옵션
+    parser.add_argument('--valid_step', '-vs', type=int, default=0.5, help='Validation ratio option')
     parser.add_argument('--validation', '-v', dest='val', type=float, default=10.0,
                         help='Percent of the data that is used as validation (0-100)')
     parser.add_argument('--thickness', '-th', type=int, default=5, help='Enter Annotation Thickness')
