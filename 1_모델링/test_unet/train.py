@@ -1,6 +1,7 @@
 import argparse
 import logging
 import sys
+import numpy as np
 from pathlib import Path
 
 import torch
@@ -31,6 +32,7 @@ def train_net(net,
               img_scale: float = 0.5,
               thick: float = 5,
               data_num: int = -1,
+              valid_count: int = 2,
               amp: bool = False):
     # 1. Create dataset
     try:
@@ -72,11 +74,14 @@ def train_net(net,
     grad_scaler = torch.cuda.amp.GradScaler(enabled=amp)
     criterion = nn.CrossEntropyLoss()
     global_step = 0
+    valid_check_list = [np.round(100*(i/valid_count)) for i in range(1,valid_count+1)]
+    
 
     # 5. Begin training
     for epoch in range(epochs):
         net.train()
         epoch_loss = 0
+        valid_thred_idx = 0
         with tqdm(total=n_train, desc=f'Epoch {epoch + 1}/{epochs}', unit='img') as pbar:
             for batch in train_loader:
                 images = batch['image']
@@ -121,7 +126,11 @@ def train_net(net,
                 # Evaluation round
                 division_step = (n_train // (10 * batch_size))
                 if division_step > 0:
-                    if global_step % division_step == 0:
+                    cur_percent = (global_step/division_step)*10
+                    # if global_step % division_step == 0:
+                    if cur_percent >= valid_check_list[valid_thred_idx]:
+                        print(valid_thred_idx,' : ',valid_check_list[valid_thred_idx])
+                        valid_thred_idx+=1
                         histograms = {}
                         for tag, value in net.named_parameters():
                             tag = tag.replace('/', '.')
@@ -160,12 +169,13 @@ def get_args():
     parser.add_argument('--load', '-f', type=str, default=False, help='Load model from a .pth file')
     parser.add_argument('--scale', '-s', type=float, default=0.5, help='Downscaling factor of the images')
     ## validation 비율 옵션
-    parser.add_argument('--valid_step', '-vs', type=int, default=0.5, help='Validation ratio option')
+    parser.add_argument('--valid_count', '-vc', type=int, default=2, help='How much validation you want?')
     parser.add_argument('--validation', '-v', dest='val', type=float, default=10.0,
                         help='Percent of the data that is used as validation (0-100)')
     parser.add_argument('--thickness', '-th', type=int, default=5, help='Enter Annotation Thickness')
     parser.add_argument('--amp', action='store_true', default=False, help='Use mixed precision')
     parser.add_argument('--data_number','-dn', type=int, default=-1, help='Enter Using Number of Data')
+    parser.add_argument('--bilinear', action="store_true", default=False, help='Model bilinear option')
 
     return parser.parse_args()
 
@@ -180,7 +190,7 @@ if __name__ == '__main__':
     # Change here to adapt to your data
     # n_channels=3 for RGB images
     # n_classes is the number of probabilities you want to get per pixel
-    net = UNet(n_channels=3, n_classes=2, bilinear=False)
+    net = UNet(n_channels=3, n_classes=2, bilinear=args.bilinear)
 
     logging.info(f'Network:\n'
                  f'\t{net.n_channels} input channels\n'
@@ -202,6 +212,7 @@ if __name__ == '__main__':
                   val_percent=args.val / 100,
                   thick=args.thickness,
                   data_num=args.data_number,
+                  valid_count=args.valid_count,
                   amp=args.amp)
     except KeyboardInterrupt:
         torch.save(net.state_dict(), 'INTERRUPTED.pth')
