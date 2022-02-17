@@ -75,7 +75,7 @@ def train_net(net,
     criterion = nn.CrossEntropyLoss()
     global_step = 0
 
-    assert valid_count in [2,5,10], 'Check Valid Count : Must Input 2 / 5 / 10'
+    assert valid_count in [1,2,5,10], 'Check Valid Count : Must Input 1 / 2 / 5 / 10'
     valid_check_list = [int(10*(i/valid_count)) for i in range(1,valid_count+1)]
     
 
@@ -130,30 +130,31 @@ def train_net(net,
                 if division_step > 0:
                     if (global_step % division_step == 0):
                         local_step += 1
-                        if local_step not in valid_check_list:
-                            continue
-                        histograms = {}
-                        for tag, value in net.named_parameters():
-                            tag = tag.replace('/', '.')
-                            histograms['Weights/' + tag] = wandb.Histogram(value.data.cpu())
-                            histograms['Gradients/' + tag] = wandb.Histogram(value.grad.data.cpu())
-
-                        val_score = evaluate(net, val_loader, device)
-                        scheduler.step(val_score)
-
-                        logging.info('Validation Dice score: {}'.format(val_score))
                         experiment.log({
-                            'learning rate': optimizer.param_groups[0]['lr'],
-                            'validation Dice': val_score,
-                            'images': wandb.Image(images[0].cpu()),
-                            'masks': {
+                             'images': wandb.Image(images[0].cpu()),
+                             'masks': {
                                 'true': wandb.Image(true_masks[0].float().cpu()),
                                 'pred': wandb.Image(torch.softmax(masks_pred, dim=1).argmax(dim=1)[0].float().cpu()),
-                            },
-                            'step': global_step,
-                            'epoch': epoch,
-                            **histograms
+                             }
                         })
+                        if local_step in valid_check_list:
+                            histograms = {}
+                            for tag, value in net.named_parameters():
+                                tag = tag.replace('/', '.')
+                                histograms['Weights/' + tag] = wandb.Histogram(value.data.cpu())
+                                histograms['Gradients/' + tag] = wandb.Histogram(value.grad.data.cpu())
+
+                            val_score = evaluate(net, val_loader, device)
+                            scheduler.step(val_score)
+
+                            logging.info('Validation Dice score: {}'.format(val_score))
+                            experiment.log({
+                                'learning rate': optimizer.param_groups[0]['lr'],
+                                'validation Dice': val_score,
+                                'step': global_step,
+                                'epoch': epoch,
+                                **histograms
+                            })
 
         if save_checkpoint:
             Path(dir_checkpoint).mkdir(parents=True, exist_ok=True)
