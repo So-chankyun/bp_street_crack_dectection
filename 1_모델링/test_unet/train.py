@@ -74,14 +74,16 @@ def train_net(net,
     grad_scaler = torch.cuda.amp.GradScaler(enabled=amp)
     criterion = nn.CrossEntropyLoss()
     global_step = 0
-    valid_check_list = [np.round(100*(i/valid_count)) for i in range(1,valid_count+1)]
+
+    assert valid_count in [2,5,10], 'Check Valid Count : Must Input 2 / 5 / 10'
+    valid_check_list = [int(10*(i/valid_count)) for i in range(1,valid_count+1)]
     
 
     # 5. Begin training
     for epoch in range(epochs):
         net.train()
         epoch_loss = 0
-        valid_thred_idx = 0
+        local_step = 0
         with tqdm(total=n_train, desc=f'Epoch {epoch + 1}/{epochs}', unit='img') as pbar:
             for batch in train_loader:
                 images = batch['image']
@@ -126,11 +128,10 @@ def train_net(net,
                 # Evaluation round
                 division_step = (n_train // (10 * batch_size))
                 if division_step > 0:
-                    cur_percent = (global_step/division_step)*10
-                    # if global_step % division_step == 0:
-                    if cur_percent >= valid_check_list[valid_thred_idx]:
-                        print(valid_thred_idx,' : ',valid_check_list[valid_thred_idx])
-                        valid_thred_idx+=1
+                    if (global_step % division_step == 0):
+                        local_step += 1
+                        if local_step not in valid_check_list:
+                            continue
                         histograms = {}
                         for tag, value in net.named_parameters():
                             tag = tag.replace('/', '.')
@@ -168,8 +169,7 @@ def get_args():
                         help='Learning rate', dest='lr')
     parser.add_argument('--load', '-f', type=str, default=False, help='Load model from a .pth file')
     parser.add_argument('--scale', '-s', type=float, default=0.5, help='Downscaling factor of the images')
-    ## validation 비율 옵션
-    parser.add_argument('--valid_count', '-vc', type=int, default=2, help='How much validation you want?')
+    parser.add_argument('--valid_count', '-vc', type=int, default=2, help='Choose 2 / 5 / 10 : Number of Valid opt')
     parser.add_argument('--validation', '-v', dest='val', type=float, default=10.0,
                         help='Percent of the data that is used as validation (0-100)')
     parser.add_argument('--thickness', '-th', type=int, default=5, help='Enter Annotation Thickness')
