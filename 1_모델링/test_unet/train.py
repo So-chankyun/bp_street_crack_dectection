@@ -1,6 +1,7 @@
 import argparse
 import logging
 import sys
+import numpy as np
 from pathlib import Path
 
 import torch
@@ -31,6 +32,7 @@ def train_net(net,
               img_scale: float = 0.5,
               thick: float = 5,
               data_num: int = -1,
+              valid_count: int = 2,
               amp: bool = False):
     # 1. Create dataset
     try:
@@ -73,10 +75,15 @@ def train_net(net,
     criterion = nn.CrossEntropyLoss()
     global_step = 0
 
+    assert valid_count in [1,2,5,10], 'Check Valid Count : Must Input 1 / 2 / 5 / 10'
+    valid_check_list = [int(10*(i/valid_count)) for i in range(1,valid_count+1)]
+    
+
     # 5. Begin training
     for epoch in range(epochs):
         net.train()
         epoch_loss = 0
+        local_step = 0
         with tqdm(total=n_train, desc=f'Epoch {epoch + 1}/{epochs}', unit='img') as pbar:
             for batch in train_loader:
                 images = batch['image']
@@ -121,29 +128,33 @@ def train_net(net,
                 # Evaluation round
                 division_step = (n_train // (10 * batch_size))
                 if division_step > 0:
-                    if global_step % division_step == 0:
-                        histograms = {}
-                        for tag, value in net.named_parameters():
-                            tag = tag.replace('/', '.')
-                            histograms['Weights/' + tag] = wandb.Histogram(value.data.cpu())
-                            histograms['Gradients/' + tag] = wandb.Histogram(value.grad.data.cpu())
-
-                        val_score = evaluate(net, val_loader, device)
-                        scheduler.step(val_score)
-
-                        logging.info('Validation Dice score: {}'.format(val_score))
+                    if (global_step % division_step == 0):
+                        local_step += 1
                         experiment.log({
-                            'learning rate': optimizer.param_groups[0]['lr'],
-                            'validation Dice': val_score,
-                            'images': wandb.Image(images[0].cpu()),
-                            'masks': {
+                             'images': wandb.Image(images[0].cpu()),
+                             'masks': {
                                 'true': wandb.Image(true_masks[0].float().cpu()),
                                 'pred': wandb.Image(torch.softmax(masks_pred, dim=1).argmax(dim=1)[0].float().cpu()),
-                            },
-                            'step': global_step,
-                            'epoch': epoch,
-                            **histograms
+                             }
                         })
+                        if local_step in valid_check_list:
+                            histograms = {}
+                            for tag, value in net.named_parameters():
+                                tag = tag.replace('/', '.')
+                                histograms['Weights/' + tag] = wandb.Histogram(value.data.cpu())
+                                histograms['Gradients/' + tag] = wandb.Histogram(value.grad.data.cpu())
+
+                            val_score = evaluate(net, val_loader, device)
+                            scheduler.step(val_score)
+
+                            logging.info('Validation Dice score: {}'.format(val_score))
+                            experiment.log({
+                                'learning rate': optimizer.param_groups[0]['lr'],
+                                'validation Dice': val_score,
+                                'step': global_step,
+                                'epoch': epoch,
+                                **histograms
+                            })
 
         if save_checkpoint:
             Path(dir_checkpoint).mkdir(parents=True, exist_ok=True)
@@ -159,11 +170,13 @@ def get_args():
                         help='Learning rate', dest='lr')
     parser.add_argument('--load', '-f', type=str, default=False, help='Load model from a .pth file')
     parser.add_argument('--scale', '-s', type=float, default=0.5, help='Downscaling factor of the images')
+    parser.add_argument('--valid_count', '-vc', type=int, default=2, help='Choose 2 / 5 / 10 : Number of Valid opt')
     parser.add_argument('--validation', '-v', dest='val', type=float, default=10.0,
                         help='Percent of the data that is used as validation (0-100)')
     parser.add_argument('--thickness', '-th', type=int, default=5, help='Enter Annotation Thickness')
     parser.add_argument('--amp', action='store_true', default=False, help='Use mixed precision')
     parser.add_argument('--data_number','-dn', type=int, default=-1, help='Enter Using Number of Data')
+    parser.add_argument('--bilinear', action="store_true", default=False, help='Model bilinear option')
 
     return parser.parse_args()
 
@@ -178,7 +191,7 @@ if __name__ == '__main__':
     # Change here to adapt to your data
     # n_channels=3 for RGB images
     # n_classes is the number of probabilities you want to get per pixel
-    net = UNet(n_channels=3, n_classes=2, bilinear=False)
+    net = UNet(n_channels=3, n_classes=2, bilinear=args.bilinear)
 
     logging.info(f'Network:\n'
                  f'\t{net.n_channels} input channels\n'
@@ -200,6 +213,7 @@ if __name__ == '__main__':
                   val_percent=args.val / 100,
                   thick=args.thickness,
                   data_num=args.data_number,
+                  valid_count=args.valid_count,
                   amp=args.amp)
     except KeyboardInterrupt:
         torch.save(net.state_dict(), 'INTERRUPTED.pth')
