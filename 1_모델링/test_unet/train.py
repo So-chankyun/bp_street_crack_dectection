@@ -33,7 +33,8 @@ def train_net(net,
               thick: float = 5,
               data_num: int = -1,
               valid_count: int = 2,
-              amp: bool = False):
+              amp: bool = False,
+              num_workers: int = 4):
     # 1. Create dataset
     try:
         dataset = CrackDataset(dir_img, dir_mask, img_scale, thick, data_num)
@@ -46,7 +47,7 @@ def train_net(net,
     train_set, val_set = random_split(dataset, [n_train, n_val], generator=torch.Generator().manual_seed(0))
 
     # 3. Create data loaders
-    loader_args = dict(batch_size=batch_size, num_workers=4, pin_memory=True)
+    loader_args = dict(batch_size=batch_size, num_workers=num_workers, pin_memory=True)
     train_loader = DataLoader(train_set, shuffle=True, **loader_args)
     val_loader = DataLoader(val_set, shuffle=False, drop_last=True, **loader_args)
 
@@ -90,10 +91,10 @@ def train_net(net,
                 true_masks = batch['mask']
                 # print(f" images: {images.shape}\t true_masks: {true_masks.shape}")
 
-                assert images.shape[1] == net.n_channels, \
-                    f'Network has been defined with {net.n_channels} input channels, ' \
-                    f'but loaded images have {images.shape[1]} channels. Please check that ' \
-                    'the images are loaded correctly.'
+                # assert images.shape[1] == net.n_channels, \
+                #     f'Network has been defined with {net.n_channels} input channels, ' \
+                #     f'but loaded images have {images.shape[1]} channels. Please check that ' \
+                #     'the images are loaded correctly.'
 
                 images = images.to(device=device, dtype=torch.float32)
                 true_masks = true_masks.to(device=device, dtype=torch.long)
@@ -116,6 +117,7 @@ def train_net(net,
                 grad_scaler.update()
 
                 pbar.update(images.shape[0])
+                
                 global_step += 1
                 epoch_loss += loss.item()
                 experiment.log({
@@ -123,6 +125,7 @@ def train_net(net,
                     'step': global_step,
                     'epoch': epoch
                 })
+                
                 pbar.set_postfix(**{'loss (batch)': loss.item()})
 
                 # Evaluation round
@@ -165,7 +168,7 @@ def train_net(net,
 def get_args():
     parser = argparse.ArgumentParser(description='Train the UNet on images and target masks')
     parser.add_argument('--epochs', '-e', metavar='E', type=int, default=5, help='Number of epochs')
-    parser.add_argument('--batch-size', '-b', dest='batch_size', metavar='B', type=int, default=1, help='Batch size')
+    parser.add_argument('--batch-size', '-b', dest='batch_size', metavar='B', type=int, default=6, help='Batch size')
     parser.add_argument('--learning-rate', '-l', metavar='LR', type=float, default=0.00001,
                         help='Learning rate', dest='lr')
     parser.add_argument('--load', '-f', type=str, default=False, help='Load model from a .pth file')
@@ -177,6 +180,7 @@ def get_args():
     parser.add_argument('--amp', action='store_true', default=False, help='Use mixed precision')
     parser.add_argument('--data_number','-dn', type=int, default=-1, help='Enter Using Number of Data')
     parser.add_argument('--bilinear', action="store_true", default=False, help='Model bilinear option')
+    parser.add_argument('--num_workers','-nw', type=int, default=4, help='Setting dataloader num_workers')
 
     return parser.parse_args()
 
@@ -214,7 +218,8 @@ if __name__ == '__main__':
                   thick=args.thickness,
                   data_num=args.data_number,
                   valid_count=args.valid_count,
-                  amp=args.amp)
+                  amp=args.amp,
+                  num_workers=args.num_workers)
     except KeyboardInterrupt:
         torch.save(net.state_dict(), 'INTERRUPTED.pth')
         logging.info('Saved interrupt')

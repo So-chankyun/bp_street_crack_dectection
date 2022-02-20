@@ -51,9 +51,6 @@ class BaseDataset(Dataset):
         assert trs_w>0 and trs_h>0, "스케일이 너무 작습니다. 다시 조정해 주세요."
         pil_img = pil_img.resize((trs_w, trs_h), resample=Image.NEAREST if is_ann else Image.BICUBIC)
         
-        """
-        여기서부터 이해가 안됨
-        """
         img_ndarray = np.asarray(pil_img)                   # 이미지 arr 생성
         
         if img_ndarray.ndim==2 and not is_ann:              # 이미지 arr 차원수==2 and "ann"이 아닐 때
