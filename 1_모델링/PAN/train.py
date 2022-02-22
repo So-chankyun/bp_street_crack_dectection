@@ -9,7 +9,6 @@ import torch.nn.functional as F
 import wandb
 from torch import optim
 from torch.utils.data import DataLoader, random_split
-<<<<<<< HEAD
 from torchvision import transforms
 from tqdm import tqdm
 

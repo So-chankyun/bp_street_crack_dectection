@@ -74,25 +74,14 @@ def get_args():
     parser.add_argument('--model_name', '-mn', type=str, default='UNet_b2th5dn200k', help='Input Model Name')
     parser.add_argument('--m_cam', action='store_true', default=False, help='Use Device Camera')
     parser.add_argument('--save', action='store_true', default=False, help='Save Video option')
-<<<<<<< HEAD
-    parser.add_argument('--frame_thred', '-fth', type=float, default=100, help='Frame Threshold Ratio')
-=======
     parser.add_argument('--crack_thred', '-crth', type=float, default=100, help='Frame Threshold Ratio')
     parser.add_argument('--bilinear', action='store_true', default=False, help='UNet use bilinear upscaling?')
->>>>>>> b21dbb31461ff9a9454c5184dcdb918fd063a3c7
     return parser.parse_args()
 
 if __name__ == '__main__':
     args = get_args()
     PATH = r"C:\Users\yunjc\_python_jupyter\bupyeonggu\bp_road_crack_detection\1_모델링\unet_result_pth\!model.pth"
     MODEL_PATH = PATH.replace("!model", args.model_name)
-<<<<<<< HEAD
-    INPUT_PATH = f"D:/data/sample_video{args.v_number}.mp4"
-    SAVE_PATH = f'D:/data/output/{args.model_name}_vn{args.v_number}.avi'
-    DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
-    
-    model = UNet(n_channels=3, n_classes=2, bilinear=False)
-=======
     INPUT_PATH = f"D:/data/sample/sample_video{args.v_number}.mp4"
     
     """
@@ -121,7 +110,6 @@ if __name__ == '__main__':
 
 
     model = UNet(n_channels=3, n_classes=2, bilinear=args.bilinear)
->>>>>>> b21dbb31461ff9a9454c5184dcdb918fd063a3c7
     model.load_state_dict(torch.load(MODEL_PATH))
     model.to(device=DEVICE)
     model.eval()
@@ -145,10 +133,7 @@ if __name__ == '__main__':
     
     while cv2.waitKey(33) < 0:
         count+=1
-<<<<<<< HEAD
-=======
         full_frame = capture.get(cv2.CAP_PROP_FRAME_COUNT)
->>>>>>> b21dbb31461ff9a9454c5184dcdb918fd063a3c7
         ret, frame = capture.read()
         if not ret:
             print("프레임을 수신할 수 없습니다. 종료 중 ...")
@@ -160,23 +145,6 @@ if __name__ == '__main__':
         CRPF = np.round((pred_img.reshape(-1).sum()/(args.width*args.height))*100, 2)
         max_ratio = CRPF if CRPF > max_ratio else max_ratio
         avg_ratio = (avg_ratio*(count-1)+CRPF)/count
-<<<<<<< HEAD
-        
-        """
-        ########### args.frame_thred 이상이 됐을 때 캡처 (추가 예정) ###########
-        """
-        
-        font=cv2.FONT_HERSHEY_SIMPLEX
-        color = (50,50,165) if CRPF > args.frame_thred else (50,165,50)
-        
-        CRPF_img = cv2.putText(convert_img, 'Crt Ratio : {:.2f} {}'.format(CRPF, "%"), (5, 20), font, .6, color, 2)
-        MAX_img = cv2.putText(CRPF_img, 'Max Ratio : {:.2f} {}'.format(max_ratio, "%"), (5, 40), font, .6, (60,180,255), 2)
-        AVG_img = cv2.putText(MAX_img, 'Avg Ratio : {:.2f} {}'.format(avg_ratio, "%"), (5, 60), font, .6, (60,180,255), 2)
-
-        cv2.imshow("Test Vidoe Crack Detect", AVG_img)
-        if args.save:
-            out.write(AVG_img)
-=======
             
         """
         Text 표현
@@ -206,7 +174,6 @@ if __name__ == '__main__':
         cv2.imshow("Test Vidoe Crack Detect", convert_img)
         if args.save:
             out.write(convert_img)
->>>>>>> b21dbb31461ff9a9454c5184dcdb918fd063a3c7
 
     capture.release()
     if args.save:
