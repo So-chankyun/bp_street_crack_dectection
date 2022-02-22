@@ -62,6 +62,7 @@ def get_args():
     parser.add_argument('--m_cam', action='store_true', default=False, help='Use Device Camera')
     parser.add_argument('--save', action='store_true', default=False, help='Save Video option')
     parser.add_argument('--crack_thred', '-crth', type=float, default=100, help='Frame Threshold Ratio')
+    parser.add_argument('--bilinear', action='store_true', default=False, help='UNet use bilinear upscaling?')
     return parser.parse_args()
 
 if __name__ == '__main__':
@@ -81,21 +82,21 @@ if __name__ == '__main__':
     """
     
     try:
-        os.makedirs(f'D:/data/output/{args.model_name}/video/')
-        SAVE_PATH = f'D:/data/output/{args.model_name}/video/{args.model_name}_vn{args.v_number}.avi'
+        os.makedirs(f'D:/data/output/{args.model_name}/vn{args.v_number}')
+        SAVE_PATH = f'D:/data/output/{args.model_name}/vn{args.v_number}/{args.model_name}_vn{args.v_number}.avi'
     except:
-        SAVE_PATH = f'D:/data/output/{args.model_name}/video/{args.model_name}_vn{args.v_number}.avi'
+        SAVE_PATH = f'D:/data/output/{args.model_name}/vn{args.v_number}/{args.model_name}_vn{args.v_number}.avi'
     
     try:
-        os.makedirs(f'D:/data/output/{args.model_name}/capture/')
-        CAP_PATH = f'D:/data/output/{args.model_name}/capture/'
+        os.makedirs(f'D:/data/output/{args.model_name}/vn{args.v_number}/capture/')
+        CAP_PATH = f'D:/data/output/{args.model_name}/vn{args.v_number}/capture/'
     except:
-        CAP_PATH = f'D:/data/output/{args.model_name}/capture/'
+        CAP_PATH = f'D:/data/output/{args.model_name}/vn{args.v_number}/capture/'
         
     DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
-    
-    model = UNet(n_channels=3, n_classes=2, bilinear=False)
+
+    model = UNet(n_channels=3, n_classes=2, bilinear=args.bilinear)
     model.load_state_dict(torch.load(MODEL_PATH))
     model.to(device=DEVICE)
     model.eval()
@@ -144,7 +145,7 @@ if __name__ == '__main__':
         font=cv2.FONT_HERSHEY_SIMPLEX
         color = (50,50,165) if CRPF > args.crack_thred else (50,165,50)
         
-        cv2.putText(convert_img, 'Crt Rae : {:.2f} {}'.format(CRPF, "%"), (5, 20), font, .6, color, 2)
+        cv2.putText(convert_img, 'Crt Rate : {:.2f} {}'.format(CRPF, "%"), (5, 20), font, .6, color, 2)
         cv2.putText(convert_img, 'Max Rate : {:.2f} {}'.format(max_ratio, "%"), (5, 40), font, .6, (60,180,255), 2)
         cv2.putText(convert_img, 'Avg Rate : {:.2f} {}'.format(avg_ratio, "%"), (5, 60), font, .6, (60,180,255), 2)
         cv2.putText(convert_img, 
