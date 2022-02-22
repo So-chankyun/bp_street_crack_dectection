@@ -193,8 +193,8 @@ if __name__ == '__main__':
     # 2. PAN
     NUM_CLASS = 1
 
-    # net = PAN(backbone='resnet34', pretrained=True, n_class=2)
-    net = UNet(n_channels=3,n_classes=2,bilinear=True)
+    net = PAN(backbone='resnet34', pretrained=True, n_class=2)
+    # net = UNet(n_channels=3,n_classes=2,bilinear=True)
 
     if args.load:
         net.load_state_dict(torch.load(args.load, map_location=device))

@@ -10,7 +10,7 @@ from pathlib import Path
 from os import listdir
 from os.path import splitext
 from torch.utils.data import Dataset
-import pandas as pd
+
 
 class BaseDataset(Dataset):
     def __init__(self, 
@@ -27,19 +27,15 @@ class BaseDataset(Dataset):
         self.scale = scale
         self.ann_suffix = ann_suffix
         
-        # if data_num > 0:
-        #     full_ids = [splitext(file)[0] for file in listdir(img_path) if not file.startswith('.')]
-        #     self.ids = random.sample(full_ids, data_num)
-        # else:
-        #     self.ids = [splitext(file)[0] for file in listdir(img_path) if not file.startswith('.')]
-        # if not self.ids:
-        #     raise RuntimeError(f"{img_path}\n 위 경로를 찾을 수 없습니다.")
-
-        img_name_list = pd.read_csv('./mask_ratio_over_five.csv')['file_name'].tolist()
-        self.ids = [splitext(file)[0] for file in img_name_list if not file.startswith('.')]
-
+        if data_num > 0:
+            full_ids = [splitext(file)[0] for file in listdir(img_path) if not file.startswith('.')]
+            self.ids = random.sample(full_ids, data_num)
+        else:
+            self.ids = [splitext(file)[0] for file in listdir(img_path) if not file.startswith('.')]
         if not self.ids:
             raise RuntimeError(f"{img_path}\n 위 경로를 찾을 수 없습니다.")
+        
+        
             
         self.thick = thick
         logging.info(f"Creating dataset with {len(self.ids)} examples")
@@ -110,7 +106,7 @@ class BaseDataset(Dataset):
                 lbl = cv2.polylines(img=lbl,
                             pts=[temp_re],
                             isClosed=False,
-                            color=(255,255,255),
+                            color=(255),
                             thickness=thick)
             return Image.fromarray(lbl)
         else:
