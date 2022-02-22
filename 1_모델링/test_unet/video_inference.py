@@ -1,24 +1,15 @@
 import argparse
-<<<<<<< HEAD
-import cv2
-import torch
-=======
 import os
 import cv2
 import torch
 import datetime
->>>>>>> b21dbb31461ff9a9454c5184dcdb918fd063a3c7
 import numpy as np
 
 from PIL import Image
 from unet import UNet
 
 """
-<<<<<<< HEAD
-########### 모델 아이디어 및 테스트는 test_unet/mak_video_detect.ipynb 에서 확인할 수 있음 ###########
-=======
 ########### 초기 모델 아이디어 및 테스트는 test_unet/mak_video_detect.ipynb 에서 확인할 수 있음 ###########
->>>>>>> b21dbb31461ff9a9454c5184dcdb918fd063a3c7
 
 전처리 로직이 다르다면, preprocess 메서드 수정 필요
 """
@@ -58,11 +49,7 @@ def get_args():
         --model_dir :   모델이 있는 directory 이름 (main code 참조)
         --m_cam :       내장 카메라 사용 여부 (활성화 시 input video 대신 내장 카메라 작동)
         --save :        저장 여부 (활성화 시 save 경로로 저장 - save 경로는 main에서 정의)
-<<<<<<< HEAD
-        --frame_thred : Crack 비율의 경계 값 (예 : 1.0이면 1.0을 초과하는 frame의 ratio를 red로 표시)
-=======
         --crack_thred : Crack 비율의 경계 값 (예 : 1.0이면 1.0을 초과하는 frame의 ratio를 red로 표시)
->>>>>>> b21dbb31461ff9a9454c5184dcdb918fd063a3c7
         
     """
     
