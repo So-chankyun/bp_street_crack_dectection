@@ -32,9 +32,13 @@ def train_net(net,
               img_scale: float = 0.5,
               thick: float = 5,
               data_num: int = -1,
+<<<<<<< HEAD
+              amp: bool = False):
+=======
               valid_count: int = 2,
               amp: bool = False,
               num_workers: int = 4):
+>>>>>>> b21dbb31461ff9a9454c5184dcdb918fd063a3c7
     # 1. Create dataset
     try:
         dataset = CrackDataset(dir_img, dir_mask, img_scale, thick, data_num)
@@ -179,8 +183,11 @@ def get_args():
     parser.add_argument('--thickness', '-th', type=int, default=5, help='Enter Annotation Thickness')
     parser.add_argument('--amp', action='store_true', default=False, help='Use mixed precision')
     parser.add_argument('--data_number','-dn', type=int, default=-1, help='Enter Using Number of Data')
+<<<<<<< HEAD
+=======
     parser.add_argument('--bilinear', action="store_true", default=False, help='Model bilinear option')
     parser.add_argument('--num_workers','-nw', type=int, default=4, help='Setting dataloader num_workers')
+>>>>>>> b21dbb31461ff9a9454c5184dcdb918fd063a3c7
 
     return parser.parse_args()
 
@@ -217,9 +224,13 @@ if __name__ == '__main__':
                   val_percent=args.val / 100,
                   thick=args.thickness,
                   data_num=args.data_number,
+<<<<<<< HEAD
+                  amp=args.amp)
+=======
                   valid_count=args.valid_count,
                   amp=args.amp,
                   num_workers=args.num_workers)
+>>>>>>> b21dbb31461ff9a9454c5184dcdb918fd063a3c7
     except KeyboardInterrupt:
         torch.save(net.state_dict(), 'INTERRUPTED.pth')
         logging.info('Saved interrupt')

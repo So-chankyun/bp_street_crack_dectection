@@ -14,4 +14,7 @@ wandb/
 test_modeling_any.ipynb
 requirements.txt
 hubconf.py
+<<<<<<< HEAD
+=======
 train_testver.py
+>>>>>>> b21dbb31461ff9a9454c5184dcdb918fd063a3c7
