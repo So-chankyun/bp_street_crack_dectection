@@ -1,0 +1,33 @@
+INFO: Starting training:
+        Epochs:          5
+        Batch size:      1
+        Learning rate:   1e-05
+        Training size:   4590
+        Validation size: 509
+        Checkpoints:     True
+        Device:          cuda
+        Images scaling:  0.2
+        Mixed Precision: True
+Epoch 1/5:   0%|                                                                                                                                             | 0/4590 [00:21<?, ?img/s]
+Traceback (most recent call last):
+  File "train_pan.py", line 200, in <module>
+    amp=args.amp)
+  File "train_pan.py", line 96, in train_net
+    masks_pred = net(fms_blob[::-1])
+  File "C:\Users\chank\anaconda3\envs\deep_learning\lib\site-packages\torch\nn\modules\module.py", line 722, in _call_impl
+    result = self.forward(*input, **kwargs)
+  File "G:\내 드라이브\인턴\도로 크랙 탐지\Pytorch-UNet\pan\networks.py", line 225, in forward
+    fm_high = self.fpa(fm_low)
+  File "C:\Users\chank\anaconda3\envs\deep_learning\lib\site-packages\torch\nn\modules\module.py", line 722, in _call_impl
+    result = self.forward(*input, **kwargs)
+  File "G:\내 드라이브\인턴\도로 크랙 탐지\Pytorch-UNet\pan\networks.py", line 104, in forward
+    x_gpb = self.bn_gpb(x_gpb)
+  File "C:\Users\chank\anaconda3\envs\deep_learning\lib\site-packages\torch\nn\modules\module.py", line 722, in _call_impl
+    result = self.forward(*input, **kwargs)
+  File "C:\Users\chank\anaconda3\envs\deep_learning\lib\site-packages\torch\nn\modules\batchnorm.py", line 136, in forward
+    self.weight, self.bias, bn_training, exponential_average_factor, self.eps)
+  File "C:\Users\chank\anaconda3\envs\deep_learning\lib\site-packages\torch\nn\functional.py", line 2012, in batch_norm
+    _verify_batch_size(input.size())
+  File "C:\Users\chank\anaconda3\envs\deep_learning\lib\site-packages\torch\nn\functional.py", line 1995, in _verify_batch_size
+    raise ValueError('Expected more than 1 value per channel when training, got input size {}'.format(size))
+ValueError: Expected more than 1 value per channel when training, got input size torch.Size([1, 2048, 1, 1])

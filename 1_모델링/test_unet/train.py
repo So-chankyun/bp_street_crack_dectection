@@ -1,6 +1,7 @@
 import argparse
 import logging
 import sys
+import numpy as np
 from pathlib import Path
 
 import torch
@@ -31,7 +32,13 @@ def train_net(net,
               img_scale: float = 0.5,
               thick: float = 5,
               data_num: int = -1,
+<<<<<<< HEAD
               amp: bool = False):
+=======
+              valid_count: int = 2,
+              amp: bool = False,
+              num_workers: int = 4):
+>>>>>>> b21dbb31461ff9a9454c5184dcdb918fd063a3c7
     # 1. Create dataset
     try:
         dataset = CrackDataset(dir_img, dir_mask, img_scale, thick, data_num)
@@ -44,7 +51,7 @@ def train_net(net,
     train_set, val_set = random_split(dataset, [n_train, n_val], generator=torch.Generator().manual_seed(0))
 
     # 3. Create data loaders
-    loader_args = dict(batch_size=batch_size, num_workers=4, pin_memory=True)
+    loader_args = dict(batch_size=batch_size, num_workers=num_workers, pin_memory=True)
     train_loader = DataLoader(train_set, shuffle=True, **loader_args)
     val_loader = DataLoader(val_set, shuffle=False, drop_last=True, **loader_args)
 
@@ -73,20 +80,25 @@ def train_net(net,
     criterion = nn.CrossEntropyLoss()
     global_step = 0
 
+    assert valid_count in [1,2,5,10], 'Check Valid Count : Must Input 1 / 2 / 5 / 10'
+    valid_check_list = [int(10*(i/valid_count)) for i in range(1,valid_count+1)]
+    
+
     # 5. Begin training
     for epoch in range(epochs):
         net.train()
         epoch_loss = 0
+        local_step = 0
         with tqdm(total=n_train, desc=f'Epoch {epoch + 1}/{epochs}', unit='img') as pbar:
             for batch in train_loader:
                 images = batch['image']
                 true_masks = batch['mask']
                 # print(f" images: {images.shape}\t true_masks: {true_masks.shape}")
 
-                assert images.shape[1] == net.n_channels, \
-                    f'Network has been defined with {net.n_channels} input channels, ' \
-                    f'but loaded images have {images.shape[1]} channels. Please check that ' \
-                    'the images are loaded correctly.'
+                # assert images.shape[1] == net.n_channels, \
+                #     f'Network has been defined with {net.n_channels} input channels, ' \
+                #     f'but loaded images have {images.shape[1]} channels. Please check that ' \
+                #     'the images are loaded correctly.'
 
                 images = images.to(device=device, dtype=torch.float32)
                 true_masks = true_masks.to(device=device, dtype=torch.long)
@@ -109,6 +121,7 @@ def train_net(net,
                 grad_scaler.update()
 
                 pbar.update(images.shape[0])
+                
                 global_step += 1
                 epoch_loss += loss.item()
                 experiment.log({
@@ -116,34 +129,39 @@ def train_net(net,
                     'step': global_step,
                     'epoch': epoch
                 })
+                
                 pbar.set_postfix(**{'loss (batch)': loss.item()})
 
                 # Evaluation round
                 division_step = (n_train // (10 * batch_size))
                 if division_step > 0:
-                    if global_step % division_step == 0:
-                        histograms = {}
-                        for tag, value in net.named_parameters():
-                            tag = tag.replace('/', '.')
-                            histograms['Weights/' + tag] = wandb.Histogram(value.data.cpu())
-                            histograms['Gradients/' + tag] = wandb.Histogram(value.grad.data.cpu())
-
-                        val_score = evaluate(net, val_loader, device)
-                        scheduler.step(val_score)
-
-                        logging.info('Validation Dice score: {}'.format(val_score))
+                    if (global_step % division_step == 0):
+                        local_step += 1
                         experiment.log({
-                            'learning rate': optimizer.param_groups[0]['lr'],
-                            'validation Dice': val_score,
-                            'images': wandb.Image(images[0].cpu()),
-                            'masks': {
+                             'images': wandb.Image(images[0].cpu()),
+                             'masks': {
                                 'true': wandb.Image(true_masks[0].float().cpu()),
                                 'pred': wandb.Image(torch.softmax(masks_pred, dim=1).argmax(dim=1)[0].float().cpu()),
-                            },
-                            'step': global_step,
-                            'epoch': epoch,
-                            **histograms
+                             }
                         })
+                        if local_step in valid_check_list:
+                            histograms = {}
+                            for tag, value in net.named_parameters():
+                                tag = tag.replace('/', '.')
+                                histograms['Weights/' + tag] = wandb.Histogram(value.data.cpu())
+                                histograms['Gradients/' + tag] = wandb.Histogram(value.grad.data.cpu())
+
+                            val_score = evaluate(net, val_loader, device)
+                            scheduler.step(val_score)
+
+                            logging.info('Validation Dice score: {}'.format(val_score))
+                            experiment.log({
+                                'learning rate': optimizer.param_groups[0]['lr'],
+                                'validation Dice': val_score,
+                                'step': global_step,
+                                'epoch': epoch,
+                                **histograms
+                            })
 
         if save_checkpoint:
             Path(dir_checkpoint).mkdir(parents=True, exist_ok=True)
@@ -154,16 +172,22 @@ def train_net(net,
 def get_args():
     parser = argparse.ArgumentParser(description='Train the UNet on images and target masks')
     parser.add_argument('--epochs', '-e', metavar='E', type=int, default=5, help='Number of epochs')
-    parser.add_argument('--batch-size', '-b', dest='batch_size', metavar='B', type=int, default=1, help='Batch size')
+    parser.add_argument('--batch-size', '-b', dest='batch_size', metavar='B', type=int, default=6, help='Batch size')
     parser.add_argument('--learning-rate', '-l', metavar='LR', type=float, default=0.00001,
                         help='Learning rate', dest='lr')
     parser.add_argument('--load', '-f', type=str, default=False, help='Load model from a .pth file')
     parser.add_argument('--scale', '-s', type=float, default=0.5, help='Downscaling factor of the images')
+    parser.add_argument('--valid_count', '-vc', type=int, default=2, help='Choose 2 / 5 / 10 : Number of Valid opt')
     parser.add_argument('--validation', '-v', dest='val', type=float, default=10.0,
                         help='Percent of the data that is used as validation (0-100)')
     parser.add_argument('--thickness', '-th', type=int, default=5, help='Enter Annotation Thickness')
     parser.add_argument('--amp', action='store_true', default=False, help='Use mixed precision')
     parser.add_argument('--data_number','-dn', type=int, default=-1, help='Enter Using Number of Data')
+<<<<<<< HEAD
+=======
+    parser.add_argument('--bilinear', action="store_true", default=False, help='Model bilinear option')
+    parser.add_argument('--num_workers','-nw', type=int, default=4, help='Setting dataloader num_workers')
+>>>>>>> b21dbb31461ff9a9454c5184dcdb918fd063a3c7
 
     return parser.parse_args()
 
@@ -178,7 +202,7 @@ if __name__ == '__main__':
     # Change here to adapt to your data
     # n_channels=3 for RGB images
     # n_classes is the number of probabilities you want to get per pixel
-    net = UNet(n_channels=3, n_classes=2, bilinear=False)
+    net = UNet(n_channels=3, n_classes=2, bilinear=args.bilinear)
 
     logging.info(f'Network:\n'
                  f'\t{net.n_channels} input channels\n'
@@ -200,7 +224,13 @@ if __name__ == '__main__':
                   val_percent=args.val / 100,
                   thick=args.thickness,
                   data_num=args.data_number,
+<<<<<<< HEAD
                   amp=args.amp)
+=======
+                  valid_count=args.valid_count,
+                  amp=args.amp,
+                  num_workers=args.num_workers)
+>>>>>>> b21dbb31461ff9a9454c5184dcdb918fd063a3c7
     except KeyboardInterrupt:
         torch.save(net.state_dict(), 'INTERRUPTED.pth')
         logging.info('Saved interrupt')

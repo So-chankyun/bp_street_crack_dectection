@@ -1,0 +1,158 @@
+2022-01-17 11:45:24,004 INFO    MainThread:29692 [internal.py:wandb_internal():90] W&B internal server running at pid: 29692, started at: 2022-01-17 11:45:23.994119
+2022-01-17 11:45:24,011 INFO    WriterThread:29692 [datastore.py:open_for_write():77] open: G:\내 드라이브\인턴\도로 크랙 탐지\Pytorch-UNet\wandb\run-20220117_114518-3h8gr56f\run-3h8gr56f.wandb
+2022-01-17 11:45:24,013 DEBUG   HandlerThread:29692 [handler.py:handle_request():130] handle_request: check_version
+2022-01-17 11:45:24,024 DEBUG   SenderThread:29692 [sender.py:send():234] send: header
+2022-01-17 11:45:24,025 DEBUG   SenderThread:29692 [sender.py:send_request():248] send_request: check_version
+2022-01-17 11:45:25,103 DEBUG   SenderThread:29692 [sender.py:send():234] send: run
+2022-01-17 11:45:25,120 INFO    SenderThread:29692 [sender.py:_maybe_setup_resume():485] checking resume status for None/U-Net/3h8gr56f
+2022-01-17 11:45:25,745 INFO    SenderThread:29692 [dir_watcher.py:__init__():169] watching files in: G:\내 드라이브\인턴\도로 크랙 탐지\Pytorch-UNet\wandb\run-20220117_114518-3h8gr56f\files
+2022-01-17 11:45:25,746 INFO    SenderThread:29692 [sender.py:_start_run_threads():807] run started: 3h8gr56f with start time 1642387518
+2022-01-17 11:45:25,746 DEBUG   SenderThread:29692 [sender.py:send():234] send: summary
+2022-01-17 11:45:25,755 DEBUG   HandlerThread:29692 [handler.py:handle_request():130] handle_request: run_start
+2022-01-17 11:45:25,764 INFO    SenderThread:29692 [sender.py:_save_file():939] saving file wandb-summary.json with policy end
+2022-01-17 11:45:25,837 DEBUG   HandlerThread:29692 [meta.py:__init__():40] meta init
+2022-01-17 11:45:25,838 DEBUG   HandlerThread:29692 [meta.py:__init__():54] meta init done
+2022-01-17 11:45:25,838 DEBUG   HandlerThread:29692 [meta.py:probe():214] probe
+2022-01-17 11:45:25,969 DEBUG   HandlerThread:29692 [meta.py:_setup_git():204] setup git
+2022-01-17 11:45:26,293 DEBUG   HandlerThread:29692 [meta.py:_setup_git():211] setup git done
+2022-01-17 11:45:26,293 DEBUG   HandlerThread:29692 [meta.py:_save_pip():58] save pip
+2022-01-17 11:45:26,306 DEBUG   HandlerThread:29692 [meta.py:_save_pip():72] save pip done
+2022-01-17 11:45:26,307 DEBUG   HandlerThread:29692 [meta.py:_save_conda():79] save conda
+2022-01-17 11:45:26,332 ERROR   HandlerThread:29692 [meta.py:_save_conda():88] Error saving conda packages
+Traceback (most recent call last):
+  File "C:\Users\chank\anaconda3\envs\deep_learning\lib\site-packages\wandb\sdk\internal\meta.py", line 85, in _save_conda
+    ["conda", "env", "export"], stdout=f, stderr=subprocess.DEVNULL
+  File "C:\Users\chank\anaconda3\envs\deep_learning\lib\subprocess.py", line 287, in call
+    with Popen(*popenargs, **kwargs) as p:
+  File "C:\Users\chank\anaconda3\envs\deep_learning\lib\subprocess.py", line 729, in __init__
+    restore_signals, start_new_session)
+  File "C:\Users\chank\anaconda3\envs\deep_learning\lib\subprocess.py", line 1017, in _execute_child
+    startupinfo)
+FileNotFoundError: [WinError 2] 지정된 파일을 찾을 수 없습니다
+2022-01-17 11:45:26,337 DEBUG   HandlerThread:29692 [meta.py:_save_conda():89] save conda done
+2022-01-17 11:45:26,337 DEBUG   HandlerThread:29692 [meta.py:probe():252] probe done
+2022-01-17 11:45:26,384 DEBUG   SenderThread:29692 [sender.py:send():234] send: files
+2022-01-17 11:45:26,385 INFO    SenderThread:29692 [sender.py:_save_file():939] saving file wandb-metadata.json with policy now
+2022-01-17 11:45:26,426 DEBUG   HandlerThread:29692 [handler.py:handle_request():130] handle_request: stop_status
+2022-01-17 11:45:26,427 DEBUG   SenderThread:29692 [sender.py:send_request():248] send_request: stop_status
+2022-01-17 11:45:26,738 DEBUG   SenderThread:29692 [sender.py:send():234] send: config
+2022-01-17 11:45:26,759 INFO    Thread-12 :29692 [dir_watcher.py:_on_file_created():217] file/dir created: G:\내 드라이브\인턴\도로 크랙 탐지\Pytorch-UNet\wandb\run-20220117_114518-3h8gr56f\files\conda-environment.yaml
+2022-01-17 11:45:26,762 INFO    Thread-12 :29692 [dir_watcher.py:_on_file_created():217] file/dir created: G:\내 드라이브\인턴\도로 크랙 탐지\Pytorch-UNet\wandb\run-20220117_114518-3h8gr56f\files\wandb-summary.json
+2022-01-17 11:45:26,764 INFO    Thread-12 :29692 [dir_watcher.py:_on_file_created():217] file/dir created: G:\내 드라이브\인턴\도로 크랙 탐지\Pytorch-UNet\wandb\run-20220117_114518-3h8gr56f\files\wandb-metadata.json
+2022-01-17 11:45:26,766 INFO    Thread-12 :29692 [dir_watcher.py:_on_file_created():217] file/dir created: G:\내 드라이브\인턴\도로 크랙 탐지\Pytorch-UNet\wandb\run-20220117_114518-3h8gr56f\files\output.log
+2022-01-17 11:45:26,768 INFO    Thread-12 :29692 [dir_watcher.py:_on_file_created():217] file/dir created: G:\내 드라이브\인턴\도로 크랙 탐지\Pytorch-UNet\wandb\run-20220117_114518-3h8gr56f\files\requirements.txt
+2022-01-17 11:45:27,074 INFO    Thread-17 :29692 [upload_job.py:push():137] Uploaded file C:\Users\Public\Documents\ESTsoft\CreatorTemp\tmp47et37emwandb\ltx5s2sx-wandb-metadata.json
+2022-01-17 11:45:41,745 DEBUG   HandlerThread:29692 [handler.py:handle_request():130] handle_request: stop_status
+2022-01-17 11:45:41,745 DEBUG   SenderThread:29692 [sender.py:send_request():248] send_request: stop_status
+2022-01-17 11:45:50,775 DEBUG   SenderThread:29692 [sender.py:send():234] send: telemetry
+2022-01-17 11:45:50,777 DEBUG   SenderThread:29692 [sender.py:send():234] send: exit
+2022-01-17 11:45:50,778 DEBUG   HandlerThread:29692 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-17 11:45:50,778 INFO    SenderThread:29692 [sender.py:send_exit():366] handling exit code: 1
+2022-01-17 11:45:50,781 INFO    SenderThread:29692 [sender.py:send_exit():368] handling runtime: 25
+2022-01-17 11:45:50,795 INFO    SenderThread:29692 [sender.py:_save_file():939] saving file wandb-summary.json with policy end
+2022-01-17 11:45:50,799 INFO    SenderThread:29692 [sender.py:send_exit():374] send defer
+2022-01-17 11:45:50,800 DEBUG   SenderThread:29692 [sender.py:send_request():248] send_request: poll_exit
+2022-01-17 11:45:50,801 DEBUG   HandlerThread:29692 [handler.py:handle_request():130] handle_request: defer
+2022-01-17 11:45:50,802 INFO    HandlerThread:29692 [handler.py:handle_request_defer():147] handle defer: 0
+2022-01-17 11:45:50,802 DEBUG   SenderThread:29692 [sender.py:send_request():248] send_request: defer
+2022-01-17 11:45:50,809 INFO    SenderThread:29692 [sender.py:send_request_defer():383] handle sender defer: 0
+2022-01-17 11:45:50,810 INFO    SenderThread:29692 [sender.py:transition_state():387] send defer: 1
+2022-01-17 11:45:50,811 DEBUG   HandlerThread:29692 [handler.py:handle_request():130] handle_request: defer
+2022-01-17 11:45:50,812 INFO    HandlerThread:29692 [handler.py:handle_request_defer():147] handle defer: 1
+2022-01-17 11:45:50,950 DEBUG   SenderThread:29692 [sender.py:send_request():248] send_request: defer
+2022-01-17 11:45:50,950 DEBUG   HandlerThread:29692 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-17 11:45:50,951 INFO    SenderThread:29692 [sender.py:send_request_defer():383] handle sender defer: 1
+2022-01-17 11:45:50,952 INFO    SenderThread:29692 [sender.py:transition_state():387] send defer: 2
+2022-01-17 11:45:50,953 DEBUG   SenderThread:29692 [sender.py:send_request():248] send_request: poll_exit
+2022-01-17 11:45:50,953 DEBUG   HandlerThread:29692 [handler.py:handle_request():130] handle_request: defer
+2022-01-17 11:45:50,954 DEBUG   SenderThread:29692 [sender.py:send():234] send: stats
+2022-01-17 11:45:50,954 INFO    HandlerThread:29692 [handler.py:handle_request_defer():147] handle defer: 2
+2022-01-17 11:45:50,956 DEBUG   SenderThread:29692 [sender.py:send_request():248] send_request: defer
+2022-01-17 11:45:50,957 INFO    SenderThread:29692 [sender.py:send_request_defer():383] handle sender defer: 2
+2022-01-17 11:45:50,957 INFO    SenderThread:29692 [sender.py:transition_state():387] send defer: 3
+2022-01-17 11:45:50,958 DEBUG   HandlerThread:29692 [handler.py:handle_request():130] handle_request: defer
+2022-01-17 11:45:50,959 INFO    HandlerThread:29692 [handler.py:handle_request_defer():147] handle defer: 3
+2022-01-17 11:45:50,959 DEBUG   SenderThread:29692 [sender.py:send():234] send: summary
+2022-01-17 11:45:50,972 INFO    SenderThread:29692 [sender.py:_save_file():939] saving file wandb-summary.json with policy end
+2022-01-17 11:45:50,975 DEBUG   SenderThread:29692 [sender.py:send_request():248] send_request: defer
+2022-01-17 11:45:50,976 INFO    SenderThread:29692 [sender.py:send_request_defer():383] handle sender defer: 3
+2022-01-17 11:45:50,976 INFO    SenderThread:29692 [sender.py:transition_state():387] send defer: 4
+2022-01-17 11:45:50,978 DEBUG   HandlerThread:29692 [handler.py:handle_request():130] handle_request: defer
+2022-01-17 11:45:50,979 INFO    HandlerThread:29692 [handler.py:handle_request_defer():147] handle defer: 4
+2022-01-17 11:45:50,979 DEBUG   SenderThread:29692 [sender.py:send_request():248] send_request: defer
+2022-01-17 11:45:50,980 INFO    SenderThread:29692 [sender.py:send_request_defer():383] handle sender defer: 4
+2022-01-17 11:45:51,073 DEBUG   HandlerThread:29692 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-17 11:45:51,250 INFO    SenderThread:29692 [sender.py:transition_state():387] send defer: 5
+2022-01-17 11:45:51,251 DEBUG   SenderThread:29692 [sender.py:send_request():248] send_request: poll_exit
+2022-01-17 11:45:51,252 DEBUG   HandlerThread:29692 [handler.py:handle_request():130] handle_request: defer
+2022-01-17 11:45:51,253 INFO    HandlerThread:29692 [handler.py:handle_request_defer():147] handle defer: 5
+2022-01-17 11:45:51,253 DEBUG   SenderThread:29692 [sender.py:send_request():248] send_request: defer
+2022-01-17 11:45:51,254 INFO    SenderThread:29692 [sender.py:send_request_defer():383] handle sender defer: 5
+2022-01-17 11:45:51,255 INFO    SenderThread:29692 [dir_watcher.py:finish():283] shutting down directory watcher
+2022-01-17 11:45:51,357 DEBUG   HandlerThread:29692 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-17 11:45:51,365 INFO    Thread-12 :29692 [dir_watcher.py:_on_file_modified():230] file/dir modified: G:\내 드라이브\인턴\도로 크랙 탐지\Pytorch-UNet\wandb\run-20220117_114518-3h8gr56f\files\config.yaml
+2022-01-17 11:45:51,372 INFO    SenderThread:29692 [dir_watcher.py:_on_file_modified():230] file/dir modified: G:\내 드라이브\인턴\도로 크랙 탐지\Pytorch-UNet\wandb\run-20220117_114518-3h8gr56f\files\wandb-summary.json
+2022-01-17 11:45:51,373 INFO    SenderThread:29692 [dir_watcher.py:_on_file_modified():230] file/dir modified: G:\내 드라이브\인턴\도로 크랙 탐지\Pytorch-UNet\wandb\run-20220117_114518-3h8gr56f\files\output.log
+2022-01-17 11:45:51,375 INFO    SenderThread:29692 [dir_watcher.py:finish():313] scan: G:\내 드라이브\인턴\도로 크랙 탐지\Pytorch-UNet\wandb\run-20220117_114518-3h8gr56f\files
+2022-01-17 11:45:51,376 INFO    SenderThread:29692 [dir_watcher.py:finish():327] scan save: G:\내 드라이브\인턴\도로 크랙 탐지\Pytorch-UNet\wandb\run-20220117_114518-3h8gr56f\files\config.yaml config.yaml
+2022-01-17 11:45:51,380 INFO    SenderThread:29692 [dir_watcher.py:finish():327] scan save: G:\내 드라이브\인턴\도로 크랙 탐지\Pytorch-UNet\wandb\run-20220117_114518-3h8gr56f\files\wandb-summary.json wandb-summary.json
+2022-01-17 11:45:51,386 INFO    SenderThread:29692 [dir_watcher.py:finish():327] scan save: G:\내 드라이브\인턴\도로 크랙 탐지\Pytorch-UNet\wandb\run-20220117_114518-3h8gr56f\files\requirements.txt requirements.txt
+2022-01-17 11:45:51,395 INFO    SenderThread:29692 [dir_watcher.py:finish():327] scan save: G:\내 드라이브\인턴\도로 크랙 탐지\Pytorch-UNet\wandb\run-20220117_114518-3h8gr56f\files\conda-environment.yaml conda-environment.yaml
+2022-01-17 11:45:51,402 INFO    SenderThread:29692 [dir_watcher.py:finish():327] scan save: G:\내 드라이브\인턴\도로 크랙 탐지\Pytorch-UNet\wandb\run-20220117_114518-3h8gr56f\files\wandb-metadata.json wandb-metadata.json
+2022-01-17 11:45:51,403 INFO    SenderThread:29692 [dir_watcher.py:finish():327] scan save: G:\내 드라이브\인턴\도로 크랙 탐지\Pytorch-UNet\wandb\run-20220117_114518-3h8gr56f\files\output.log output.log
+2022-01-17 11:45:51,408 INFO    SenderThread:29692 [sender.py:transition_state():387] send defer: 6
+2022-01-17 11:45:51,409 DEBUG   SenderThread:29692 [sender.py:send_request():248] send_request: poll_exit
+2022-01-17 11:45:51,410 DEBUG   HandlerThread:29692 [handler.py:handle_request():130] handle_request: defer
+2022-01-17 11:45:51,411 INFO    HandlerThread:29692 [handler.py:handle_request_defer():147] handle defer: 6
+2022-01-17 11:45:51,412 DEBUG   SenderThread:29692 [sender.py:send_request():248] send_request: defer
+2022-01-17 11:45:51,417 INFO    SenderThread:29692 [sender.py:send_request_defer():383] handle sender defer: 6
+2022-01-17 11:45:51,418 INFO    SenderThread:29692 [file_pusher.py:finish():177] shutting down file pusher
+2022-01-17 11:45:51,514 DEBUG   HandlerThread:29692 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-17 11:45:51,515 DEBUG   SenderThread:29692 [sender.py:send_request():248] send_request: poll_exit
+2022-01-17 11:45:51,623 DEBUG   HandlerThread:29692 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-17 11:45:51,624 DEBUG   SenderThread:29692 [sender.py:send_request():248] send_request: poll_exit
+2022-01-17 11:45:51,732 DEBUG   HandlerThread:29692 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-17 11:45:51,733 DEBUG   SenderThread:29692 [sender.py:send_request():248] send_request: poll_exit
+2022-01-17 11:45:51,844 DEBUG   HandlerThread:29692 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-17 11:45:51,845 DEBUG   SenderThread:29692 [sender.py:send_request():248] send_request: poll_exit
+2022-01-17 11:45:51,957 DEBUG   HandlerThread:29692 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-17 11:45:51,957 DEBUG   SenderThread:29692 [sender.py:send_request():248] send_request: poll_exit
+2022-01-17 11:45:52,031 INFO    Thread-18 :29692 [upload_job.py:push():137] Uploaded file G:\내 드라이브\인턴\도로 크랙 탐지\Pytorch-UNet\wandb\run-20220117_114518-3h8gr56f\files\config.yaml
+2022-01-17 11:45:52,031 INFO    Thread-19 :29692 [upload_job.py:push():137] Uploaded file G:\내 드라이브\인턴\도로 크랙 탐지\Pytorch-UNet\wandb\run-20220117_114518-3h8gr56f\files\wandb-summary.json
+2022-01-17 11:45:52,031 INFO    Thread-20 :29692 [upload_job.py:push():137] Uploaded file G:\내 드라이브\인턴\도로 크랙 탐지\Pytorch-UNet\wandb\run-20220117_114518-3h8gr56f\files\requirements.txt
+2022-01-17 11:45:52,057 INFO    Thread-21 :29692 [upload_job.py:push():137] Uploaded file G:\내 드라이브\인턴\도로 크랙 탐지\Pytorch-UNet\wandb\run-20220117_114518-3h8gr56f\files\output.log
+2022-01-17 11:45:52,066 DEBUG   HandlerThread:29692 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-17 11:45:52,067 DEBUG   SenderThread:29692 [sender.py:send_request():248] send_request: poll_exit
+2022-01-17 11:45:52,177 DEBUG   HandlerThread:29692 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-17 11:45:52,178 DEBUG   SenderThread:29692 [sender.py:send_request():248] send_request: poll_exit
+2022-01-17 11:45:52,272 INFO    Thread-11 :29692 [sender.py:transition_state():387] send defer: 7
+2022-01-17 11:45:52,273 DEBUG   HandlerThread:29692 [handler.py:handle_request():130] handle_request: defer
+2022-01-17 11:45:52,274 INFO    HandlerThread:29692 [handler.py:handle_request_defer():147] handle defer: 7
+2022-01-17 11:45:52,274 DEBUG   SenderThread:29692 [sender.py:send_request():248] send_request: defer
+2022-01-17 11:45:52,275 INFO    SenderThread:29692 [sender.py:send_request_defer():383] handle sender defer: 7
+2022-01-17 11:45:52,288 DEBUG   HandlerThread:29692 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-17 11:45:52,948 INFO    SenderThread:29692 [sender.py:transition_state():387] send defer: 8
+2022-01-17 11:45:52,949 DEBUG   SenderThread:29692 [sender.py:send_request():248] send_request: poll_exit
+2022-01-17 11:45:52,949 DEBUG   HandlerThread:29692 [handler.py:handle_request():130] handle_request: defer
+2022-01-17 11:45:52,950 INFO    HandlerThread:29692 [handler.py:handle_request_defer():147] handle defer: 8
+2022-01-17 11:45:52,951 DEBUG   SenderThread:29692 [sender.py:send_request():248] send_request: defer
+2022-01-17 11:45:52,951 INFO    SenderThread:29692 [sender.py:send_request_defer():383] handle sender defer: 8
+2022-01-17 11:45:52,952 INFO    SenderThread:29692 [sender.py:transition_state():387] send defer: 9
+2022-01-17 11:45:52,953 DEBUG   SenderThread:29692 [sender.py:send():234] send: final
+2022-01-17 11:45:52,953 DEBUG   SenderThread:29692 [sender.py:send():234] send: footer
+2022-01-17 11:45:52,954 DEBUG   HandlerThread:29692 [handler.py:handle_request():130] handle_request: defer
+2022-01-17 11:45:52,954 INFO    HandlerThread:29692 [handler.py:handle_request_defer():147] handle defer: 9
+2022-01-17 11:45:52,955 DEBUG   SenderThread:29692 [sender.py:send_request():248] send_request: defer
+2022-01-17 11:45:52,955 INFO    SenderThread:29692 [sender.py:send_request_defer():383] handle sender defer: 9
+2022-01-17 11:45:53,063 DEBUG   HandlerThread:29692 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-17 11:45:53,064 DEBUG   SenderThread:29692 [sender.py:send_request():248] send_request: poll_exit
+2022-01-17 11:45:53,065 INFO    SenderThread:29692 [file_pusher.py:join():182] waiting for file pusher
+2022-01-17 11:45:53,571 DEBUG   HandlerThread:29692 [handler.py:handle_request():130] handle_request: get_summary
+2022-01-17 11:45:53,575 DEBUG   HandlerThread:29692 [handler.py:handle_request():130] handle_request: sampled_history
+2022-01-17 11:45:53,577 DEBUG   HandlerThread:29692 [handler.py:handle_request():130] handle_request: shutdown
+2022-01-17 11:45:53,578 INFO    HandlerThread:29692 [handler.py:finish():731] shutting down handler
+2022-01-17 11:45:53,954 INFO    WriterThread:29692 [datastore.py:close():281] close: G:\내 드라이브\인턴\도로 크랙 탐지\Pytorch-UNet\wandb\run-20220117_114518-3h8gr56f\run-3h8gr56f.wandb
+2022-01-17 11:45:54,570 INFO    SenderThread:29692 [sender.py:finish():1070] shutting down sender
+2022-01-17 11:45:54,570 INFO    SenderThread:29692 [file_pusher.py:finish():177] shutting down file pusher
+2022-01-17 11:45:54,571 INFO    SenderThread:29692 [file_pusher.py:join():182] waiting for file pusher
+2022-01-17 11:45:54,575 INFO    MainThread:29692 [internal.py:handle_exit():77] Internal process exited

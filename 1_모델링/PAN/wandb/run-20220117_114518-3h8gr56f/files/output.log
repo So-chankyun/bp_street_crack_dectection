@@ -1,0 +1,19 @@
+INFO: Starting training:
+        Epochs:          5
+        Batch size:      1
+        Learning rate:   1e-05
+        Training size:   4590
+        Validation size: 509
+        Checkpoints:     True
+        Device:          cuda
+        Images scaling:  0.5
+        Mixed Precision: False
+Epoch 1/5:   0%|                                                                                                                                             | 0/4590 [00:24<?, ?img/s]
+Traceback (most recent call last):
+  File "train_pan.py", line 197, in <module>
+    amp=args.amp)
+  File "train_pan.py", line 83, in train_net
+    assert images.shape[1] == net.n_channels, \
+  File "C:\Users\chank\anaconda3\envs\deep_learning\lib\site-packages\torch\nn\modules\module.py", line 772, in __getattr__
+    type(self).__name__, name))
+torch.nn.modules.module.ModuleAttributeError: 'PAN' object has no attribute 'n_channels'

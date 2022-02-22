@@ -1,0 +1,28 @@
+{
+    "os": "Windows-10-10.0.19041-SP0",
+    "python": "3.6.13",
+    "heartbeatAt": "2022-01-17T08:45:33.148139",
+    "startedAt": "2022-01-17T08:45:28.781583",
+    "docker": null,
+    "gpu": "NVIDIA GeForce MX150",
+    "gpu_count": 1,
+    "cpu_count": 8,
+    "cuda": null,
+    "args": [
+        "--scale",
+        "0.3",
+        "--amp"
+    ],
+    "state": "running",
+    "program": "train.py",
+    "codePath": "train.py",
+    "git": {
+        "remote": "https://github.com/milesial/Pytorch-UNet.git",
+        "commit": null
+    },
+    "email": "chankyun97@gmail.com",
+    "root": "G:/\ub0b4 \ub4dc\ub77c\uc774\ube0c/\uc778\ud134/\ub3c4\ub85c \ud06c\ub799 \ud0d0\uc9c0/Pytorch-UNet",
+    "host": "DESKTOP-A4D7AHP",
+    "username": "SO CHAN KYUN",
+    "executable": "C:\\Users\\chank\\anaconda3\\envs\\deep_learning\\python.exe"
+}

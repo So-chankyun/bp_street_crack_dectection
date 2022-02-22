@@ -1,1 +1,7 @@
 _model_test
+pan modeling/wandb/
+pan modeling/__pycache__/
+pan modeling/data/
+pan modeling/scripts/
+pan modeling/checkpoints/
+2_report
