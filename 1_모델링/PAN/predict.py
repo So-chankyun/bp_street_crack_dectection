@@ -46,8 +46,8 @@ def predict_img(net,
 
 def get_args():
     parser = argparse.ArgumentParser(description='Predict masks from input images')
-    parser.add_argument('--model', '-m', default='MODEL.pth', metavar='FILE',
-                        help='Specify the file in which the model is stored')
+    parser.add_argument('--model file', '-m', default='MODEL.pth', metavar='FILE',
+                        help='Specify the file in which the model file is stored')
     parser.add_argument('--input', '-i', metavar='INPUT', nargs='+', help='Filenames of input images', required=True)
     parser.add_argument('--output', '-o', metavar='INPUT', nargs='+', help='Filenames of output images')
     parser.add_argument('--viz', '-v', action='store_true',
@@ -84,7 +84,7 @@ if __name__ == '__main__':
     net = UNet(n_channels=3, n_classes=2)
 
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    logging.info(f'Loading model {args.model}')
+    logging.info(f'Loading model file {args.model}')
     logging.info(f'Using device {device}')
 
     net.to(device=device)

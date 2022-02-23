@@ -1,4 +1,4 @@
-""" Parts of the U-Net model """
+""" Parts of the U-Net model file """
 
 import torch
 import torch.nn as nn

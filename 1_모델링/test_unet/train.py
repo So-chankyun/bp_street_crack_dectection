@@ -171,7 +171,7 @@ def get_args():
     parser.add_argument('--batch-size', '-b', dest='batch_size', metavar='B', type=int, default=6, help='Batch size')
     parser.add_argument('--learning-rate', '-l', metavar='LR', type=float, default=0.00001,
                         help='Learning rate', dest='lr')
-    parser.add_argument('--load', '-f', type=str, default=False, help='Load model from a .pth file')
+    parser.add_argument('--load', '-f', type=str, default=False, help='Load model file from a .pth file')
     parser.add_argument('--scale', '-s', type=float, default=0.5, help='Downscaling factor of the images')
     parser.add_argument('--valid_count', '-vc', type=int, default=2, help='Choose 2 / 5 / 10 : Number of Valid opt')
     parser.add_argument('--validation', '-v', dest='val', type=float, default=10.0,

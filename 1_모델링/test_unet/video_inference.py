@@ -67,8 +67,8 @@ def get_args():
 
 if __name__ == '__main__':
     args = get_args()
-    PATH = r"C:\Users\yunjc\_python_jupyter\bupyeonggu\bp_road_crack_detection\1_모델링\unet_result_pth\!model.pth"
-    MODEL_PATH = PATH.replace("!model", args.model_name)
+    PATH = r"C:\Users\yunjc\_python_jupyter\bupyeonggu\bp_road_crack_detection\1_모델링\unet_result_pth\!model file.pth"
+    MODEL_PATH = PATH.replace("!model file", args.model_name)
     INPUT_PATH = f"D:/data/sample/sample_video{args.v_number}.mp4"
     
     """

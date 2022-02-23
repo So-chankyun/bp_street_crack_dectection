@@ -89,7 +89,7 @@ if __name__ == '__main__':
     # 모델의 리스트를 출력해준다.
     print(10*'-'+' MODEL LIST '+'-'*10+'\n')
 
-    MODEL_PATH = './model file'
+    MODEL_PATH = './model file file'
     model_file_list = [name for name in os.listdir(MODEL_PATH) if name.endswith('.pth')]
 
     for idx, name in enumerate(model_file_list):
@@ -98,7 +98,7 @@ if __name__ == '__main__':
     print('\n'+32 * '-'+'\n')
 
     # 모델의 번호를 입력받는다.
-    model_index = input('Select model file(you have to input number) : ').split(' ')
+    model_index = input('Select model file file(you have to input number) : ').split(' ')
 
     # 모델의 번호를 int형으로 변환한다.
     model_index = list(map(int, model_index))
@@ -124,10 +124,10 @@ if __name__ == '__main__':
             batch_size = 8
             model = UNet(n_channels=3, n_classes=2, bilinear=True)
         else:
-            print('Nothing to use model file')
+            print('Nothing to use model file file')
             break
 
-        # load model
+        # load model file
         model.load_state_dict(torch.load(os.path.join(MODEL_PATH, file_name)))
         model.to(device=device)
 
@@ -142,7 +142,7 @@ if __name__ == '__main__':
         # if not os.direxists(STORE_PATH):
         #     os.mkdir(STORE_PATH)
         result = test(model, data_loader, device) # 결과 저장. Avg Loss, Dice Score
-        result['model'] = file_name.split('.')[0] # 모델명만 저장.
+        result['model file'] = file_name.split('.')[0] # 모델명만 저장.
 
         # store result
         total_result.append(result)
@@ -153,11 +153,11 @@ if __name__ == '__main__':
 
     # print result
     for idx, result_dict in enumerate(total_result):
-        print(str(idx)+'. Model : {}'.format(result_dict['model']))
+        print(str(idx)+'. Model : {}'.format(result_dict['model file']))
         print('    Avg Loss : {}'.format(result_dict['Avg Loss']))
         print('    Dice Score : {}\n'.format(result_dict['Dice Score']))
 
-    # total_result.to_csv('model result.csv',index=False)
+    # total_result.to_csv('model file result.csv',index=False)
 
 
 

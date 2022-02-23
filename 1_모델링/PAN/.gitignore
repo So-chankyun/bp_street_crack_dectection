@@ -12,3 +12,4 @@ wandb/
 *.jpg
 venv/
 .idea/
+*.ini

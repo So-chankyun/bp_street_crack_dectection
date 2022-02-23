@@ -1,101 +1,102 @@
-<<<<<<< HEAD
-
 import torch
 import torch.nn as nn
-from pan.modules.basic import Conv2dBn,Conv2dBnRelu
+from pan.modules.basic import Conv2dBn, Conv2dBnRelu
 import torchvision
 
 '''
 Global Attention Upsample Module
 '''
+
+
 class GAUModule(nn.Module):
-	def __init__(self,in_ch,out_ch):   #
-		super(GAUModule, self).__init__()
-		
-		self.conv1 = nn.Sequential(
-			nn.AdaptiveAvgPool2d(1),
-			Conv2dBn(out_ch, out_ch, kernel_size=1, stride=1, padding=0),
-			nn.Sigmoid()
-		)
-		
-		self.conv2 = Conv2dBnRelu(in_ch,out_ch,kernel_size=3,stride=1,padding=1)
-		
-	# x: low level feature
-	# y: high level feature
-	def forward(self,x,y):
-		h,w = x.size(2),x.size(3)
-		y_up = nn.Upsample(size=(h, w), mode='bilinear', align_corners=True)(y)
-		x = self.conv2(x)
-		y = self.conv1(y)
-		z = torch.mul(x, y)
-		
-		return y_up + z
-		
+    def __init__(self, in_ch, out_ch):  #
+        super(GAUModule, self).__init__()
+
+        self.conv1 = nn.Sequential(
+            nn.AdaptiveAvgPool2d(1),
+            Conv2dBn(out_ch, out_ch, kernel_size=1, stride=1, padding=0),
+            nn.Sigmoid()
+        )
+
+        self.conv2 = Conv2dBnRelu(in_ch, out_ch, kernel_size=3, stride=1, padding=1)
+
+    # x: low level feature
+    # y: high level feature
+    def forward(self, x, y):
+        h, w = x.size(2), x.size(3)
+        y_up = nn.Upsample(size=(h, w), mode='bilinear', align_corners=True)(y)
+        x = self.conv2(x)
+        y = self.conv1(y)
+        z = torch.mul(x, y)
+
+        return y_up + z
+
 
 '''
 Feature Pyramid Attention Module
 FPAModule1:
 	downsample use maxpooling
 '''
-class FPAModule1(nn.Module):
-	
-	def __init__(self,in_ch,out_ch):
-		super(FPAModule1,self).__init__()
-		
-		# global pooling branch
-		self.branch1 = nn.Sequential(
-			nn.AdaptiveAvgPool2d(1),
-			Conv2dBnRelu(in_ch, out_ch, kernel_size=1, stride=1, padding=0)
-		)
-		
-		# midddle branch
-		self.mid = nn.Sequential(
-			Conv2dBnRelu(in_ch, out_ch, kernel_size=1, stride=1, padding=0)
-		)
-		
-		self.down1 = nn.Sequential(
-			nn.MaxPool2d(kernel_size=2, stride=2),
-			Conv2dBnRelu(in_ch, 1, kernel_size=7, stride=1, padding=3)
-		)
-		
-		self.down2 = nn.Sequential(
-			nn.MaxPool2d(kernel_size=2, stride=2),
-			Conv2dBnRelu(1, 1, kernel_size=5, stride=1, padding=2)
-		)
-		
-		self.down3 = nn.Sequential(
-			nn.MaxPool2d(kernel_size=2, stride=2),
-			Conv2dBnRelu(1, 1, kernel_size=3, stride=1, padding=1),
-			Conv2dBnRelu(1, 1, kernel_size=3, stride=1, padding=1),
-		)
-		
-		self.conv2 = Conv2dBnRelu(1,1,kernel_size=5,stride=1,padding=2)
-		self.conv1 = Conv2dBnRelu(1,1,kernel_size=7,stride=1,padding=3)
-		
-	def forward(self, x):
-		
-		h, w = x.size(2), x.size(3)
-		b1 = self.branch1(x)
-		b1 = nn.Upsample(size=(h, w), mode='bilinear', align_corners=True)(b1)
 
-		mid = self.mid(x)
-		
-		x1 = self.down1(x)
-		x2 = self.down2(x1)
-		x3 = self.down3(x2)
-		x3 = nn.Upsample(size=(h//4, w//4), mode='bilinear', align_corners=True)(x3)
-		
-		x2 = self.conv2(x2)
-		x = x2+x3
-		x = nn.Upsample(size=(h//2, w//2), mode='bilinear', align_corners=True)(x)
-		
-		x1 = self.conv1(x1)
-		x = x+x1
-		x = nn.Upsample(size=(h, w), mode='bilinear', align_corners=True)(x)
-		
-		x = torch.mul(x, mid)
-		x = x + b1
-		return x
+
+class FPAModule1(nn.Module):
+
+    def __init__(self, in_ch, out_ch):
+        super(FPAModule1, self).__init__()
+
+        # global pooling branch
+        self.branch1 = nn.Sequential(
+            nn.AdaptiveAvgPool2d(1),
+            Conv2dBnRelu(in_ch, out_ch, kernel_size=1, stride=1, padding=0)
+        )
+
+        # midddle branch
+        self.mid = nn.Sequential(
+            Conv2dBnRelu(in_ch, out_ch, kernel_size=1, stride=1, padding=0)
+        )
+
+        self.down1 = nn.Sequential(
+            nn.MaxPool2d(kernel_size=2, stride=2),
+            Conv2dBnRelu(in_ch, 1, kernel_size=7, stride=1, padding=3)
+        )
+
+        self.down2 = nn.Sequential(
+            nn.MaxPool2d(kernel_size=2, stride=2),
+            Conv2dBnRelu(1, 1, kernel_size=5, stride=1, padding=2)
+        )
+
+        self.down3 = nn.Sequential(
+            nn.MaxPool2d(kernel_size=2, stride=2),
+            Conv2dBnRelu(1, 1, kernel_size=3, stride=1, padding=1),
+            Conv2dBnRelu(1, 1, kernel_size=3, stride=1, padding=1),
+        )
+
+        self.conv2 = Conv2dBnRelu(1, 1, kernel_size=5, stride=1, padding=2)
+        self.conv1 = Conv2dBnRelu(1, 1, kernel_size=7, stride=1, padding=3)
+
+    def forward(self, x):
+        h, w = x.size(2), x.size(3)
+        b1 = self.branch1(x)
+        b1 = nn.Upsample(size=(h, w), mode='bilinear', align_corners=True)(b1)
+
+        mid = self.mid(x)
+
+        x1 = self.down1(x)
+        x2 = self.down2(x1)
+        x3 = self.down3(x2)
+        x3 = nn.Upsample(size=(h // 4, w // 4), mode='bilinear', align_corners=True)(x3)
+
+        x2 = self.conv2(x2)
+        x = x2 + x3
+        x = nn.Upsample(size=(h // 2, w // 2), mode='bilinear', align_corners=True)(x)
+
+        x1 = self.conv1(x1)
+        x = x + x1
+        x = nn.Upsample(size=(h, w), mode='bilinear', align_corners=True)(x)
+
+        x = torch.mul(x, mid)
+        x = x + b1
+        return x
 
 
 '''
@@ -103,119 +104,124 @@ Feature Pyramid Attention Module
 FPAModule2:
 	downsample use convolution with stride = 2
 '''
+
+
 class FPAModule2(nn.Module):
-	
-	def __init__(self, in_ch, out_ch):
-		super(FPAModule2, self).__init__()
-		
-		# global pooling branch
-		self.branch1 = nn.Sequential(
-			nn.AdaptiveAvgPool2d(1),
-			Conv2dBnRelu(in_ch, out_ch, kernel_size=1, stride=1, padding=0)
-		)
-		
-		# midddle branch
-		self.mid = nn.Sequential(
-			Conv2dBnRelu(in_ch, out_ch, kernel_size=1, stride=1, padding=0)
-		)
-		
-		self.down1 = Conv2dBnRelu(in_ch, 1, kernel_size=7, stride=2, padding=3)
-		
-		self.down2 = Conv2dBnRelu(1, 1, kernel_size=5, stride=2, padding=2)
-		
-		self.down3 = nn.Sequential(
-			Conv2dBnRelu(1, 1, kernel_size=3, stride=2, padding=1),
-			Conv2dBnRelu(1, 1, kernel_size=3, stride=1, padding=1),
-		)
-		
-		self.conv2 = Conv2dBnRelu(1, 1, kernel_size=5, stride=1, padding=2)
-		self.conv1 = Conv2dBnRelu(1, 1, kernel_size=7, stride=1, padding=3)
-	
-	def forward(self, x):
-		h, w = x.size(2), x.size(3)
-		b1 = self.branch1(x)
-		b1 = nn.Upsample(size=(h, w), mode='bilinear', align_corners=True)(b1)
-		
-		mid = self.mid(x)
-		
-		x1 = self.down1(x)
-		x2 = self.down2(x1)
-		x3 = self.down3(x2)
-		x3 = nn.Upsample(size=(h // 4, w // 4), mode='bilinear', align_corners=True)(x3)
-		
-		x2 = self.conv2(x2)
-		x = x2 + x3
-		x = nn.Upsample(size=(h // 2, w // 2), mode='bilinear', align_corners=True)(x)
-		
-		x1 = self.conv1(x1)
-		x = x + x1
-		x = nn.Upsample(size=(h, w), mode='bilinear', align_corners=True)(x)
-		
-		x = torch.mul(x, mid)
-		x = x + b1
-		return x
+
+    def __init__(self, in_ch, out_ch):
+        super(FPAModule2, self).__init__()
+
+        # global pooling branch
+        self.branch1 = nn.Sequential(
+            nn.AdaptiveAvgPool2d(1),
+            Conv2dBnRelu(in_ch, out_ch, kernel_size=1, stride=1, padding=0)
+        )
+
+        # midddle branch
+        self.mid = nn.Sequential(
+            Conv2dBnRelu(in_ch, out_ch, kernel_size=1, stride=1, padding=0)
+        )
+
+        self.down1 = Conv2dBnRelu(in_ch, 1, kernel_size=7, stride=2, padding=3)
+
+        self.down2 = Conv2dBnRelu(1, 1, kernel_size=5, stride=2, padding=2)
+
+        self.down3 = nn.Sequential(
+            Conv2dBnRelu(1, 1, kernel_size=3, stride=2, padding=1),
+            Conv2dBnRelu(1, 1, kernel_size=3, stride=1, padding=1),
+        )
+
+        self.conv2 = Conv2dBnRelu(1, 1, kernel_size=5, stride=1, padding=2)
+        self.conv1 = Conv2dBnRelu(1, 1, kernel_size=7, stride=1, padding=3)
+
+    def forward(self, x):
+        h, w = x.size(2), x.size(3)
+        b1 = self.branch1(x)
+        b1 = nn.Upsample(size=(h, w), mode='bilinear', align_corners=True)(b1)
+
+        mid = self.mid(x)
+
+        x1 = self.down1(x)
+        x2 = self.down2(x1)
+        x3 = self.down3(x2)
+        x3 = nn.Upsample(size=(h // 4, w // 4), mode='bilinear', align_corners=True)(x3)
+
+        x2 = self.conv2(x2)
+        x = x2 + x3
+        x = nn.Upsample(size=(h // 2, w // 2), mode='bilinear', align_corners=True)(x)
+
+        x1 = self.conv1(x1)
+        x = x + x1
+        x = nn.Upsample(size=(h, w), mode='bilinear', align_corners=True)(x)
+
+        x = torch.mul(x, mid)
+        x = x + b1
+        return x
 
 
 '''
 papers:
 	Pyramid Attention Networks
 '''
+
+
 class PAN(nn.Module):
-	def __init__(self,backbone,pretrained=True,n_class=2):
-		'''
-		:param backbone: Bcakbone network
-		'''
-		super(PAN,self).__init__()
-		
-		if backbone.lower() == 'resnet34':
-			encoder = torchvision.models.resnet34(pretrained)
-			bottom_ch = 512
-		elif backbone.lower() == 'resnet50':
-			encoder = torchvision.models.resnet50(pretrained)
-			bottom_ch = 2048
-		elif backbone.lower() == 'resnet101':
-			encoder = torchvision.models.resnet101(pretrained)
-			bottom_ch = 2048
-		elif backbone.lower() == 'resnet152':
-			encoder = torchvision.models.resnet152(pretrained)
-			bottom_ch = 2048
-		else:
-			raise NotImplementedError('{} Backbone not implement'.format(backbone))
-		
-		self.conv1 = nn.Sequential(encoder.conv1, encoder.bn1, encoder.relu,encoder.maxpool)  #1/4
-		self.conv2_x = encoder.layer1    # 1/4
-		self.conv3_x = encoder.layer2    # 1/8
-		self.conv4_x = encoder.layer3    # 1/16
-		self.conv5_x = encoder.layer4    # 1/32
-		
-		self.fpa = FPAModule1(in_ch=bottom_ch,out_ch=n_class)
-		
-		self.gau3 = GAUModule(in_ch=bottom_ch // 2,out_ch=n_class)
-		
-		self.gau2 = GAUModule(in_ch=bottom_ch // 4, out_ch=n_class)
-		
-		self.gau1 = GAUModule(in_ch=bottom_ch // 8, out_ch=n_class)
-	
-	def forward(self,x):
-		h, w = x.size(2), x.size(3)
-		x1 = self.conv1(x)
-		x2 = self.conv2_x(x1)
-		x3 = self.conv3_x(x2)
-		x4 = self.conv4_x(x3)
-		x5 = self.conv5_x(x4)
-		
-		x5 = self.fpa(x5)        # 1/32
-		x4 = self.gau3(x4,x5)    # 1/16
-		x3 = self.gau2(x3,x4)    # 1/8
-		x2 = self.gau1(x2,x3)    # 1/4
-		
-		out = nn.Upsample(size=(h, w), mode='bilinear', align_corners=True)(x2)
-		
-		return out
-	
-=======
+    def __init__(self, backbone, pretrained=True, n_class=2):
+        '''
+        :param backbone: Bcakbone network
+        '''
+        super(PAN, self).__init__()
+
+        if backbone.lower() == 'resnet34':
+            encoder = torchvision.models.resnet34(pretrained)
+            bottom_ch = 512
+        elif backbone.lower() == 'resnet50':
+            encoder = torchvision.models.resnet50(pretrained)
+            bottom_ch = 2048
+        elif backbone.lower() == 'resnet101':
+            encoder = torchvision.models.resnet101(pretrained)
+            bottom_ch = 2048
+        elif backbone.lower() == 'resnet152':
+            encoder = torchvision.models.resnet152(pretrained)
+            bottom_ch = 2048
+        else:
+            raise NotImplementedError('{} Backbone not implement'.format(backbone))
+
+        self.conv1 = nn.Sequential(encoder.conv1, encoder.bn1, encoder.relu, encoder.maxpool)  # 1/4
+        self.conv2_x = encoder.layer1  # 1/4
+        self.conv3_x = encoder.layer2  # 1/8
+        self.conv4_x = encoder.layer3  # 1/16
+        self.conv5_x = encoder.layer4  # 1/32
+
+        self.fpa = FPAModule1(in_ch=bottom_ch, out_ch=n_class)
+
+        self.gau3 = GAUModule(in_ch=bottom_ch // 2, out_ch=n_class)
+
+        self.gau2 = GAUModule(in_ch=bottom_ch // 4, out_ch=n_class)
+
+        self.gau1 = GAUModule(in_ch=bottom_ch // 8, out_ch=n_class)
+
+    def forward(self, x):
+        h, w = x.size(2), x.size(3)
+        x1 = self.conv1(x)
+        x2 = self.conv2_x(x1)
+        x3 = self.conv3_x(x2)
+        x4 = self.conv4_x(x3)
+        x5 = self.conv5_x(x4)
+
+        x5 = self.fpa(x5)  # 1/32
+        x4 = self.gau3(x4, x5)  # 1/16
+        x3 = self.gau2(x3, x4)  # 1/8
+        x2 = self.gau1(x2, x3)  # 1/4
+
+        out = nn.Upsample(size=(h, w), mode='bilinear', align_corners=True)(x2)
+
+        return out
+
+== == == =
 import torch.nn as nn
 from pan import resnet
+
 
 class ResNet50(nn.Module):
     def __init__(self, pretrained=True):
@@ -249,6 +255,7 @@ class ResNet50(nn.Module):
 
         return feature_map, out
 
+
 class Classifier(nn.Module):
     def __init__(self, in_features=2048, num_class=20):
         super(Classifier, self).__init__()
@@ -259,6 +266,7 @@ class Classifier(nn.Module):
         x = self.fc1(x)
         return x
 
+
 class FPA(nn.Module):
     def __init__(self, channels=2048):
         """
@@ -266,7 +274,7 @@ class FPA(nn.Module):
         :type channels: int
         """
         super(FPA, self).__init__()
-        channels_mid = int(channels/4)
+        channels_mid = int(channels / 4)
 
         self.channels_cond = channels
 
@@ -279,7 +287,8 @@ class FPA(nn.Module):
         self.bn_gpb = nn.BatchNorm2d(channels)
 
         # C333 because of the shape of last feature maps is (16, 16).
-        self.conv7x7_1 = nn.Conv2d(self.channels_cond, channels_mid, kernel_size=(7, 7), stride=2, padding=3, bias=False)
+        self.conv7x7_1 = nn.Conv2d(self.channels_cond, channels_mid, kernel_size=(7, 7), stride=2, padding=3,
+                                   bias=False)
         self.bn1_1 = nn.BatchNorm2d(channels_mid)
         self.conv5x5_1 = nn.Conv2d(channels_mid, channels_mid, kernel_size=(5, 5), stride=2, padding=2, bias=False)
         self.bn2_1 = nn.BatchNorm2d(channels_mid)
@@ -298,7 +307,8 @@ class FPA(nn.Module):
                                                   bias=False)
         self.bn_upsample_3 = nn.BatchNorm2d(channels_mid)
 
-        self.conv_upsample_2 = nn.ConvTranspose2d(channels_mid, channels_mid, kernel_size=4, stride=2,padding=1, bias=False)
+        self.conv_upsample_2 = nn.ConvTranspose2d(channels_mid, channels_mid, kernel_size=4, stride=2, padding=1,
+                                                  bias=False)
         self.bn_upsample_2 = nn.BatchNorm2d(channels_mid)
 
         self.conv_upsample_1 = nn.ConvTranspose2d(channels_mid, channels, kernel_size=4, stride=2, padding=1,
@@ -319,7 +329,7 @@ class FPA(nn.Module):
         # Global pooling branch
         x_gpb = nn.AvgPool2d(x.shape[2:])(x).view(x.shape[0], self.channels_cond, 1, 1)
         x_gpb = self.conv_gpb(x_gpb)
-        x_gpb = self.bn_gpb(x_gpb) # 이 부분이 실행이 안된다.
+        x_gpb = self.bn_gpb(x_gpb)  # 이 부분이 실행이 안된다.
 
         # Branch 1
         x1_1 = self.conv7x7_1(x)
@@ -355,6 +365,7 @@ class FPA(nn.Module):
 
         return out
 
+
 class GAU(nn.Module):
     def __init__(self, channels_high, channels_low, upsample=True):
         super(GAU, self).__init__()
@@ -367,7 +378,8 @@ class GAU(nn.Module):
         self.bn_high = nn.BatchNorm2d(channels_low)
 
         if upsample:
-            self.conv_upsample = nn.ConvTranspose2d(channels_high, channels_low, kernel_size=4, stride=2, padding=1, bias=False)
+            self.conv_upsample = nn.ConvTranspose2d(channels_high, channels_low, kernel_size=4, stride=2, padding=1,
+                                                    bias=False)
             self.bn_upsample = nn.BatchNorm2d(channels_low)
         else:
             self.conv_reduction = nn.Conv2d(channels_high, channels_low, kernel_size=1, padding=0, bias=False)
@@ -391,7 +403,7 @@ class GAU(nn.Module):
         # high-feature map에 average pooling을 적용한 후에 reshape 진행.
         # 그리고 1x1 kernel로 conv해주고 BN, ReLU 진행.
         fms_high_gp = nn.AvgPool2d(fms_high.shape[2:])(fms_high).view(len(fms_high), c, 1, 1)
-        fms_high_gp = self.conv1x1(fms_high_gp) # 이걸 실시함으로써 high-low 만큼의 정보 손실이 발생하는 것인가...
+        fms_high_gp = self.conv1x1(fms_high_gp)  # 이걸 실시함으로써 high-low 만큼의 정보 손실이 발생하는 것인가...
         fms_high_gp = self.bn_high(fms_high_gp)
         fms_high_gp = self.relu(fms_high_gp)
 
@@ -408,6 +420,7 @@ class GAU(nn.Module):
                 self.bn_reduction(self.conv_reduction(fms_high)) + fms_att)
 
         return out
+
 
 class PAN(nn.Module):
     def __init__(self, blocks=[]):
@@ -442,9 +455,10 @@ class PAN(nn.Module):
             if i == 0:
                 fm_high = self.fpa(fm_low)
             else:
-                fm_high = self.gau[int(i-1)](fm_high, fm_low)
+                fm_high = self.gau[int(i - 1)](fm_high, fm_low)
 
         return fm_high
+
 
 class Mask_Classifier(nn.Module):
     def __init__(self, in_features=512, num_class=1):
@@ -455,4 +469,3 @@ class Mask_Classifier(nn.Module):
         # 먼저 upsampling해주고... 걍 한번에 진행하자.
         x = self.mask_conv(x)
         return x
->>>>>>> b21dbb31461ff9a9454c5184dcdb918fd063a3c7
