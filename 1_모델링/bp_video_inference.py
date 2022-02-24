@@ -7,7 +7,7 @@ import numpy as np
 
 from tqdm import tqdm
 from PIL import Image
-from test_unet.unet import UNet
+from UNet.unet import UNet
 from PAN.unet import unet_model as p_unet
 # from PAN.pan import 
 
