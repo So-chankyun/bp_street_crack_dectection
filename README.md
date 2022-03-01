@@ -93,7 +93,7 @@ PIL
 5. `1_모델링/output/`에 결과물 확인
     - 반환되는 결과물은 다음과 같음
 
-    > ⅰ. $ {(Crack이\;차지하는\;Pixel\;수) \over (전체\;픽셀\;수)}*100 $ 이 5% 이상인 Frame 이미지 캡처  
+    > ⅰ. *(Crack이 차지하는 Pixel 수)\*100 / (전체 픽셀 수)* 가 5% 이상인 Frame 이미지 캡처  
     > ⅱ. Crack Detection이 포함된 `.avi` 비디오 파일
 
 ## Output
