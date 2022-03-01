@@ -8,7 +8,6 @@ import numpy as np
 from tqdm import tqdm
 from PIL import Image
 from UNet.unet import UNet
-from PAN.unet import unet_model as p_unet
 # from PAN.pan import 
 
 def preprocess(img, scale):
@@ -37,31 +36,17 @@ def merge_img(frame, pred):
 
 def get_args():
     
-    """
-    parser의 argument 정의
-    
-        --width :       이미지 너비
-        --height :      이미지 높이
-        --v_number :    비디오 번호 - input video 파일 명 예) sample_video9.mp4
-        --frame :       output video 저장 시 프레임 수
-        --model_dir :   모델이 있는 directory 이름 (main code 참조)
-        --m_cam :       내장 카메라 사용 여부 (활성화 시 input video 대신 내장 카메라 작동)
-        --save :        저장 여부 (활성화 시 save 경로로 저장 - save 경로는 main에서 정의)
-        --crack_thred : Crack 비율의 경계 값 (예 : 1.0이면 1.0을 초과하는 frame의 ratio를 red로 표시)
-        
-    """
-    
     parser = argparse.ArgumentParser(description='Video Inference Learning Parameters')
     parser.add_argument('--width', '-W', type=int, default=640, help='Model Input Width')
     parser.add_argument('--height', '-H', type=int, default=360, help='Model Input Height')
-    parser.add_argument('--frame', '-fps', type=float, default=15.0, help='Output video Frame')
+    parser.add_argument('--frame', '-fps', type=float, default=30.0, help='Output video Frame')
     parser.add_argument('--save', action='store_true', default=False, help='Save Video option')
     parser.add_argument('--crack_thred', '-crth', type=float, default=100, help='Frame Threshold Ratio')
     return parser.parse_args()
 
 if __name__ == '__main__':
-    MODELS_PATH = 'C:/Users/yunjc/_python_jupyter/bupyeonggu/bp_road_crack_detection/1_모델링/unet_result_pth/models/'
-    VIDEOS = "D:/data/sample/부평구_도로영상/"
+    MODELS_PATH = './models/'
+    VIDEOS = "./input/"
     DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
     
     args = get_args()
@@ -85,22 +70,20 @@ if __name__ == '__main__':
     
         for video in tqdm(os.listdir(VIDEOS), total=len(os.listdir(VIDEOS))):
             try:
-                os.makedirs(f'D:/data/output/{m.replace(".pth","")}/{video.replace(".mp4","")}')
-                SAVE_PATH = f'D:/data/output/{m.replace(".pth","")}/{video.replace(".mp4","")}/{video.replace(".mp4","")}_out.avi'
+                os.makedirs(f'./output/{m.replace(".pth","")}/{video.replace(".mp4","")}')
+                SAVE_PATH = f'./output/{m.replace(".pth","")}/{video.replace(".mp4","")}/{video.replace(".mp4","")}_out.avi'
             except:
-                SAVE_PATH = f'D:/data/output/{m.replace(".pth","")}/{video.replace(".mp4","")}/{video.replace(".mp4","")}_out.avi'
+                SAVE_PATH = f'./output/{m.replace(".pth","")}/{video.replace(".mp4","")}/{video.replace(".mp4","")}_out.avi'
             
             try:
-                os.makedirs(f'D:/data/output/{m.replace(".pth","")}/{video.replace(".mp4","")}/capture/')
-                CAP_PATH = f'D:/data/output/{m.replace(".pth","")}/{video.replace(".mp4","")}/capture/'
+                os.makedirs(f'./output/{m.replace(".pth","")}/{video.replace(".mp4","")}/capture/')
+                CAP_PATH = f'./output/{m.replace(".pth","")}/{video.replace(".mp4","")}/capture/'
             except:
-                CAP_PATH = f'D:/data/output/{m.replace(".pth","")}/{video.replace(".mp4","")}/capture/'  
+                CAP_PATH = f'./output/{m.replace(".pth","")}/{video.replace(".mp4","")}/capture/'  
 
             capture = cv2.VideoCapture(VIDEOS+video)
             capture.set(cv2.CAP_PROP_FRAME_WIDTH, args.width)
             capture.set(cv2.CAP_PROP_FRAME_HEIGHT, args.height)
-
-            # print("재생할 파일 너비, 높이 : %d, %d"%(args.width, args.height))
 
             fourcc = cv2.VideoWriter_fourcc(*'DIVX')
             if args.save:
@@ -115,7 +98,6 @@ if __name__ == '__main__':
                 full_frame = capture.get(cv2.CAP_PROP_FRAME_COUNT)
                 ret, frame = capture.read()
                 if not ret:
-                    # print("프레임을 수신할 수 없습니다. 종료 중 ...")
                     break
 
                 pred_img = pred_frame(frame, model, DEVICE)
