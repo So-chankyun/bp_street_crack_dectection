@@ -1,11 +1,15 @@
 # bp_road_crack_dectection
 
-- [Setting](#Setting)
-- [Data](#Data)
-- [Train](#Train)
-- [Video Inference](#Video_inference)
-    - [How to Use](#How_to_Use)
-- [Output](#Output)
+- [Setting](#setting)
+    - [Hardware and Python](#hardware-and-python)
+    - [필수 library](#%ED%95%84%EC%88%98-library)
+- [Data](#data)
+- [Train](#train)
+    - [Wandb](#wandb)
+    - [Data Path Setting](#data-path-setting)
+- [Video Inference](#video-inference)
+    - [How to Use](#how-to-use)
+- [Output](#output)
 
 <span style="color:RED"> !!! `README.md` 미완성 !!! </span>
 
@@ -70,7 +74,24 @@ PIL
 
 ## Train
 
+### Wandb
 
+Training을 위해서 우선 `wandb`를 install하고 계정에 로그인하는 것을 추천한다. wandb를 활용한다면 별도의 evaluation과 validation에 대한 시각화 라인을 줄일 수 있다.(web에서 트래킹하는 것이니 네트워크 환경이 필요하다.) `wandb`에 관한 사항은 [여기](https://docs.wandb.ai/quickstart)를 통해 세팅할 수 있다.
+
+### Data Path Setting
+
+`train.py`를 원활히 실행하기 위해서 데이터 경로를 세팅한다. `train.py`의 상단부에 데이터 경로를 정의하는 코드 라인을 수정한다.
+
+1. Ai Hub를 통해 받은 데이터에서 [Data](#data)를 참고하여 `제외한 데이터`를 제외한 폴더의 모든 압축을 풀고, 다음의 경로로 바꾸어준다.
+    ```text
+    images:     /도로장애물·표면 인지 영상(수도권)/Training/Images/CRACK/images
+    annotations: /도로장애물·표면 인지 영상(수도권)/Training/Annotations/CRACK/annotations
+    ```
+2. `train.py`의 상단 코드라인을 수정한다.
+    ```python
+    DATAPATH = "<다운로드한 경로>/도로장애물·표면 인지 영상(수도권)/Training/!CHANGE/CRACK/!changes/"
+    ```
+    Data 경로를 위와 다른 경로로 설정한다면, 코드라인 하위의 images와 annotations의 경로를 지정하는 부분도 수정해야 한다.
 
 ## Video Inference
 
@@ -97,3 +118,7 @@ PIL
     > ⅱ. Crack Detection이 포함된 `.avi` 비디오 파일
 
 ## Output
+
+### Video Output
+
+![Video_Out](https://github.com/chaaaning/bp_road_crack_detection/blob/main/_imgs/video_out.gif?raw=true)
