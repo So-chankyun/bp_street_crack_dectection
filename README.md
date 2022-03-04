@@ -7,6 +7,7 @@
 - [Train](#train)
     - [Wandb](#wandb)
     - [Data Path Setting](#data-path-setting)
+    - [How to train](#how-to-train)
 - [Video Inference](#video-inference)
     - [How to Use](#how-to-use)
 - [Output](#output)
@@ -80,7 +81,7 @@ Training을 위해서 우선 `wandb`를 install하고 계정에 로그인하는 
 
 ### Data Path Setting
 
-`train.py`를 원활히 실행하기 위해서 데이터 경로를 세팅한다. `train.py`의 상단부에 데이터 경로를 정의하는 코드 라인을 수정한다.
+[`train.py`](https://github.com/chaaaning/bp_road_crack_detection/blob/main/1_%EB%AA%A8%EB%8D%B8%EB%A7%81/UNet/train.py)(*클릭 시 소스코드 이동*)를 원활히 실행하기 위해서 데이터 경로를 세팅한다. `train.py`의 상단부에 데이터 경로를 정의하는 코드 라인을 수정한다.
 
 1. Ai Hub를 통해 받은 데이터에서 [Data](#data)를 참고하여 `제외한 데이터`를 제외한 폴더의 모든 압축을 풀고, 다음의 경로로 바꾸어준다.
     ```text
@@ -92,6 +93,57 @@ Training을 위해서 우선 `wandb`를 install하고 계정에 로그인하는 
     DATAPATH = "<다운로드한 경로>/도로장애물·표면 인지 영상(수도권)/Training/!CHANGE/CRACK/!changes/"
     ```
     Data 경로를 위와 다른 경로로 설정한다면, 코드라인 하위의 images와 annotations의 경로를 지정하는 부분도 수정해야 한다.
+
+### How to train
+
+ide를 활용하여 소스코드를 running 해도 되지만, `args.parser` 옵션 활용을 위해 cmd 또는 Anaconda prompt를 활용하는 것을 추천한다.
+
+1. 경로 이동
+    ```cmd
+    cd <clone한 디렉토리>/1_모델링/UNet
+    ```
+
+2. `args.parser`옵션 설정
+    ```cmd
+    python train.py -b <batch_size>, ... , --amp, --bilinear
+    ```
+
+    위의 cmd 코드는 학습 예시이다. 본인의 VGA, 학습 데이터 비율 등 조건에 맞게 옵션을 조절한다. 옵션은 다음과 같다.
+
+    - **Option Experience**
+
+    |Option Name    |Experience                                             |
+    |:--------------|:------------------------------------------------------|
+    |`epcohs`       |모델 학습의 epochs 설정                                 |
+    |`batch-size`   |모델 학습의 batch size 설정                             |
+    |`learning-rate`|모델 학습의 learning rate 설정                          |
+    |`load`         |Transfer learning 시 불러오는 모델에 대한 옵션           |
+    |`scale`        |Image Scaling Size, 이미지 다운사이징을 위한 스케일      |
+    |`valid_count`  |Validation을 수행할 횟수로 2,5,10 번으로 설정 가능       |
+    |`validation`   |Validation을 수행할 데이터 비율                         |
+    |`thickness`    |Crack을 그리는 굵기에 대한 옵션                          |
+    |`amp`          |`--amp` 활성화 시 Mixed Precision 수행                  |
+    |`data_number`  |사용할 데이터의 갯수를 지정, 전체 데이터 셋에서 랜덤 샘플링|
+    |`bilinear`     |`--bilinear` 활성화 시 UNet의 bilinear를 True로 설정    |
+    |`num_workers`  |DataLoader의 num workers의 수를 지정                    |
+
+    - **Option Detail**
+    
+    |Option Name    |Activation             |Type   |Default|
+    |:--------------|:----------------------|:------|:------|
+    |`epcohs`       |--epochs, -e           |int    |5      |
+    |`batch-size`   |--batch-size, -b       |int    |6      |
+    |`learning-rate`|--learning-rate, -l    |float  |0.00001|
+    |`load`         |--load, -f             |float  |False  |
+    |`scale`        |--scale, -s            |float  |0.5    |
+    |`valid_count`  |--valid_count, -vc     |int    |2      |
+    |`validation`   |--validation, -v       |float  |10.0   |
+    |`thickness`    |--thickness, -th       |int    |5      |
+    |`amp`          |--amp (store opt.)     |boolean|False  |
+    |`data_number`  |--data_number, -dn     |int    |-1     |
+    |`bilinear`     |--bilinear (store opt.)|boolean|False  |
+    |`num_workers`  |--num_workers, -nw     |int    |4      |
+    
 
 ## Video Inference
 
