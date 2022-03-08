@@ -1,0 +1,19 @@
+INFO: Starting training:
+        Epochs:          5
+        Batch size:      8
+        Learning rate:   1e-05
+        Training size:   4000
+        Validation size: 1000
+        Checkpoints:     True
+        Device:          cuda
+        Images scaling:  0.5
+        Mixed Precision: True
+Epoch 1/5:   0%|                                                                                                                                                                                                | 0/4000 [00:01<?, ?img/s]
+INFO: Saved interrupt
+Exception ignored in: <function _MultiProcessingDataLoaderIter.__del__ at 0x0000021F21480318>
+Traceback (most recent call last):
+  File "C:\Users\chank\anaconda3\envs\deep_learning\lib\site-packages\torch\utils\data\dataloader.py", line 1328, in __del__
+    self._shutdown_workers()
+  File "C:\Users\chank\anaconda3\envs\deep_learning\lib\site-packages\torch\utils\data\dataloader.py", line 1295, in _shutdown_workers
+    if self._persistent_workers or self._workers_status[worker_id]:
+AttributeError: '_MultiProcessingDataLoaderIter' object has no attribute '_workers_status'

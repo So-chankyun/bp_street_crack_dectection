@@ -1,0 +1,168 @@
+2022-02-04 15:17:36,091 INFO    MainThread:1884 [internal.py:wandb_internal():92] W&B internal server running at pid: 1884, started at: 2022-02-04 15:17:36.091942
+2022-02-04 15:17:36,093 INFO    WriterThread:1884 [datastore.py:open_for_write():77] open: C:\Users\chank\bp_road_crack_detection-main\1_¸ðµ¨¸µ\test_unet\wandb\run-20220204_151735-3ue6dywj\run-3ue6dywj.wandb
+2022-02-04 15:17:36,094 DEBUG   HandlerThread:1884 [handler.py:handle_request():131] handle_request: check_version
+2022-02-04 15:17:36,096 DEBUG   SenderThread:1884 [sender.py:send():235] send: header
+2022-02-04 15:17:36,096 DEBUG   SenderThread:1884 [sender.py:send_request():249] send_request: check_version
+2022-02-04 15:17:36,139 DEBUG   SenderThread:1884 [sender.py:send():235] send: run
+2022-02-04 15:17:36,142 INFO    SenderThread:1884 [sender.py:_maybe_setup_resume():490] checking resume status for None/U-Net/3ue6dywj
+2022-02-04 15:17:36,582 INFO    SenderThread:1884 [dir_watcher.py:__init__():169] watching files in: C:\Users\chank\bp_road_crack_detection-main\1_¸ðµ¨¸µ\test_unet\wandb\run-20220204_151735-3ue6dywj\files
+2022-02-04 15:17:36,582 INFO    SenderThread:1884 [sender.py:_start_run_threads():812] run started: 3ue6dywj with start time 1643955455
+2022-02-04 15:17:36,583 DEBUG   SenderThread:1884 [sender.py:send():235] send: summary
+2022-02-04 15:17:36,583 DEBUG   HandlerThread:1884 [handler.py:handle_request():131] handle_request: run_start
+2022-02-04 15:17:36,584 INFO    SenderThread:1884 [sender.py:_save_file():944] saving file wandb-summary.json with policy end
+2022-02-04 15:17:36,595 DEBUG   HandlerThread:1884 [meta.py:__init__():36] meta init
+2022-02-04 15:17:36,595 DEBUG   HandlerThread:1884 [meta.py:__init__():50] meta init done
+2022-02-04 15:17:36,595 DEBUG   HandlerThread:1884 [meta.py:probe():210] probe
+2022-02-04 15:17:36,618 DEBUG   HandlerThread:1884 [git.py:repo():33] git repository is invalid
+2022-02-04 15:17:36,619 DEBUG   HandlerThread:1884 [meta.py:_save_pip():54] save pip
+2022-02-04 15:17:36,619 DEBUG   HandlerThread:1884 [meta.py:_save_pip():68] save pip done
+2022-02-04 15:17:36,619 DEBUG   HandlerThread:1884 [meta.py:_save_conda():75] save conda
+2022-02-04 15:17:37,587 INFO    Thread-17 :1884 [dir_watcher.py:_on_file_created():217] file/dir created: C:\Users\chank\bp_road_crack_detection-main\1_¸ðµ¨¸µ\test_unet\wandb\run-20220204_151735-3ue6dywj\files\wandb-summary.json
+2022-02-04 15:17:37,587 INFO    Thread-17 :1884 [dir_watcher.py:_on_file_created():217] file/dir created: C:\Users\chank\bp_road_crack_detection-main\1_¸ðµ¨¸µ\test_unet\wandb\run-20220204_151735-3ue6dywj\files\requirements.txt
+2022-02-04 15:17:37,587 INFO    Thread-17 :1884 [dir_watcher.py:_on_file_created():217] file/dir created: C:\Users\chank\bp_road_crack_detection-main\1_¸ðµ¨¸µ\test_unet\wandb\run-20220204_151735-3ue6dywj\files\conda-environment.yaml
+2022-02-04 15:17:37,931 DEBUG   HandlerThread:1884 [meta.py:_save_conda():85] save conda done
+2022-02-04 15:17:37,931 DEBUG   HandlerThread:1884 [meta.py:probe():248] probe done
+2022-02-04 15:17:37,936 DEBUG   SenderThread:1884 [sender.py:send():235] send: files
+2022-02-04 15:17:37,936 INFO    SenderThread:1884 [sender.py:_save_file():944] saving file wandb-metadata.json with policy now
+2022-02-04 15:17:37,941 DEBUG   HandlerThread:1884 [handler.py:handle_request():131] handle_request: stop_status
+2022-02-04 15:17:37,945 DEBUG   SenderThread:1884 [sender.py:send_request():249] send_request: stop_status
+2022-02-04 15:17:38,144 DEBUG   SenderThread:1884 [sender.py:send():235] send: config
+2022-02-04 15:17:38,515 INFO    Thread-20 :1884 [upload_job.py:push():137] Uploaded file C:\Users\chank\AppData\Local\Temp\tmpy9bi2ifjwandb\31n4jiub-wandb-metadata.json
+2022-02-04 15:17:38,591 INFO    Thread-17 :1884 [dir_watcher.py:_on_file_modified():230] file/dir modified: C:\Users\chank\bp_road_crack_detection-main\1_¸ðµ¨¸µ\test_unet\wandb\run-20220204_151735-3ue6dywj\files\conda-environment.yaml
+2022-02-04 15:17:38,592 INFO    Thread-17 :1884 [dir_watcher.py:_on_file_created():217] file/dir created: C:\Users\chank\bp_road_crack_detection-main\1_¸ðµ¨¸µ\test_unet\wandb\run-20220204_151735-3ue6dywj\files\wandb-metadata.json
+2022-02-04 15:17:38,592 INFO    Thread-17 :1884 [dir_watcher.py:_on_file_created():217] file/dir created: C:\Users\chank\bp_road_crack_detection-main\1_¸ðµ¨¸µ\test_unet\wandb\run-20220204_151735-3ue6dywj\files\output.log
+2022-02-04 15:17:40,600 INFO    Thread-17 :1884 [dir_watcher.py:_on_file_modified():230] file/dir modified: C:\Users\chank\bp_road_crack_detection-main\1_¸ðµ¨¸µ\test_unet\wandb\run-20220204_151735-3ue6dywj\files\output.log
+2022-02-04 15:17:50,689 INFO    Thread-17 :1884 [dir_watcher.py:_on_file_modified():230] file/dir modified: C:\Users\chank\bp_road_crack_detection-main\1_¸ðµ¨¸µ\test_unet\wandb\run-20220204_151735-3ue6dywj\files\output.log
+2022-02-04 15:17:53,154 DEBUG   HandlerThread:1884 [handler.py:handle_request():131] handle_request: stop_status
+2022-02-04 15:17:53,155 DEBUG   SenderThread:1884 [sender.py:send_request():249] send_request: stop_status
+2022-02-04 15:18:06,759 INFO    Thread-17 :1884 [dir_watcher.py:_on_file_modified():230] file/dir modified: C:\Users\chank\bp_road_crack_detection-main\1_¸ðµ¨¸µ\test_unet\wandb\run-20220204_151735-3ue6dywj\files\config.yaml
+2022-02-04 15:18:07,636 DEBUG   SenderThread:1884 [sender.py:send():235] send: stats
+2022-02-04 15:18:08,370 DEBUG   HandlerThread:1884 [handler.py:handle_request():131] handle_request: stop_status
+2022-02-04 15:18:08,371 DEBUG   SenderThread:1884 [sender.py:send_request():249] send_request: stop_status
+2022-02-04 15:18:23,597 DEBUG   HandlerThread:1884 [handler.py:handle_request():131] handle_request: stop_status
+2022-02-04 15:18:23,599 DEBUG   SenderThread:1884 [sender.py:send_request():249] send_request: stop_status
+2022-02-04 15:18:38,845 DEBUG   HandlerThread:1884 [handler.py:handle_request():131] handle_request: stop_status
+2022-02-04 15:18:38,846 DEBUG   SenderThread:1884 [sender.py:send_request():249] send_request: stop_status
+2022-02-04 15:18:40,785 DEBUG   SenderThread:1884 [sender.py:send():235] send: stats
+2022-02-04 15:18:54,070 DEBUG   HandlerThread:1884 [handler.py:handle_request():131] handle_request: stop_status
+2022-02-04 15:18:54,070 DEBUG   SenderThread:1884 [sender.py:send_request():249] send_request: stop_status
+2022-02-04 15:19:09,306 DEBUG   HandlerThread:1884 [handler.py:handle_request():131] handle_request: stop_status
+2022-02-04 15:19:09,306 DEBUG   SenderThread:1884 [sender.py:send_request():249] send_request: stop_status
+2022-02-04 15:19:13,970 DEBUG   SenderThread:1884 [sender.py:send():235] send: stats
+2022-02-04 15:19:24,521 DEBUG   HandlerThread:1884 [handler.py:handle_request():131] handle_request: stop_status
+2022-02-04 15:19:24,522 DEBUG   SenderThread:1884 [sender.py:send_request():249] send_request: stop_status
+2022-02-04 15:19:39,746 DEBUG   HandlerThread:1884 [handler.py:handle_request():131] handle_request: stop_status
+2022-02-04 15:19:39,746 DEBUG   SenderThread:1884 [sender.py:send_request():249] send_request: stop_status
+2022-02-04 15:19:43,174 WARNING MainThread:1884 [internal.py:wandb_internal():152] Internal process interrupt: 1
+2022-02-04 15:19:44,565 INFO    Thread-17 :1884 [dir_watcher.py:_on_file_modified():230] file/dir modified: C:\Users\chank\bp_road_crack_detection-main\1_¸ðµ¨¸µ\test_unet\wandb\run-20220204_151735-3ue6dywj\files\output.log
+2022-02-04 15:19:44,912 DEBUG   SenderThread:1884 [sender.py:send():235] send: telemetry
+2022-02-04 15:19:44,913 DEBUG   SenderThread:1884 [sender.py:send():235] send: exit
+2022-02-04 15:19:44,913 DEBUG   HandlerThread:1884 [handler.py:handle_request():131] handle_request: poll_exit
+2022-02-04 15:19:44,913 INFO    SenderThread:1884 [sender.py:send_exit():371] handling exit code: 0
+2022-02-04 15:19:44,913 INFO    SenderThread:1884 [sender.py:send_exit():373] handling runtime: 128
+2022-02-04 15:19:44,914 INFO    SenderThread:1884 [sender.py:_save_file():944] saving file wandb-summary.json with policy end
+2022-02-04 15:19:44,914 INFO    SenderThread:1884 [sender.py:send_exit():379] send defer
+2022-02-04 15:19:44,914 DEBUG   SenderThread:1884 [sender.py:send_request():249] send_request: poll_exit
+2022-02-04 15:19:44,915 DEBUG   HandlerThread:1884 [handler.py:handle_request():131] handle_request: defer
+2022-02-04 15:19:44,915 INFO    HandlerThread:1884 [handler.py:handle_request_defer():154] handle defer: 0
+2022-02-04 15:19:44,916 DEBUG   SenderThread:1884 [sender.py:send_request():249] send_request: defer
+2022-02-04 15:19:44,916 INFO    SenderThread:1884 [sender.py:send_request_defer():388] handle sender defer: 0
+2022-02-04 15:19:44,916 INFO    SenderThread:1884 [sender.py:transition_state():392] send defer: 1
+2022-02-04 15:19:44,916 DEBUG   HandlerThread:1884 [handler.py:handle_request():131] handle_request: defer
+2022-02-04 15:19:44,916 INFO    HandlerThread:1884 [handler.py:handle_request_defer():154] handle defer: 1
+2022-02-04 15:19:45,003 DEBUG   SenderThread:1884 [sender.py:send_request():249] send_request: defer
+2022-02-04 15:19:45,004 INFO    SenderThread:1884 [sender.py:send_request_defer():388] handle sender defer: 1
+2022-02-04 15:19:45,004 INFO    SenderThread:1884 [sender.py:transition_state():392] send defer: 2
+2022-02-04 15:19:45,004 DEBUG   SenderThread:1884 [sender.py:send():235] send: stats
+2022-02-04 15:19:45,006 DEBUG   HandlerThread:1884 [handler.py:handle_request():131] handle_request: defer
+2022-02-04 15:19:45,006 INFO    HandlerThread:1884 [handler.py:handle_request_defer():154] handle defer: 2
+2022-02-04 15:19:45,006 DEBUG   SenderThread:1884 [sender.py:send_request():249] send_request: defer
+2022-02-04 15:19:45,006 INFO    SenderThread:1884 [sender.py:send_request_defer():388] handle sender defer: 2
+2022-02-04 15:19:45,006 INFO    SenderThread:1884 [sender.py:transition_state():392] send defer: 3
+2022-02-04 15:19:45,006 DEBUG   HandlerThread:1884 [handler.py:handle_request():131] handle_request: defer
+2022-02-04 15:19:45,006 INFO    HandlerThread:1884 [handler.py:handle_request_defer():154] handle defer: 3
+2022-02-04 15:19:45,006 DEBUG   SenderThread:1884 [sender.py:send():235] send: summary
+2022-02-04 15:19:45,007 INFO    SenderThread:1884 [sender.py:_save_file():944] saving file wandb-summary.json with policy end
+2022-02-04 15:19:45,007 DEBUG   SenderThread:1884 [sender.py:send_request():249] send_request: defer
+2022-02-04 15:19:45,007 INFO    SenderThread:1884 [sender.py:send_request_defer():388] handle sender defer: 3
+2022-02-04 15:19:45,007 INFO    SenderThread:1884 [sender.py:transition_state():392] send defer: 4
+2022-02-04 15:19:45,008 DEBUG   HandlerThread:1884 [handler.py:handle_request():131] handle_request: defer
+2022-02-04 15:19:45,008 INFO    HandlerThread:1884 [handler.py:handle_request_defer():154] handle defer: 4
+2022-02-04 15:19:45,008 DEBUG   SenderThread:1884 [sender.py:send_request():249] send_request: defer
+2022-02-04 15:19:45,008 INFO    SenderThread:1884 [sender.py:send_request_defer():388] handle sender defer: 4
+2022-02-04 15:19:45,020 DEBUG   HandlerThread:1884 [handler.py:handle_request():131] handle_request: poll_exit
+2022-02-04 15:19:45,219 INFO    SenderThread:1884 [sender.py:transition_state():392] send defer: 5
+2022-02-04 15:19:45,219 DEBUG   SenderThread:1884 [sender.py:send_request():249] send_request: poll_exit
+2022-02-04 15:19:45,220 DEBUG   HandlerThread:1884 [handler.py:handle_request():131] handle_request: defer
+2022-02-04 15:19:45,220 INFO    HandlerThread:1884 [handler.py:handle_request_defer():154] handle defer: 5
+2022-02-04 15:19:45,221 DEBUG   SenderThread:1884 [sender.py:send_request():249] send_request: defer
+2022-02-04 15:19:45,221 INFO    SenderThread:1884 [sender.py:send_request_defer():388] handle sender defer: 5
+2022-02-04 15:19:45,221 INFO    SenderThread:1884 [dir_watcher.py:finish():283] shutting down directory watcher
+2022-02-04 15:19:45,335 DEBUG   HandlerThread:1884 [handler.py:handle_request():131] handle_request: poll_exit
+2022-02-04 15:19:45,572 INFO    SenderThread:1884 [dir_watcher.py:_on_file_modified():230] file/dir modified: C:\Users\chank\bp_road_crack_detection-main\1_¸ðµ¨¸µ\test_unet\wandb\run-20220204_151735-3ue6dywj\files\output.log
+2022-02-04 15:19:45,575 INFO    SenderThread:1884 [dir_watcher.py:_on_file_modified():230] file/dir modified: C:\Users\chank\bp_road_crack_detection-main\1_¸ðµ¨¸µ\test_unet\wandb\run-20220204_151735-3ue6dywj\files\config.yaml
+2022-02-04 15:19:45,577 INFO    SenderThread:1884 [dir_watcher.py:_on_file_modified():230] file/dir modified: C:\Users\chank\bp_road_crack_detection-main\1_¸ðµ¨¸µ\test_unet\wandb\run-20220204_151735-3ue6dywj\files\wandb-summary.json
+2022-02-04 15:19:45,580 INFO    SenderThread:1884 [dir_watcher.py:finish():313] scan: C:\Users\chank\bp_road_crack_detection-main\1_¸ðµ¨¸µ\test_unet\wandb\run-20220204_151735-3ue6dywj\files
+2022-02-04 15:19:45,581 INFO    SenderThread:1884 [dir_watcher.py:finish():327] scan save: C:\Users\chank\bp_road_crack_detection-main\1_¸ðµ¨¸µ\test_unet\wandb\run-20220204_151735-3ue6dywj\files\conda-environment.yaml conda-environment.yaml
+2022-02-04 15:19:45,583 INFO    SenderThread:1884 [dir_watcher.py:finish():327] scan save: C:\Users\chank\bp_road_crack_detection-main\1_¸ðµ¨¸µ\test_unet\wandb\run-20220204_151735-3ue6dywj\files\config.yaml config.yaml
+2022-02-04 15:19:45,586 INFO    SenderThread:1884 [dir_watcher.py:finish():327] scan save: C:\Users\chank\bp_road_crack_detection-main\1_¸ðµ¨¸µ\test_unet\wandb\run-20220204_151735-3ue6dywj\files\output.log output.log
+2022-02-04 15:19:45,596 INFO    SenderThread:1884 [dir_watcher.py:finish():327] scan save: C:\Users\chank\bp_road_crack_detection-main\1_¸ðµ¨¸µ\test_unet\wandb\run-20220204_151735-3ue6dywj\files\requirements.txt requirements.txt
+2022-02-04 15:19:45,603 INFO    SenderThread:1884 [dir_watcher.py:finish():327] scan save: C:\Users\chank\bp_road_crack_detection-main\1_¸ðµ¨¸µ\test_unet\wandb\run-20220204_151735-3ue6dywj\files\wandb-metadata.json wandb-metadata.json
+2022-02-04 15:19:45,603 INFO    SenderThread:1884 [dir_watcher.py:finish():327] scan save: C:\Users\chank\bp_road_crack_detection-main\1_¸ðµ¨¸µ\test_unet\wandb\run-20220204_151735-3ue6dywj\files\wandb-summary.json wandb-summary.json
+2022-02-04 15:19:45,610 INFO    SenderThread:1884 [sender.py:transition_state():392] send defer: 6
+2022-02-04 15:19:45,610 DEBUG   SenderThread:1884 [sender.py:send_request():249] send_request: poll_exit
+2022-02-04 15:19:45,620 DEBUG   HandlerThread:1884 [handler.py:handle_request():131] handle_request: defer
+2022-02-04 15:19:45,620 INFO    HandlerThread:1884 [handler.py:handle_request_defer():154] handle defer: 6
+2022-02-04 15:19:45,621 DEBUG   SenderThread:1884 [sender.py:send_request():249] send_request: defer
+2022-02-04 15:19:45,621 INFO    SenderThread:1884 [sender.py:send_request_defer():388] handle sender defer: 6
+2022-02-04 15:19:45,621 INFO    SenderThread:1884 [file_pusher.py:finish():177] shutting down file pusher
+2022-02-04 15:19:45,722 DEBUG   HandlerThread:1884 [handler.py:handle_request():131] handle_request: poll_exit
+2022-02-04 15:19:45,723 DEBUG   SenderThread:1884 [sender.py:send_request():249] send_request: poll_exit
+2022-02-04 15:19:45,832 DEBUG   HandlerThread:1884 [handler.py:handle_request():131] handle_request: poll_exit
+2022-02-04 15:19:45,833 DEBUG   SenderThread:1884 [sender.py:send_request():249] send_request: poll_exit
+2022-02-04 15:19:45,942 DEBUG   HandlerThread:1884 [handler.py:handle_request():131] handle_request: poll_exit
+2022-02-04 15:19:45,942 DEBUG   SenderThread:1884 [sender.py:send_request():249] send_request: poll_exit
+2022-02-04 15:19:46,055 DEBUG   HandlerThread:1884 [handler.py:handle_request():131] handle_request: poll_exit
+2022-02-04 15:19:46,057 DEBUG   SenderThread:1884 [sender.py:send_request():249] send_request: poll_exit
+2022-02-04 15:19:46,178 INFO    Thread-24 :1884 [upload_job.py:push():137] Uploaded file C:\Users\chank\bp_road_crack_detection-main\1_¸ðµ¨¸µ\test_unet\wandb\run-20220204_151735-3ue6dywj\files\requirements.txt
+2022-02-04 15:19:46,179 DEBUG   HandlerThread:1884 [handler.py:handle_request():131] handle_request: poll_exit
+2022-02-04 15:19:46,179 DEBUG   SenderThread:1884 [sender.py:send_request():249] send_request: poll_exit
+2022-02-04 15:19:46,189 INFO    Thread-23 :1884 [upload_job.py:push():137] Uploaded file C:\Users\chank\bp_road_crack_detection-main\1_¸ðµ¨¸µ\test_unet\wandb\run-20220204_151735-3ue6dywj\files\output.log
+2022-02-04 15:19:46,190 INFO    Thread-25 :1884 [upload_job.py:push():137] Uploaded file C:\Users\chank\bp_road_crack_detection-main\1_¸ðµ¨¸µ\test_unet\wandb\run-20220204_151735-3ue6dywj\files\wandb-summary.json
+2022-02-04 15:19:46,190 INFO    Thread-21 :1884 [upload_job.py:push():137] Uploaded file C:\Users\chank\bp_road_crack_detection-main\1_¸ðµ¨¸µ\test_unet\wandb\run-20220204_151735-3ue6dywj\files\conda-environment.yaml
+2022-02-04 15:19:46,213 INFO    Thread-22 :1884 [upload_job.py:push():137] Uploaded file C:\Users\chank\bp_road_crack_detection-main\1_¸ðµ¨¸µ\test_unet\wandb\run-20220204_151735-3ue6dywj\files\config.yaml
+2022-02-04 15:19:46,288 DEBUG   HandlerThread:1884 [handler.py:handle_request():131] handle_request: poll_exit
+2022-02-04 15:19:46,288 DEBUG   SenderThread:1884 [sender.py:send_request():249] send_request: poll_exit
+2022-02-04 15:19:46,396 DEBUG   HandlerThread:1884 [handler.py:handle_request():131] handle_request: poll_exit
+2022-02-04 15:19:46,397 DEBUG   SenderThread:1884 [sender.py:send_request():249] send_request: poll_exit
+2022-02-04 15:19:46,427 INFO    Thread-16 :1884 [sender.py:transition_state():392] send defer: 7
+2022-02-04 15:19:46,427 DEBUG   HandlerThread:1884 [handler.py:handle_request():131] handle_request: defer
+2022-02-04 15:19:46,428 INFO    HandlerThread:1884 [handler.py:handle_request_defer():154] handle defer: 7
+2022-02-04 15:19:46,428 DEBUG   SenderThread:1884 [sender.py:send_request():249] send_request: defer
+2022-02-04 15:19:46,428 INFO    SenderThread:1884 [sender.py:send_request_defer():388] handle sender defer: 7
+2022-02-04 15:19:46,507 DEBUG   HandlerThread:1884 [handler.py:handle_request():131] handle_request: poll_exit
+2022-02-04 15:19:47,021 INFO    SenderThread:1884 [sender.py:transition_state():392] send defer: 8
+2022-02-04 15:19:47,022 DEBUG   SenderThread:1884 [sender.py:send_request():249] send_request: poll_exit
+2022-02-04 15:19:47,025 DEBUG   HandlerThread:1884 [handler.py:handle_request():131] handle_request: defer
+2022-02-04 15:19:47,026 INFO    HandlerThread:1884 [handler.py:handle_request_defer():154] handle defer: 8
+2022-02-04 15:19:47,026 DEBUG   SenderThread:1884 [sender.py:send_request():249] send_request: defer
+2022-02-04 15:19:47,027 INFO    SenderThread:1884 [sender.py:send_request_defer():388] handle sender defer: 8
+2022-02-04 15:19:47,028 INFO    SenderThread:1884 [sender.py:transition_state():392] send defer: 9
+2022-02-04 15:19:47,030 DEBUG   SenderThread:1884 [sender.py:send():235] send: final
+2022-02-04 15:19:47,031 DEBUG   SenderThread:1884 [sender.py:send():235] send: footer
+2022-02-04 15:19:47,032 DEBUG   HandlerThread:1884 [handler.py:handle_request():131] handle_request: defer
+2022-02-04 15:19:47,033 INFO    HandlerThread:1884 [handler.py:handle_request_defer():154] handle defer: 9
+2022-02-04 15:19:47,033 DEBUG   SenderThread:1884 [sender.py:send_request():249] send_request: defer
+2022-02-04 15:19:47,033 INFO    SenderThread:1884 [sender.py:send_request_defer():388] handle sender defer: 9
+2022-02-04 15:19:47,133 DEBUG   HandlerThread:1884 [handler.py:handle_request():131] handle_request: poll_exit
+2022-02-04 15:19:47,134 DEBUG   SenderThread:1884 [sender.py:send_request():249] send_request: poll_exit
+2022-02-04 15:19:47,134 INFO    SenderThread:1884 [file_pusher.py:join():182] waiting for file pusher
+2022-02-04 15:19:47,591 DEBUG   HandlerThread:1884 [handler.py:handle_request():131] handle_request: get_summary
+2022-02-04 15:19:47,594 DEBUG   HandlerThread:1884 [handler.py:handle_request():131] handle_request: sampled_history
+2022-02-04 15:19:47,596 DEBUG   HandlerThread:1884 [handler.py:handle_request():131] handle_request: shutdown
+2022-02-04 15:19:47,596 INFO    HandlerThread:1884 [handler.py:finish():739] shutting down handler
+2022-02-04 15:19:48,042 INFO    WriterThread:1884 [datastore.py:close():281] close: C:\Users\chank\bp_road_crack_detection-main\1_¸ðµ¨¸µ\test_unet\wandb\run-20220204_151735-3ue6dywj\run-3ue6dywj.wandb
+2022-02-04 15:19:48,593 INFO    SenderThread:1884 [sender.py:finish():1075] shutting down sender
+2022-02-04 15:19:48,594 INFO    SenderThread:1884 [file_pusher.py:finish():177] shutting down file pusher
+2022-02-04 15:19:48,594 INFO    SenderThread:1884 [file_pusher.py:join():182] waiting for file pusher
+2022-02-04 15:19:49,021 INFO    MainThread:1884 [internal.py:handle_exit():79] Internal process exited

@@ -1,0 +1,37 @@
+INFO: Starting training:
+        Epochs:          5
+        Batch size:      8
+        Learning rate:   1e-05
+        Training size:   8017
+        Validation size: 2004
+        Checkpoints:     True
+        Device:          cuda
+        Images scaling:  0.5
+        Mixed Precision: True
+Epoch 1/5:   0%|                                                                                                                                                                                                | 0/8017 [00:08<?, ?img/s]
+Traceback (most recent call last):
+  File "train.py", line 203, in <module>
+    amp=args.amp)
+  File "train.py", line 81, in train_net
+    for batch in train_loader:
+  File "C:\Users\chank\anaconda3\envs\deep_learning\lib\site-packages\torch\utils\data\dataloader.py", line 521, in __next__
+    data = self._next_data()
+  File "C:\Users\chank\anaconda3\envs\deep_learning\lib\site-packages\torch\utils\data\dataloader.py", line 1203, in _next_data
+    return self._process_data(data)
+  File "C:\Users\chank\anaconda3\envs\deep_learning\lib\site-packages\torch\utils\data\dataloader.py", line 1229, in _process_data
+    data.reraise()
+  File "C:\Users\chank\anaconda3\envs\deep_learning\lib\site-packages\torch\_utils.py", line 425, in reraise
+    raise self.exc_type(msg)
+AssertionError: Caught AssertionError in DataLoader worker process 0.
+Original Traceback (most recent call last):
+  File "C:\Users\chank\anaconda3\envs\deep_learning\lib\site-packages\torch\utils\data\_utils\worker.py", line 287, in _worker_loop
+    data = fetcher.fetch(index)
+  File "C:\Users\chank\anaconda3\envs\deep_learning\lib\site-packages\torch\utils\data\_utils\fetch.py", line 44, in fetch
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+  File "C:\Users\chank\anaconda3\envs\deep_learning\lib\site-packages\torch\utils\data\_utils\fetch.py", line 44, in <listcomp>
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+  File "C:\Users\chank\anaconda3\envs\deep_learning\lib\site-packages\torch\utils\data\dataset.py", line 311, in __getitem__
+    return self.dataset[self.indices[idx]]
+  File "C:\Users\chank\bp_road_crack_detection-main\1_모델링\test_unet\utils\crack_data_loading.py", line 126, in __getitem__
+    assert len(ann_file)==1, f"어노테이션이 없거나, 여러 개의 ID를 지녔습니다. {name}: {ann_file}"
+AssertionError: 어노테이션이 없거나, 여러 개의 ID를 지녔습니다. V0F_HY_6929_20201210_145202_E_CH0_Seoul_Cloud_Frontback_Day_27203.png: []

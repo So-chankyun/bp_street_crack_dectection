@@ -1,0 +1,41 @@
+INFO: Starting training:
+        Epochs:          5
+        Batch size:      16
+        Learning rate:   7e-06
+        Training size:   8017
+        Validation size: 2004
+        Checkpoints:     True
+        Device:          cuda
+        Images scaling:  0.6
+        Mixed Precision: True
+Epoch 1/5:   0%|                                                                                                                                                                                                | 0/8017 [00:00<?, ?img/s]C:\Users\chank\anaconda3\envs\deep_learning\lib\site-packages\torch\nn\functional.py:718: UserWarning: Named tensors and all their associated APIs are an experimental feature and subject to change. Please do not use them for anything important until they are released as stable. (Triggered internally at  ..\c10/core/TensorImpl.h:1156.)
+  return torch.max_pool2d(input, kernel_size, stride, padding, dilation, ceil_mode)
+Epoch 1/5:   0%|                                                                                                                                                                                                | 0/8017 [00:28<?, ?img/s]
+Traceback (most recent call last):
+  File "train.py", line 203, in <module>
+    amp=args.amp)
+  File "train.py", line 97, in train_net
+    masks_pred = net(images)
+  File "C:\Users\chank\anaconda3\envs\deep_learning\lib\site-packages\torch\nn\modules\module.py", line 1051, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "C:\Users\chank\bp_road_crack_detection-main\1_모델링\test_unet\unet\unet_model.py", line 33, in forward
+    x = self.up3(x, x2)
+  File "C:\Users\chank\anaconda3\envs\deep_learning\lib\site-packages\torch\nn\modules\module.py", line 1051, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "C:\Users\chank\bp_road_crack_detection-main\1_모델링\test_unet\unet\unet_parts.py", line 68, in forward
+    return self.conv(x)
+  File "C:\Users\chank\anaconda3\envs\deep_learning\lib\site-packages\torch\nn\modules\module.py", line 1051, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "C:\Users\chank\bp_road_crack_detection-main\1_모델링\test_unet\unet\unet_parts.py", line 25, in forward
+    return self.double_conv(x)
+  File "C:\Users\chank\anaconda3\envs\deep_learning\lib\site-packages\torch\nn\modules\module.py", line 1051, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "C:\Users\chank\anaconda3\envs\deep_learning\lib\site-packages\torch\nn\modules\container.py", line 139, in forward
+    input = module(input)
+  File "C:\Users\chank\anaconda3\envs\deep_learning\lib\site-packages\torch\nn\modules\module.py", line 1051, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "C:\Users\chank\anaconda3\envs\deep_learning\lib\site-packages\torch\nn\modules\batchnorm.py", line 178, in forward
+    self.eps,
+  File "C:\Users\chank\anaconda3\envs\deep_learning\lib\site-packages\torch\nn\functional.py", line 2282, in batch_norm
+    input, weight, bias, running_mean, running_var, training, momentum, eps, torch.backends.cudnn.enabled
+RuntimeError: CUDA out of memory. Tried to allocate 324.00 MiB (GPU 0; 12.00 GiB total capacity; 10.01 GiB already allocated; 0 bytes free; 10.28 GiB reserved in total by PyTorch)

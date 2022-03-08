@@ -1,0 +1,30 @@
+{
+    "os": "Windows-10-10.0.22000-SP0",
+    "python": "3.7.11",
+    "heartbeatAt": "2022-02-05T15:25:07.673916",
+    "startedAt": "2022-02-05T15:25:06.596712",
+    "docker": null,
+    "gpu": "NVIDIA GeForce RTX 3060",
+    "gpu_count": 1,
+    "cpu_count": 16,
+    "cuda": null,
+    "args": [
+        "-b",
+        "8",
+        "--scale",
+        "0.6",
+        "-th",
+        "7",
+        "-v",
+        "20",
+        "-l",
+        "7e-6",
+        "--amp"
+    ],
+    "state": "running",
+    "program": "train.py",
+    "codePath": "train.py",
+    "host": "DESKTOP-G53D0LN",
+    "username": "chank",
+    "executable": "C:\\Users\\chank\\anaconda3\\envs\\deep_learning\\python.exe"
+}

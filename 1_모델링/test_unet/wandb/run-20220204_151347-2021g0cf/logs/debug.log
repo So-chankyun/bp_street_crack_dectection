@@ -1,0 +1,130 @@
+2022-02-04 15:13:47,589 INFO    MainThread:4656 [wandb_setup.py:_flush():75] Loading settings from C:\Users\chank\.config\wandb\settings
+2022-02-04 15:13:47,589 INFO    MainThread:4656 [wandb_setup.py:_flush():75] Loading settings from C:\Users\chank\bp_road_crack_detection-main\1_¸ðµ¨¸µ\test_unet\wandb\settings
+2022-02-04 15:13:47,589 INFO    MainThread:4656 [wandb_setup.py:_flush():75] Loading settings from environment variables: {}
+2022-02-04 15:13:47,589 INFO    MainThread:4656 [wandb_setup.py:_flush():75] Inferring run settings from compute environment: {'program_relpath': 'train.py', 'program': 'C:/Users/chank/bp_road_crack_detection-main/1_¸ðµ¨¸µ/test_unet/train.py'}
+2022-02-04 15:13:47,589 INFO    MainThread:4656 [wandb_setup.py:_flush():75] Applying login settings: {'anonymous': 'must'}
+2022-02-04 15:13:47,590 INFO    MainThread:4656 [wandb_init.py:_log_setup():386] Logging user logs to C:\Users\chank\bp_road_crack_detection-main\1_¸ðµ¨¸µ\test_unet\wandb\run-20220204_151347-2021g0cf\logs\debug.log
+2022-02-04 15:13:47,590 INFO    MainThread:4656 [wandb_init.py:_log_setup():387] Logging internal logs to C:\Users\chank\bp_road_crack_detection-main\1_¸ðµ¨¸µ\test_unet\wandb\run-20220204_151347-2021g0cf\logs\debug-internal.log
+2022-02-04 15:13:47,590 INFO    MainThread:4656 [wandb_init.py:init():420] calling init triggers
+2022-02-04 15:13:47,590 INFO    MainThread:4656 [wandb_init.py:init():427] wandb.init called with sweep_config: {}
+config: {}
+2022-02-04 15:13:47,590 INFO    MainThread:4656 [wandb_init.py:init():471] starting backend
+2022-02-04 15:13:47,590 INFO    MainThread:4656 [backend.py:_multiprocessing_setup():101] multiprocessing start_methods=spawn, using: spawn
+2022-02-04 15:13:47,593 INFO    MainThread:4656 [backend.py:ensure_launched():219] starting backend process...
+2022-02-04 15:13:48,133 INFO    MainThread:4656 [backend.py:ensure_launched():225] started backend process with pid: 21628
+2022-02-04 15:13:48,134 INFO    MainThread:4656 [wandb_init.py:init():480] backend started and connected
+2022-02-04 15:13:48,135 INFO    MainThread:4656 [wandb_init.py:init():550] updated telemetry
+2022-02-04 15:13:48,136 INFO    MainThread:4656 [wandb_init.py:init():581] communicating current version
+2022-02-04 15:13:48,641 INFO    MainThread:4656 [wandb_init.py:init():586] got version response 
+2022-02-04 15:13:48,641 INFO    MainThread:4656 [wandb_init.py:init():596] communicating run to backend with 30 second timeout
+2022-02-04 15:13:49,059 INFO    MainThread:4656 [wandb_init.py:init():624] starting run threads in backend
+2022-02-04 15:13:50,343 INFO    MainThread:4656 [wandb_run.py:_console_start():1827] atexit reg
+2022-02-04 15:13:50,343 INFO    MainThread:4656 [wandb_run.py:_redirect():1701] redirect: SettingsConsole.WRAP
+2022-02-04 15:13:50,344 INFO    MainThread:4656 [wandb_run.py:_redirect():1738] Wrapping output streams.
+2022-02-04 15:13:50,345 INFO    MainThread:4656 [wandb_run.py:_redirect():1762] Redirects installed.
+2022-02-04 15:13:50,345 INFO    MainThread:4656 [wandb_init.py:init():651] run started, returning control to user process
+2022-02-04 15:13:50,346 INFO    MainThread:4656 [wandb_run.py:_config_callback():966] config_cb None None {'epochs': 5, 'batch_size': 1, 'learning_rate': 1e-05, 'val_percent': 0.1, 'save_checkpoint': True, 'img_scale': 0.5, 'amp': False}
+2022-02-04 15:17:24,667 INFO    MainThread:4656 [wandb_run.py:_atexit_cleanup():1797] got exitcode: 0
+2022-02-04 15:17:24,667 INFO    MainThread:4656 [wandb_run.py:_restore():1769] restore
+2022-02-04 15:17:25,337 INFO    MainThread:4656 [wandb_run.py:_wait_for_finish():1929] got exit ret: file_counts {
+  wandb_count: 1
+}
+pusher_stats {
+  uploaded_bytes: 605
+  total_bytes: 605
+}
+
+2022-02-04 15:17:25,625 INFO    MainThread:4656 [wandb_run.py:_wait_for_finish():1929] got exit ret: file_counts {
+  wandb_count: 1
+}
+pusher_stats {
+  uploaded_bytes: 605
+  total_bytes: 605
+}
+
+2022-02-04 15:17:25,773 INFO    MainThread:4656 [wandb_run.py:_wait_for_finish():1929] got exit ret: file_counts {
+  wandb_count: 6
+}
+pusher_stats {
+  uploaded_bytes: 605
+  total_bytes: 7629
+}
+
+2022-02-04 15:17:25,882 INFO    MainThread:4656 [wandb_run.py:_wait_for_finish():1929] got exit ret: file_counts {
+  wandb_count: 6
+}
+pusher_stats {
+  uploaded_bytes: 605
+  total_bytes: 7629
+}
+
+2022-02-04 15:17:25,994 INFO    MainThread:4656 [wandb_run.py:_wait_for_finish():1929] got exit ret: file_counts {
+  wandb_count: 6
+}
+pusher_stats {
+  uploaded_bytes: 605
+  total_bytes: 7629
+}
+
+2022-02-04 15:17:26,099 INFO    MainThread:4656 [wandb_run.py:_wait_for_finish():1929] got exit ret: file_counts {
+  wandb_count: 6
+}
+pusher_stats {
+  uploaded_bytes: 7629
+  total_bytes: 7629
+}
+
+2022-02-04 15:17:26,208 INFO    MainThread:4656 [wandb_run.py:_wait_for_finish():1929] got exit ret: file_counts {
+  wandb_count: 6
+}
+pusher_stats {
+  uploaded_bytes: 7629
+  total_bytes: 7629
+}
+
+2022-02-04 15:17:26,316 INFO    MainThread:4656 [wandb_run.py:_wait_for_finish():1929] got exit ret: file_counts {
+  wandb_count: 6
+}
+pusher_stats {
+  uploaded_bytes: 7629
+  total_bytes: 7629
+}
+
+2022-02-04 15:17:26,428 INFO    MainThread:4656 [wandb_run.py:_wait_for_finish():1929] got exit ret: file_counts {
+  wandb_count: 6
+}
+pusher_stats {
+  uploaded_bytes: 7629
+  total_bytes: 7629
+}
+
+2022-02-04 15:17:26,537 INFO    MainThread:4656 [wandb_run.py:_wait_for_finish():1929] got exit ret: file_counts {
+  wandb_count: 6
+}
+pusher_stats {
+  uploaded_bytes: 7629
+  total_bytes: 7629
+}
+
+2022-02-04 15:17:27,229 INFO    MainThread:4656 [wandb_run.py:_wait_for_finish():1929] got exit ret: file_counts {
+  wandb_count: 6
+}
+pusher_stats {
+  uploaded_bytes: 7629
+  total_bytes: 7629
+}
+
+2022-02-04 15:17:27,744 INFO    MainThread:4656 [wandb_run.py:_wait_for_finish():1929] got exit ret: done: true
+exit_result {
+}
+file_counts {
+  wandb_count: 6
+}
+pusher_stats {
+  uploaded_bytes: 7629
+  total_bytes: 7629
+}
+local_info {
+}
+
+2022-02-04 15:17:28,967 INFO    MainThread:4656 [wandb_run.py:_append_files():2194] logging synced files

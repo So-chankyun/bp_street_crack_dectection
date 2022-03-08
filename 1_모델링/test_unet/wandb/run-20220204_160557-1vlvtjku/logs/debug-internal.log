@@ -1,0 +1,67 @@
+2022-02-04 16:05:58,648 INFO    MainThread:16892 [internal.py:wandb_internal():92] W&B internal server running at pid: 16892, started at: 2022-02-04 16:05:58.646495
+2022-02-04 16:05:58,650 INFO    WriterThread:16892 [datastore.py:open_for_write():77] open: G:\내 드라이브\인턴\bp_street_crack_dectection\1_모델링\test_unet\wandb\run-20220204_160557-1vlvtjku\run-1vlvtjku.wandb
+2022-02-04 16:05:58,650 DEBUG   HandlerThread:16892 [handler.py:handle_request():131] handle_request: check_version
+2022-02-04 16:05:58,655 DEBUG   SenderThread:16892 [sender.py:send():235] send: header
+2022-02-04 16:05:58,655 DEBUG   SenderThread:16892 [sender.py:send_request():249] send_request: check_version
+2022-02-04 16:05:58,713 DEBUG   SenderThread:16892 [sender.py:send():235] send: run
+2022-02-04 16:05:58,718 INFO    SenderThread:16892 [sender.py:_maybe_setup_resume():490] checking resume status for None/U-Net/1vlvtjku
+2022-02-04 16:05:59,164 INFO    SenderThread:16892 [dir_watcher.py:__init__():169] watching files in: G:\내 드라이브\인턴\bp_street_crack_dectection\1_모델링\test_unet\wandb\run-20220204_160557-1vlvtjku\files
+2022-02-04 16:05:59,165 INFO    SenderThread:16892 [sender.py:_start_run_threads():812] run started: 1vlvtjku with start time 1643958358
+2022-02-04 16:05:59,165 DEBUG   SenderThread:16892 [sender.py:send():235] send: summary
+2022-02-04 16:05:59,165 DEBUG   HandlerThread:16892 [handler.py:handle_request():131] handle_request: run_start
+2022-02-04 16:05:59,167 INFO    SenderThread:16892 [sender.py:_save_file():944] saving file wandb-summary.json with policy end
+2022-02-04 16:05:59,194 DEBUG   HandlerThread:16892 [meta.py:__init__():36] meta init
+2022-02-04 16:05:59,194 DEBUG   HandlerThread:16892 [meta.py:__init__():50] meta init done
+2022-02-04 16:05:59,194 DEBUG   HandlerThread:16892 [meta.py:probe():210] probe
+2022-02-04 16:05:59,219 DEBUG   HandlerThread:16892 [meta.py:_setup_git():200] setup git
+2022-02-04 16:05:59,272 DEBUG   HandlerThread:16892 [meta.py:_setup_git():207] setup git done
+2022-02-04 16:05:59,273 DEBUG   HandlerThread:16892 [meta.py:_save_pip():54] save pip
+2022-02-04 16:05:59,275 DEBUG   HandlerThread:16892 [meta.py:_save_pip():68] save pip done
+2022-02-04 16:05:59,276 DEBUG   HandlerThread:16892 [meta.py:_save_conda():75] save conda
+2022-02-04 16:06:00,182 INFO    Thread-17 :16892 [dir_watcher.py:_on_file_created():217] file/dir created: G:\내 드라이브\인턴\bp_street_crack_dectection\1_모델링\test_unet\wandb\run-20220204_160557-1vlvtjku\files\wandb-summary.json
+2022-02-04 16:06:00,182 INFO    Thread-17 :16892 [dir_watcher.py:_on_file_created():217] file/dir created: G:\내 드라이브\인턴\bp_street_crack_dectection\1_모델링\test_unet\wandb\run-20220204_160557-1vlvtjku\files\requirements.txt
+2022-02-04 16:06:00,183 INFO    Thread-17 :16892 [dir_watcher.py:_on_file_created():217] file/dir created: G:\내 드라이브\인턴\bp_street_crack_dectection\1_모델링\test_unet\wandb\run-20220204_160557-1vlvtjku\files\conda-environment.yaml
+2022-02-04 16:06:00,686 DEBUG   HandlerThread:16892 [meta.py:_save_conda():85] save conda done
+2022-02-04 16:06:00,686 DEBUG   HandlerThread:16892 [meta.py:probe():248] probe done
+2022-02-04 16:06:00,695 DEBUG   SenderThread:16892 [sender.py:send():235] send: files
+2022-02-04 16:06:00,696 INFO    SenderThread:16892 [sender.py:_save_file():944] saving file wandb-metadata.json with policy now
+2022-02-04 16:06:00,705 DEBUG   HandlerThread:16892 [handler.py:handle_request():131] handle_request: stop_status
+2022-02-04 16:06:00,706 DEBUG   SenderThread:16892 [sender.py:send_request():249] send_request: stop_status
+2022-02-04 16:06:00,925 DEBUG   SenderThread:16892 [sender.py:send():235] send: config
+2022-02-04 16:06:01,194 INFO    Thread-17 :16892 [dir_watcher.py:_on_file_modified():230] file/dir modified: G:\내 드라이브\인턴\bp_street_crack_dectection\1_모델링\test_unet\wandb\run-20220204_160557-1vlvtjku\files\conda-environment.yaml
+2022-02-04 16:06:01,195 INFO    Thread-17 :16892 [dir_watcher.py:_on_file_created():217] file/dir created: G:\내 드라이브\인턴\bp_street_crack_dectection\1_모델링\test_unet\wandb\run-20220204_160557-1vlvtjku\files\wandb-metadata.json
+2022-02-04 16:06:01,195 INFO    Thread-17 :16892 [dir_watcher.py:_on_file_created():217] file/dir created: G:\내 드라이브\인턴\bp_street_crack_dectection\1_모델링\test_unet\wandb\run-20220204_160557-1vlvtjku\files\output.log
+2022-02-04 16:06:01,277 INFO    Thread-22 :16892 [upload_job.py:push():137] Uploaded file C:\Users\chank\AppData\Local\Temp\tmplbkm2jr4wandb\3vuyy2on-wandb-metadata.json
+2022-02-04 16:06:07,257 INFO    Thread-17 :16892 [dir_watcher.py:_on_file_modified():230] file/dir modified: G:\내 드라이브\인턴\bp_street_crack_dectection\1_모델링\test_unet\wandb\run-20220204_160557-1vlvtjku\files\output.log
+2022-02-04 16:06:15,938 DEBUG   HandlerThread:16892 [handler.py:handle_request():131] handle_request: stop_status
+2022-02-04 16:06:15,940 DEBUG   SenderThread:16892 [sender.py:send_request():249] send_request: stop_status
+2022-02-04 16:06:29,618 INFO    Thread-17 :16892 [dir_watcher.py:_on_file_modified():230] file/dir modified: G:\내 드라이브\인턴\bp_street_crack_dectection\1_모델링\test_unet\wandb\run-20220204_160557-1vlvtjku\files\config.yaml
+2022-02-04 16:06:30,125 DEBUG   SenderThread:16892 [sender.py:send():235] send: stats
+2022-02-04 16:06:31,162 DEBUG   HandlerThread:16892 [handler.py:handle_request():131] handle_request: stop_status
+2022-02-04 16:06:31,163 DEBUG   SenderThread:16892 [sender.py:send_request():249] send_request: stop_status
+2022-02-04 16:06:37,742 INFO    Thread-17 :16892 [dir_watcher.py:_on_file_modified():230] file/dir modified: G:\내 드라이브\인턴\bp_street_crack_dectection\1_모델링\test_unet\wandb\run-20220204_160557-1vlvtjku\files\output.log
+2022-02-04 16:06:46,368 DEBUG   HandlerThread:16892 [handler.py:handle_request():131] handle_request: stop_status
+2022-02-04 16:06:46,369 DEBUG   SenderThread:16892 [sender.py:send_request():249] send_request: stop_status
+2022-02-04 16:07:01,675 DEBUG   HandlerThread:16892 [handler.py:handle_request():131] handle_request: stop_status
+2022-02-04 16:07:01,676 DEBUG   SenderThread:16892 [sender.py:send_request():249] send_request: stop_status
+2022-02-04 16:07:03,808 DEBUG   HandlerThread:16892 [handler.py:handle_request():131] handle_request: shutdown
+2022-02-04 16:07:03,809 INFO    HandlerThread:16892 [handler.py:finish():739] shutting down handler
+2022-02-04 16:07:04,098 INFO    Thread-17 :16892 [dir_watcher.py:_on_file_modified():230] file/dir modified: G:\내 드라이브\인턴\bp_street_crack_dectection\1_모델링\test_unet\wandb\run-20220204_160557-1vlvtjku\files\output.log
+2022-02-04 16:07:04,813 INFO    WriterThread:16892 [datastore.py:close():281] close: G:\내 드라이브\인턴\bp_street_crack_dectection\1_모델링\test_unet\wandb\run-20220204_160557-1vlvtjku\run-1vlvtjku.wandb
+2022-02-04 16:07:04,814 INFO    SenderThread:16892 [sender.py:finish():1075] shutting down sender
+2022-02-04 16:07:04,817 INFO    SenderThread:16892 [dir_watcher.py:finish():283] shutting down directory watcher
+2022-02-04 16:07:05,115 INFO    SenderThread:16892 [dir_watcher.py:finish():313] scan: G:\내 드라이브\인턴\bp_street_crack_dectection\1_모델링\test_unet\wandb\run-20220204_160557-1vlvtjku\files
+2022-02-04 16:07:05,115 INFO    SenderThread:16892 [dir_watcher.py:finish():327] scan save: G:\내 드라이브\인턴\bp_street_crack_dectection\1_모델링\test_unet\wandb\run-20220204_160557-1vlvtjku\files\config.yaml config.yaml
+2022-02-04 16:07:05,117 INFO    SenderThread:16892 [dir_watcher.py:finish():327] scan save: G:\내 드라이브\인턴\bp_street_crack_dectection\1_모델링\test_unet\wandb\run-20220204_160557-1vlvtjku\files\wandb-summary.json wandb-summary.json
+2022-02-04 16:07:05,118 INFO    SenderThread:16892 [dir_watcher.py:finish():327] scan save: G:\내 드라이브\인턴\bp_street_crack_dectection\1_모델링\test_unet\wandb\run-20220204_160557-1vlvtjku\files\requirements.txt requirements.txt
+2022-02-04 16:07:05,131 INFO    SenderThread:16892 [dir_watcher.py:finish():327] scan save: G:\내 드라이브\인턴\bp_street_crack_dectection\1_모델링\test_unet\wandb\run-20220204_160557-1vlvtjku\files\conda-environment.yaml conda-environment.yaml
+2022-02-04 16:07:05,136 INFO    SenderThread:16892 [dir_watcher.py:finish():327] scan save: G:\내 드라이브\인턴\bp_street_crack_dectection\1_모델링\test_unet\wandb\run-20220204_160557-1vlvtjku\files\wandb-metadata.json wandb-metadata.json
+2022-02-04 16:07:05,136 INFO    SenderThread:16892 [dir_watcher.py:finish():327] scan save: G:\내 드라이브\인턴\bp_street_crack_dectection\1_모델링\test_unet\wandb\run-20220204_160557-1vlvtjku\files\output.log output.log
+2022-02-04 16:07:05,141 INFO    SenderThread:16892 [file_pusher.py:finish():177] shutting down file pusher
+2022-02-04 16:07:05,141 INFO    SenderThread:16892 [file_pusher.py:join():182] waiting for file pusher
+2022-02-04 16:07:05,689 INFO    Thread-27 :16892 [upload_job.py:push():137] Uploaded file G:\내 드라이브\인턴\bp_street_crack_dectection\1_모델링\test_unet\wandb\run-20220204_160557-1vlvtjku\files\requirements.txt
+2022-02-04 16:07:05,725 INFO    Thread-29 :16892 [upload_job.py:push():137] Uploaded file G:\내 드라이브\인턴\bp_street_crack_dectection\1_모델링\test_unet\wandb\run-20220204_160557-1vlvtjku\files\output.log
+2022-02-04 16:07:05,738 INFO    Thread-25 :16892 [upload_job.py:push():137] Uploaded file G:\내 드라이브\인턴\bp_street_crack_dectection\1_모델링\test_unet\wandb\run-20220204_160557-1vlvtjku\files\config.yaml
+2022-02-04 16:07:05,752 INFO    Thread-26 :16892 [upload_job.py:push():137] Uploaded file G:\내 드라이브\인턴\bp_street_crack_dectection\1_모델링\test_unet\wandb\run-20220204_160557-1vlvtjku\files\wandb-summary.json
+2022-02-04 16:07:05,795 INFO    Thread-28 :16892 [upload_job.py:push():137] Uploaded file G:\내 드라이브\인턴\bp_street_crack_dectection\1_모델링\test_unet\wandb\run-20220204_160557-1vlvtjku\files\conda-environment.yaml
+2022-02-04 16:07:06,797 INFO    MainThread:16892 [internal.py:handle_exit():79] Internal process exited

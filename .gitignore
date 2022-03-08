@@ -4,4 +4,7 @@ pan modeling/__pycache__/
 pan modeling/data/
 pan modeling/scripts/
 pan modeling/checkpoints/
-2_report
+2_report/CrackDetection_Report.hwp
+0_데이터정제/(practice)cv_image_data.ipynb
+0_데이터정제/(practice)prac_coco.ipynb
+*.ini

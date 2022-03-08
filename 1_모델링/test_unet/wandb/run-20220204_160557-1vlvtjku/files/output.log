@@ -1,0 +1,45 @@
+INFO: Starting training:
+        Epochs:          5
+        Batch size:      1
+        Learning rate:   1e-05
+        Training size:   190485
+        Validation size: 21165
+        Checkpoints:     True
+        Device:          cuda
+        Images scaling:  0.5
+        Mixed Precision: False
+Epoch 1/5:   0%|          | 0/190485 [00:04<?, ?img/s]
+Traceback (most recent call last):
+  File "G:/내 드라이브/인턴/bp_street_crack_dectection/1_모델링/test_unet/train.py", line 198, in <module>
+    amp=args.amp)
+  File "G:/내 드라이브/인턴/bp_street_crack_dectection/1_모델링/test_unet/train.py", line 79, in train_net
+    for batch in train_loader:
+  File "C:\Users\chank\anaconda3\envs\deep_learning\lib\site-packages\torch\utils\data\dataloader.py", line 359, in __iter__
+    return self._get_iterator()
+  File "C:\Users\chank\anaconda3\envs\deep_learning\lib\site-packages\torch\utils\data\dataloader.py", line 305, in _get_iterator
+    return _MultiProcessingDataLoaderIter(self)
+  File "C:\Users\chank\anaconda3\envs\deep_learning\lib\site-packages\torch\utils\data\dataloader.py", line 918, in __init__
+    w.start()
+  File "C:\Users\chank\anaconda3\envs\deep_learning\lib\multiprocessing\process.py", line 112, in start
+    self._popen = self._Popen(self)
+  File "C:\Users\chank\anaconda3\envs\deep_learning\lib\multiprocessing\context.py", line 223, in _Popen
+    return _default_context.get_context().Process._Popen(process_obj)
+  File "C:\Users\chank\anaconda3\envs\deep_learning\lib\multiprocessing\context.py", line 322, in _Popen
+    return Popen(process_obj)
+  File "C:\Users\chank\anaconda3\envs\deep_learning\lib\multiprocessing\popen_spawn_win32.py", line 89, in __init__
+    reduction.dump(process_obj, to_child)
+  File "C:\Users\chank\anaconda3\envs\deep_learning\lib\multiprocessing\reduction.py", line 60, in dump
+    ForkingPickler(file, protocol).dump(obj)
+BrokenPipeError: [Errno 32] Broken pipe
+Traceback (most recent call last):
+  File "C:\Program Files\JetBrains\PyCharm Community Edition 2021.3.1\plugins\python-ce\helpers\pydev\_pydevd_bundle\pydevd_comm.py", line 292, in _on_run
+    r = self.sock.recv(1024)
+ConnectionResetError: [WinError 10054] 현재 연결은 원격 호스트에 의해 강제로 끊겼습니다
+Traceback (most recent call last):
+  File "C:\Program Files\JetBrains\PyCharm Community Edition 2021.3.1\plugins\python-ce\helpers\pydev\pydevd.py", line 2173, in <module>
+    main()
+  File "C:\Program Files\JetBrains\PyCharm Community Edition 2021.3.1\plugins\python-ce\helpers\pydev\pydevd.py", line 2164, in main
+    globals = debugger.run(setup['file'], None, None, is_module)
+  File "C:\Program Files\JetBrains\PyCharm Community Edition 2021.3.1\plugins\python-ce\helpers\pydev\pydevd.py", line 1476, in run
+    return self._exec(is_module, entry_point_fn, module_name, file, globals, locals)
+  File "C:\Program Files\JetBrains\PyCharm Community Edition 2021.3.1\plugins\python-ce\helpers\pydev\pydevd.py", line 1483, in _exec

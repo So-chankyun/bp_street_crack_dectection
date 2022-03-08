@@ -1,0 +1,18 @@
+{
+    "os": "Windows-10-10.0.22000-SP0",
+    "python": "3.7.11",
+    "heartbeatAt": "2022-02-04T06:13:49.075393",
+    "startedAt": "2022-02-04T06:13:47.587404",
+    "docker": null,
+    "gpu": "NVIDIA GeForce RTX 3060",
+    "gpu_count": 1,
+    "cpu_count": 16,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "C:/Users/chank/bp_road_crack_detection-main/1_\ubaa8\ub378\ub9c1/test_unet/train.py",
+    "codePath": "train.py",
+    "host": "DESKTOP-G53D0LN",
+    "username": "chank",
+    "executable": "C:\\Users\\chank\\anaconda3\\envs\\deep_learning\\python.exe"
+}
