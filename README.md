@@ -10,6 +10,9 @@
     - [How to train](#how-to-train)
 - [Video Inference](#video-inference)
     - [How to Use](#how-to-use)
+- [Web Service](#web-service)
+    - [Image](#Image)
+    - [Video](#Video)
 - [Output](#output)
 
 <span style="color:RED"> !!! `README.md` 미완성 !!! </span>
@@ -168,6 +171,59 @@ ide를 활용하여 소스코드를 running 해도 되지만, `args.parser` 옵�
 
     > ⅰ. *(Crack이 차지하는 Pixel 수)\*100 / (전체 픽셀 수)* 가 5% 이상인 Frame 이미지 캡처  
     > ⅱ. Crack Detection이 포함된 `.avi` 비디오 파일
+
+## Web Service
+[web github link](https://github.com/So-chankyun/crack_detection_web/tree/master)
+### Image
+![web_img_out](https://github.com/So-chankyun/bp_street_crack_dectection/blob/main/_imgs/web_out.gif?raw=true)
+1. Image Selection
+    - 아래의 사진은 메인 홈페이지임. 
+    - Image detection과 video inference 기능을 제공함. 
+    - 현재는 필수적인 기능만 탑재하여 main homepage를 완전하게 구성하지 못하였으나, 추후 업데이트를 통해 다양한 기능 및 설명을 추가할 예정.   
+![img_1](https://github.com/So-chankyun/bp_street_crack_dectection/blob/main/_imgs/web_img/img_1.png?raw=true) 
+
+    - 페이지 상단의 'Image'버튼을 클릭하면, 위와 같은 페이지로 이동. 
+    - 우선, 예측한 결과 이미지의 해상도를 선택(단, 예측한 결과로 나오는 이미지는 원본 이미지의 해상도보다 클 수 없음)  
+![img_2](https://github.com/So-chankyun/bp_street_crack_dectection/blob/main/_imgs/web_img/img_2.png?raw=true)
+
+2. Image Prediction Result 
+    - qHD(960x540), HD(1280x720), FHD(1920x1080) 이렇게 총 3개의 해상도를 선택 가능. 
+    - 해상도를 선택하고 나서, 예측하고자 하는 이미지를 선택(복수 선택 가능). 
+    - 'predict' 버튼을 누르면 crack detection이 실행됨.  
+![img_3](https://github.com/So-chankyun/bp_street_crack_dectection/blob/main/_imgs/web_img/img_3.png?raw=true)
+
+    - 예측 결과로써 아래와 같은 페이지를 출력. 
+    - 좌측은 사용자가 입력한 이미지목록이며 우측은 사용자가 입력한 이미지의 예측 결과를 출력. 
+    - 이미지 결과 하단의 'Download'버튼을 클릭하면 위의 결과를 다운로드 받을 수 있음  
+![img_4](https://github.com/So-chankyun/bp_street_crack_dectection/blob/main/_imgs/web_img/img_4.png?raw=true)
+
+    - 다운로드 결과는 아래와 같음. 
+    - true-img 폴더에는 사용자가 입력한 이미지가 담겨있고, pred-img 폴더에는 사용자가 입력한 이미지의 예측한 결과가 담겨짐  
+![img_5](https://github.com/So-chankyun/bp_street_crack_dectection/blob/main/_imgs/web_img/img_5.png?raw=true)
+
+    - 다운 받은 이미지들을 실행해보면 위와 같이 원본, 예측 이미지를 비교 가능  
+![img_6](https://github.com/So-chankyun/bp_street_crack_dectection/blob/main/_imgs/web_img/img_6.png?raw=true)
+
+### Video
+
+1. Video Selection
+    - 페이지 상단의 'video' 버튼을 누르면 위와 같은 페이지로 이동함
+    - 우선 예측한 결과로 나오는 비디오의 해상도를 선택하고 차례로 frame, Threshold 값을 선택함
+    - frame은 초당 몇 개의 frame을 사용할 것인지를 나타냄. 15fps~30fps 사이의 값을 가지며, 5단위로 선택할 수 있음
+    - 이미지에서 크랙이 차지하는 비율이 threshold를 넘어서면 해당 이미지를 저장하는 기능을 포함하고 있는데, 이 threshold는 이미지를 저장하기 위한 임계값을 의미한다. 0.5%~2.0% 값을 가지며 0.1 단위로 선택할 수 있음
+    - 이후 crack detection을 실행하고자하는 video를 선택함(복수 선택 가능)  
+![video_1](https://github.com/So-chankyun/bp_street_crack_dectection/blob/main/_imgs/web_video/video_1.png?raw=true)
+
+2. Video Result    
+    - 비디오 예측이 완료되면 위와 같은 창이 보여짐. 결과는 'Download' 버튼을 눌러서 확인할 수 있음  
+![video_2](https://github.com/So-chankyun/bp_street_crack_dectection/blob/main/_imgs/web_video/video_2.png?raw=true)
+    - 다운로드 버튼을 누르면 위와 같이 폴더를 얻을 수 있음
+    - true-video 폴더 안에는 사용자가 업로드한 원본 동영상이 담겨있고, pred-video 폴더 안에는 예측 결과 동영상과  threshold를 넘는 장면들의 이미지들이 담겨있음  
+![video_3](https://github.com/So-chankyun/bp_street_crack_dectection/blob/main/_imgs/web_video/video_3.png?raw=true)
+    - 위와 같이 threshold를 넘는 장면들의 이미지를 확인할 수 있음
+![video_4](https://github.com/So-chankyun/bp_street_crack_dectection/blob/main/_imgs/web_video/video_4.png?raw=true)
+    - 다운로드 된 동영상을 실행하면 아래와 같이 예측한 결과 영상이 출력됨을 확인할 수 있음
+![video_5](https://github.com/So-chankyun/bp_street_crack_dectection/blob/main/_imgs/web_video/video_5.png?raw=true)
 
 ## Output
 
