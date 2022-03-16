@@ -212,18 +212,18 @@ ide를 활용하여 소스코드를 running 해도 되지만, `args.parser` 옵�
     - frame은 초당 몇 개의 frame을 사용할 것인지를 나타냄. 15fps~30fps 사이의 값을 가지며, 5단위로 선택할 수 있음
     - 이미지에서 크랙이 차지하는 비율이 threshold를 넘어서면 해당 이미지를 저장하는 기능을 포함하고 있는데, 이 threshold는 이미지를 저장하기 위한 임계값을 의미한다. 0.5%~2.0% 값을 가지며 0.1 단위로 선택할 수 있음
     - 이후 crack detection을 실행하고자하는 video를 선택함(복수 선택 가능)  
-![video_1](https://github.com/So-chankyun/bp_street_crack_dectection/blob/main/_imgs/web_video/video_1.png?raw=true)
+![video_1](https://github.com/So-chankyun/bp_street_crack_dectection/blob/main/_imgs/video_img/video_1.png?raw=true)
 
 2. Video Result    
     - 비디오 예측이 완료되면 위와 같은 창이 보여짐. 결과는 'Download' 버튼을 눌러서 확인할 수 있음  
-![video_2](https://github.com/So-chankyun/bp_street_crack_dectection/blob/main/_imgs/web_video/video_2.png?raw=true)
+![video_2](https://github.com/So-chankyun/bp_street_crack_dectection/blob/main/_imgs/video_img/video_2.png?raw=true)
     - 다운로드 버튼을 누르면 위와 같이 폴더를 얻을 수 있음
     - true-video 폴더 안에는 사용자가 업로드한 원본 동영상이 담겨있고, pred-video 폴더 안에는 예측 결과 동영상과  threshold를 넘는 장면들의 이미지들이 담겨있음  
-![video_3](https://github.com/So-chankyun/bp_street_crack_dectection/blob/main/_imgs/web_video/video_3.png?raw=true)
+![video_3](https://github.com/So-chankyun/bp_street_crack_dectection/blob/main/_imgs/video_img/video_3.png?raw=true)
     - 위와 같이 threshold를 넘는 장면들의 이미지를 확인할 수 있음
-![video_4](https://github.com/So-chankyun/bp_street_crack_dectection/blob/main/_imgs/web_video/video_4.png?raw=true)
+![video_4](https://github.com/So-chankyun/bp_street_crack_dectection/blob/main/_imgs/video_img/video_4.png?raw=true)
     - 다운로드 된 동영상을 실행하면 아래와 같이 예측한 결과 영상이 출력됨을 확인할 수 있음
-![video_5](https://github.com/So-chankyun/bp_street_crack_dectection/blob/main/_imgs/web_video/video_5.png?raw=true)
+![video_5](https://github.com/So-chankyun/bp_street_crack_dectection/blob/main/_imgs/video_img/video_5.png?raw=true)
 
 ## Output
 
