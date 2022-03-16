@@ -89,7 +89,7 @@ if __name__ == '__main__':
     # 모델의 리스트를 출력해준다.
     print(10*'-'+' MODEL LIST '+'-'*10+'\n')
 
-    MODEL_PATH = './model file file'
+    MODEL_PATH = './model file'
     model_file_list = [name for name in os.listdir(MODEL_PATH) if name.endswith('.pth')]
 
     for idx, name in enumerate(model_file_list):
@@ -120,7 +120,7 @@ if __name__ == '__main__':
         if file_name.startswith('PAN'):
             batch_size = 64
             model = PAN(backbone='resnet50', pretrained=True, n_class=2)
-        elif file_name.startswith('Unet'):
+        elif file_name.startswith('UNet'):
             batch_size = 8
             model = UNet(n_channels=3, n_classes=2, bilinear=True)
         else:
