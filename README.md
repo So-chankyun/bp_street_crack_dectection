@@ -10,12 +10,9 @@
     - [How to train](#how-to-train)
 - [Video Inference](#video-inference)
     - [How to Use](#how-to-use)
-<<<<<<< HEAD
 - [Web Service](#web-service)
     - [Image](#Image)
     - [Video](#Video)
-=======
->>>>>>> chaaaning-main
 - [Output](#output)
 
 <span style="color:RED"> !!! `README.md` 미완성 !!! </span>
@@ -88,7 +85,6 @@ Training을 위해서 우선 `wandb`를 install하고 계정에 로그인하는 
 ### Data Path Setting
 
 [`train.py`](https://github.com/chaaaning/bp_road_crack_detection/blob/main/1_%EB%AA%A8%EB%8D%B8%EB%A7%81/UNet/train.py)(*클릭 시 소스코드 이동*)를 원활히 실행하기 위해서 데이터 경로를 세팅한다. `train.py`의 상단부에 데이터 경로를 정의하는 코드 라인을 수정한다.
-<<<<<<< HEAD
 
 1. Ai Hub를 통해 받은 데이터에서 [Data](#data)를 참고하여 `제외한 데이터`를 제외한 폴더의 모든 압축을 풀고, 다음의 경로로 바꾸어준다.
     ```text
@@ -117,36 +113,6 @@ ide를 활용하여 소스코드를 running 해도 되지만, `args.parser` 옵�
 
     위의 cmd 코드는 학습 예시이다. 본인의 VGA, 학습 데이터 비율 등 조건에 맞게 옵션을 조절한다. 옵션은 다음과 같다.
 
-=======
-
-1. Ai Hub를 통해 받은 데이터에서 [Data](#data)를 참고하여 `제외한 데이터`를 제외한 폴더의 모든 압축을 풀고, 다음의 경로로 바꾸어준다.
-    ```text
-    images:     /도로장애물·표면 인지 영상(수도권)/Training/Images/CRACK/images
-    annotations: /도로장애물·표면 인지 영상(수도권)/Training/Annotations/CRACK/annotations
-    ```
-2. `train.py`의 상단 코드라인을 수정한다.
-    ```python
-    DATAPATH = "<다운로드한 경로>/도로장애물·표면 인지 영상(수도권)/Training/!CHANGE/CRACK/!changes/"
-    ```
-    Data 경로를 위와 다른 경로로 설정한다면, 코드라인 하위의 images와 annotations의 경로를 지정하는 부분도 수정해야 한다.
-
-### How to train
-
-ide를 활용하여 소스코드를 running 해도 되지만, `args.parser` 옵션 활용을 위해 cmd 또는 Anaconda prompt를 활용하는 것을 추천한다.
-
-1. 경로 이동
-    ```cmd
-    cd <clone한 디렉토리>/1_모델링/UNet
-    ```
-
-2. `args.parser`옵션 설정
-    ```cmd
-    python train.py -b <batch_size>, ... , --amp, --bilinear
-    ```
-
-    위의 cmd 코드는 학습 예시이다. 본인의 VGA, 학습 데이터 비율 등 조건에 맞게 옵션을 조절한다. 옵션은 다음과 같다.
-
->>>>>>> chaaaning-main
     - **Option Experience**
 
     |Option Name    |Experience                                             |
@@ -206,7 +172,6 @@ ide를 활용하여 소스코드를 running 해도 되지만, `args.parser` 옵�
     > ⅰ. *(Crack이 차지하는 Pixel 수)\*100 / (전체 픽셀 수)* 가 5% 이상인 Frame 이미지 캡처  
     > ⅱ. Crack Detection이 포함된 `.avi` 비디오 파일
 
-<<<<<<< HEAD
 ## Web Service
 [web github link](https://github.com/So-chankyun/crack_detection_web/tree/master)
 ### Image
@@ -260,14 +225,8 @@ ide를 활용하여 소스코드를 running 해도 되지만, `args.parser` 옵�
     - 다운로드 된 동영상을 실행하면 아래와 같이 예측한 결과 영상이 출력됨을 확인할 수 있음
 ![video_5](https://github.com/So-chankyun/bp_street_crack_dectection/blob/main/_imgs/video_img/video_5.png?raw=true)
 
-=======
->>>>>>> chaaaning-main
 ## Output
 
 ### Video Output
 
-<<<<<<< HEAD
 ![Video_Out](https://github.com/chaaaning/bp_road_crack_detection/blob/main/_imgs/video_out.gif?raw=true)
-=======
-![Video_Out](https://github.com/chaaaning/bp_road_crack_detection/blob/main/_imgs/video_out.gif?raw=true)
->>>>>>> chaaaning-main
