@@ -15,8 +15,6 @@
     - [Video](#Video)
 - [Output](#output)
 
-<span style="color:RED"> !!! `README.md` 미완성 !!! </span>
-
 ## Setting
 
 ### Hardware and Python
